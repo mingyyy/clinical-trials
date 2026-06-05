@@ -1,0 +1,5 @@
+[llm]
+model = "anthropic/claude-3-5-sonnet-20241022"
+# claude-sonnet-4-6 (Claude 4) rejects requests where both temperature and top_p are set.
+# OpenHands v0.40 always sends both. Using claude-3-5-sonnet-20241022 (capable, accepts both).
+# Model difference noted in observations.

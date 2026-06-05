@@ -1,0 +1,38 @@
+{
+  "_note": "Ground truth must be hand-labeled independently of any framework output. Do not populate from framework results. Each NCT ID goes in exactly one of: eligible, ineligible, ambiguous. Ambiguous = eligibility depends on data not in the profile (labs, imaging, etc.).",
+
+  "P001": {
+    "_profile": "52yo female, HER2+ ER+ PR- stage II, NYC. Completed surgery + chemo. Non-metastatic.",
+    "eligible": [],
+    "ineligible": [],
+    "ambiguous": []
+  },
+
+  "P002": {
+    "_profile": "34yo female, TNBC stage III, BRCA1 mutant, LA. Prior neoadjuvant chemo.",
+    "eligible": [],
+    "ineligible": [],
+    "ambiguous": []
+  },
+
+  "P003": {
+    "_profile": "61yo female, HR+ HER2- post-mastectomy, Chicago. Prior tamoxifen 5yr.",
+    "eligible": [],
+    "ineligible": [],
+    "ambiguous": []
+  },
+
+  "P004": {
+    "_profile": "55yo male, metastatic melanoma, BRAF V600E, brain mets, ECOG 2, Seattle.",
+    "eligible": [],
+    "ineligible": [],
+    "ambiguous": []
+  },
+
+  "P005": {
+    "_profile": "58yo female, HER2+ ER- metastatic, 2 prior HER2-targeted lines (trast, pertu, T-DM1), Boston.",
+    "eligible": [],
+    "ineligible": [],
+    "ambiguous": []
+  }
+}
