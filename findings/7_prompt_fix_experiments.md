@@ -250,6 +250,39 @@ The pattern generalizes beyond clinical trial matching: any system where a "rule
 
 ---
 
+## Fix D Accuracy Against Ground Truth
+
+Ground truth was hand-labeled June 5, 2026 by reading actual ClinicalTrials.gov eligibility criteria for all trials independently of any framework output. Labels: `eligible` (clearly meets stated criteria), `ineligible` (confirmed disqualifier in profile), `ambiguous` (eligibility depends on data not in profile → maps to UNCERTAIN).
+
+**Note on P002:** The Fix D full run and the ground-truth labeling fetched the ClinicalTrials.gov API on different days and received largely different trial sets (7 of 50 GT trials overlapped). P002 is excluded from the accuracy computation; overlap is insufficient for a meaningful comparison.
+
+| Patient | Correct | Total | Accuracy |
+|---------|---------|-------|----------|
+| P001    | 51      | 60    | 85.0%    |
+| P003    | 9       | 18    | 50.0%    |
+| P004    | 14      | 17    | 82.4%    |
+| P005    | 22      | 29    | 75.9%    |
+| **All** | **96**  | **124** | **77.4%** |
+
+**Error type breakdown (28 errors total):**
+
+| Error type | Count | Clinical impact |
+|-----------|-------|----------------|
+| INELIGIBLE → should be UNCERTAIN | 13 | Missed trial opportunities (false disqualification) |
+| UNCERTAIN → should be INELIGIBLE | 11 | Extra noise (unnecessary review burden) |
+| ELIGIBLE → should be INELIGIBLE | 3 | Safety risk (false qualification) |
+| ELIGIBLE → should be UNCERTAIN | 1 | Over-optimistic |
+
+**The 3 critical errors (ELIGIBLE when INELIGIBLE):**
+- P003 × NCT06545331 and NCT05283330: trials require advanced/metastatic solid tumors; P003 is NED post-mastectomy. Fix D's predicate extraction did not capture the "advanced/metastatic" inclusion requirement.
+- P005 × NCT06551116 (QuantifyHER): trial explicitly excludes HER2-overexpressing mBC (IHC 3+ or IHC 2+ FISH+); P005 is HER2+. Fix D's predicate extraction missed the HER2-exclusion arm.
+
+**The dominant miss pattern (13 false INELIGIBLE):** Fix D generated an INELIGIBLE verdict for trials where the patient profile simply lacked a data field. For example, a trial with an activity level requirement returned INELIGIBLE because Fix D's predicate evaluation treated a missing value as a failed check, rather than UNCERTAIN. This is the inverse of the original problem: the original framework was too confident inferring a match; Fix D is occasionally too confident inferring a mismatch.
+
+**P003's low accuracy (50%):** Twelve of the 18 trials Fix D processed for P003 were labeled INELIGIBLE in ground truth (requiring advanced/metastatic disease; P003 is NED). Fix D returned UNCERTAIN for 9 of these — it correctly avoided INELIGIBLE but failed to close on it, generating unnecessary uncertainty. The predicate ontology did not reliably encode "active/measurable disease required" as a hard inclusion gate.
+
+---
+
 ## Summary Table
 
 | Fix | Architecture | Target pass | Full-run verdict |
@@ -259,7 +292,7 @@ The pattern generalizes beyond clinical trial matching: any system where a "rule
 | Fix 2 | Citation in schema | FAIL (INELIGIBLE 0.85) | — |
 | Fix 3 | Two-stage extraction | FAIL (INELIGIBLE 0.82) | — |
 | Fix C | Annotation + literal citation check | PASS (UNCERTAIN) | Over-INELIGIBLE on P002 |
-| Fix D | Typed extraction + ontology + code evaluation | PASS (UNCERTAIN) | Best calibration; ~5% parse errors |
+| Fix D | Typed extraction + ontology + code evaluation | PASS (UNCERTAIN) | 77.4% accuracy (P001,P003-P005); 3 false-ELIGIBLE errors |
 
 **All scripts:** `test_prompt_fixes.py` (Fixes 1–2), `test_prompt_fix3.py` (Fix 3), `test_prompt_fixC.py` (Fix C), `test_prompt_fixD.py` (Fix D), `run_fixC_all_patients.py`, `run_fixD_all_patients.py`.
 
