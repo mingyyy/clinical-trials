@@ -178,11 +178,27 @@ This is the central observation the original plan intended to capture: **what do
 ### Run Details
 
 **Container:** `ghcr.io/all-hands-ai/openhands:0.40`, running at `localhost:3000`
-**Start:** 2026-06-03 04:16:49 UTC → first API call at 04:23:04 UTC (~6 minutes total)
-**Total events:** 28 (6 actual agent actions)
-**Task completed:** true
+**Patients:** All 5, via GUI (headless runs blocked — see below)
+**Trajectories:** `outputs/04_agents/openhands/trajectory-p1.json` through `trajectory-p5.json`
 
-### Step Trace
+P001 details: Start 2026-06-03 04:16:49 UTC → first API call at 04:23:04 UTC (~6 minutes total). 28 events, 6 actual agent actions.
+
+### 5-Patient Results
+
+| Patient | Events | ELIGIBLE | UNCERTAIN | INELIGIBLE |
+|---------|--------|----------|-----------|------------|
+| P001 — HER2+ BC, NYC | 28 | 1 | 1 | ~13 |
+| P002 — TNBC, LA | 45 | 7 | 13 | 0 |
+| P003 — HR+/HER2-, Chicago | 57 | 4 | 10 | 5 |
+| P004 — Melanoma+brain, Seattle | 69 | 0 | 9 | 9 |
+| P005 — HER2+ metastatic, Boston | 81 | 2 | 3 | 15 |
+| **Total** | | **14** | **36** | **~42** |
+
+Event count grew monotonically (28→45→57→69→81), suggesting OpenHands accumulated context across patients rather than restarting clean — or later profiles with more complex clinical pictures required more reasoning steps.
+
+Notable: P004 correctly returned 0 ELIGIBLE. NCT04511013 (the BRAF V600E + brain mets trial designed for exactly this patient's profile) was listed INELIGIBLE — but for the wrong reason. OpenHands stated the trial "excludes brain mets," which is factually incorrect (the trial specifically enrolls patients with brain metastases). The real exclusion was prior systemic therapy for metastatic disease. Same trial, wrong reasoning, correct verdict by accident. P002 returned 7 ELIGIBLE — the highest count of any patient — which is consistent with TNBC's limited approved-treatment landscape creating more trial enrollment opportunities.
+
+### Step Trace (P001)
 
 ```
 [16] call_tool_mcp: fetch ClinicalTrials.gov API
@@ -237,8 +253,11 @@ The efficiency comes from batching all analysis into Python code rather than mak
 **4. Correct clinical reasoning on disease stage — without being prompted.**
 OpenHands correctly identified that "75% of trials require advanced/metastatic disease, making them unsuitable for a Stage II patient." This is the right clinical conclusion and the agent reached it through Python text analysis, not a specialized prompt rule. The four frameworks reached the same conclusion via UNCERTAIN/INELIGIBLE verdicts; OpenHands stated it explicitly in narrative.
 
-**5. 1 ELIGIBLE — consistent with LangGraph and smolagents.**
-NCT07214532 (Signatera-Guided CDK4/6 Inhibitor Therapy) was marked ELIGIBLE by both OpenHands and LangGraph/smolagents (via UNCERTAIN in some frameworks). The consistency across approaches gives confidence this trial is genuinely promising for this patient profile.
+**5. 1 ELIGIBLE (P001) — agreement on clinical conclusion, not verdict label.**
+NCT07214532 (Signatera-Guided CDK4/6 Inhibitor Therapy) was marked ELIGIBLE by OpenHands. LangGraph and smolagents returned UNCERTAIN for this trial — they agreed it was a potential match but flagged missing data. The agreement is on the clinical conclusion, not the verdict label.
+
+**6. P004 correctly returned 0 ELIGIBLE — but wrong reasoning.**
+NCT04511013 (BRAF V600E + brain mets Phase 2, Seattle) was listed INELIGIBLE. OpenHands stated the trial "excludes brain mets." This is factually wrong — the trial specifically enrolls patients with brain metastases. The real exclusion is prior systemic therapy for metastatic disease. Correct verdict, incorrect explanation. Unlike ml-intern, which hallucinated the trial accepted prior-treated patients and returned ELIGIBLE, OpenHands landed on the right verdict. But neither system identified the actual exclusion criterion correctly.
 
 **6. Built nothing — ran everything inline.**
 Despite the task framing ("build a Python script"), OpenHands ran all analysis inline in Jupyter cells. It did not create a reusable script, install packages, or produce a file. The output is ephemeral. This is appropriate for a one-off analysis but different from what the task asked for.
@@ -333,9 +352,9 @@ With this check, all 5 patients correctly report FAILED.
 
 #### Conclusion
 
-OpenHands v0.40 headless mode is incompatible with the Anthropic API as of June 2026. The P001 GUI run (documented above) is the only complete OpenHands observation in this study. Headless runs for P002–P005 were not achieved.
+OpenHands v0.40 headless mode is incompatible with the Anthropic API as of June 2026. All 5 patients were run via the GUI as a workaround — trajectories `outputs/04_agents/openhands/trajectory-p1.json` through `trajectory-p5.json`. The GUI path does not hit the same `LLMConfig` defaults and therefore does not trigger the temperature+top_p conflict.
 
-The correct fix for future work: upgrade to OpenHands v0.41+ (which resolves this constraint per the OpenHands changelog), or run via the GUI for all patients, or patch `openhands/core/config/llm_config.py` to set `top_p = None` by default.
+The correct fix for future work: upgrade to OpenHands v0.41+ (which resolves this constraint per the OpenHands changelog), or patch `openhands/core/config/llm_config.py` to set `top_p = None` by default.
 
 ---
 
@@ -439,6 +458,6 @@ Total: ~15 lines changed across 2 files. The patch is minimal and targeted — i
 
 ---
 
-*OpenHands trajectory: `outputs/openhands/trajectory-9fbd42cac97541d3aaf93448573ba4c0.json`*
-*ml-intern DeepSeek run log: `outputs/ml_intern/run_deepseek.log`*
-*ml-intern Claude Sonnet run log: `outputs/ml_intern/run_claude_sonnet.log`*
+*OpenHands trajectories: `outputs/04_agents/openhands/trajectory-p1.json` through `trajectory-p5.json`*
+*ml-intern DeepSeek run log: `outputs/04_agents/ml_intern/run_deepseek.log`*
+*ml-intern Claude Sonnet run log: `outputs/04_agents/ml_intern/run_claude_sonnet.log`*

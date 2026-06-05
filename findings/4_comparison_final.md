@@ -34,7 +34,7 @@ Additional data points (different methodology — not directly comparable):
 | Approach | Paradigm | Patients | Trials assessed | ELIGIBLE | UNCERTAIN | Reproducibility |
 |----------|----------|----------|-----------------|----------|-----------|-----------------|
 | ml-intern | Autonomous tool-calling agent | 5 | 186 (haversine 100mi) | **9** | ~84 | Low |
-| OpenHands | CodeAct (code generation) | P001 only (GUI) | 20 (string matching) | 1 | ~14 INELIGIBLE | Low |
+| OpenHands | CodeAct (code generation) | 5 (GUI) | ~20/patient (string matching) | **14** | **36** | Low |
 
 ---
 
@@ -247,11 +247,22 @@ The other four ml-intern ELIGIBLE results (NCT06047379 — oral NEO212 in brain 
 
 ## OpenHands — A Sixth Data Point
 
-After the four framework runs, OpenHands v0.40 (CodeAct paradigm) was given the same P001 query via its web UI. Full trace in `findings/6_ml_intern_openhands_observations.md`.
+After the four framework runs, OpenHands v0.40 (CodeAct paradigm) was run via its web UI on all 5 patient profiles. Full trace in `findings/6_ml_intern_openhands_observations.md`. Headless runs were blocked (see below) — all 5 patients completed via GUI.
 
-**What it did:** 6 steps. MCP fetch blocked by robots.txt → immediate fallback to Python requests → API call succeeded → three IPython cells to process and classify trials → one `think` step → `finish`.
+**What it did (P001):** 6 steps. MCP fetch blocked by robots.txt → immediate fallback to Python requests → API call succeeded → three IPython cells to process and classify trials → one `think` step → `finish`.
 
-**What it found:** 20 trials fetched, 15 HER2+ specific, 1 ELIGIBLE (NCT07214532), ~14 INELIGIBLE. LangGraph and smolagents returned 0 ELIGIBLE for P001 — they marked NCT07214532 UNCERTAIN (possible match, needs review), not ELIGIBLE. The agreement is on the clinical conclusion (Stage II excluded from most trials), not the verdict label. Correctly identified Stage II as the key discriminator — "75% of trials require advanced/metastatic disease, making them unsuitable for a Stage II patient."
+**5-patient results:**
+
+| Patient | Events | ELIGIBLE | UNCERTAIN | INELIGIBLE |
+|---------|--------|----------|-----------|------------|
+| P001 — HER2+ BC, NYC | 28 | 1 | 1 | ~13 |
+| P002 — TNBC, LA | 45 | 7 | 13 | 0 |
+| P003 — HR+/HER2-, Chicago | 57 | 4 | 10 | 5 |
+| P004 — Melanoma+brain, Seattle | 69 | 0 | 9 | 9 |
+| P005 — HER2+ metastatic, Boston | 81 | 2 | 3 | 15 |
+| **Total** | | **14** | **36** | **~42** |
+
+P001: LangGraph and smolagents returned 0 ELIGIBLE — they marked NCT07214532 UNCERTAIN (possible match, needs review), not ELIGIBLE. The agreement is on the clinical conclusion (Stage II excluded from most trials), not the verdict label. P004 correctly returned 0 ELIGIBLE, unlike ml-intern (5 ELIGIBLE via hallucination). NCT04511013 was listed INELIGIBLE but for the wrong reason (OpenHands stated it "excludes brain mets" — actually the trial specifically enrolls brain mets patients; the real exclusion is prior metastatic systemic therapy). Event count grew monotonically (28→81), suggesting later profiles required more reasoning steps.
 
 **How it differed from the four frameworks:**
 
@@ -264,11 +275,11 @@ After the four framework runs, OpenHands v0.40 (CodeAct paradigm) was given the 
 | Self-correction | smolagents only | Yes — MCP blocked, fell back immediately |
 | Reproducibility | High (same prompt → same structure) | Low (different runs → different code) |
 
-**The finding it adds:** A well-scoped task given to a general-purpose coding agent produced a correct clinical answer in 6 steps with no framework, no prompt engineering, and no shared pipeline code. The answer was consistent with the four frameworks on the key verdict (1 ELIGIBLE, Stage II excluded from most trials). This is the clearest evidence in the study that the task was not complex enough to differentiate approaches — OpenHands solved it with Python string matching and got the right answer.
+**The finding it adds:** A well-scoped task given to a general-purpose coding agent produced a correct clinical answer in 6 steps with no framework, no prompt engineering, and no shared pipeline code. The answer was consistent with the four frameworks on the key verdict for P001 (Stage II excluded from most trials). P004 0 ELIGIBLE is the stronger result — it agreed with the structured frameworks against ml-intern's hallucinated ELIGIBLE. But it got the reasoning wrong. This is the clearest evidence in the study that verdict and explanation are separable: a system can reach the right verdict via the wrong path.
 
 **What OpenHands did NOT do:** It did not use the Anthropic API for per-trial reasoning (despite being asked to), did not apply the three-state verdict schema, did not produce structured output, and did not handle the "absence of information" rule explicitly. For a production system requiring auditable, structured verdicts, the four-framework approach is still correct. OpenHands is appropriate for one-off analysis where narrative output is acceptable.
 
-**Headless runs for all 5 patients: blocked.** After the P001 GUI run, an automated headless script (`run_openhands_all.py`) was written to run all 5 patients. All failed within seconds of the agent starting. The root cause: OpenHands v0.40 hardcodes both `temperature` and `top_p` as non-None defaults in `LLMConfig`, sending both to the Anthropic API on every call. All current Anthropic models (Claude 4.x) reject requests where both are set simultaneously. The only Claude-family models that accept both are Claude 3.x variants (e.g., `claude-3-5-sonnet-20241022`) — which Anthropic has deprecated; they now return `not_found_error`. Workarounds via env var (`LITELLM_DROP_PARAMS`), config.toml, or model substitution all failed. The GUI run succeeded because the browser UI leaves `top_p` unset by default, bypassing the problematic default. This is an infrastructure incompatibility between OpenHands v0.40 and the Anthropic API as of June 2026, not a task or prompt issue. Fix: OpenHands v0.41+ resolves this. P001 GUI run remains the only complete OpenHands observation.
+**Headless runs: blocked, resolved via GUI.** After the P001 GUI run, an automated headless script (`run_openhands_all.py`) was written. All 5 patients failed within seconds — root cause: OpenHands v0.40 hardcodes both `temperature` and `top_p` as non-None defaults in `LLMConfig`; Claude 4.x rejects both being set simultaneously; all Claude 3.x fallbacks are now deprecated (return `not_found_error`). Workarounds via env var, config.toml, and model substitution all failed. All 5 patients were rerun via GUI, which leaves `top_p` unset by default. Fix for future work: OpenHands v0.41+.
 
 ---
 
