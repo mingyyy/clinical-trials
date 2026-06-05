@@ -41,7 +41,7 @@ from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).parent / ".env")
 
-OUT_DIR = Path(__file__).parent / "outputs" / "notes_contamination_test"
+OUT_DIR = Path(__file__).parent / "outputs" / "05_experiments" / "p004_notes"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 MODEL = "claude-sonnet-4-6"
@@ -114,7 +114,7 @@ EXISTING_A = {
     ],
     "user_message_sent": None,
     "tokens_used": None,
-    "source": "outputs/langgraph/P004.json",
+    "source": "outputs/02_rerun/langgraph/P004.json",
 }
 
 

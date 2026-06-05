@@ -185,7 +185,7 @@ async def assess_patient_async(patient: PatientProfile) -> MatchingResult:
 
 
 async def main() -> None:
-    out_dir = Path(__file__).parent.parent.parent / "outputs" / "claude_direct"
+    out_dir = Path(__file__).parent.parent.parent / "outputs" / "02_rerun" / "claude_direct"
     out_dir.mkdir(parents=True, exist_ok=True)
 
     for patient in TEST_PROFILES:

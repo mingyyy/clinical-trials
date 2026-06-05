@@ -48,7 +48,7 @@ from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).parent / ".env")
 
-OUT_DIR = Path(__file__).parent / "outputs" / "p001_notes_test"
+OUT_DIR = Path(__file__).parent / "outputs" / "05_experiments" / "p001_notes"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 (OUT_DIR / "trials").mkdir(exist_ok=True)
 

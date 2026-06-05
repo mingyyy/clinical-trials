@@ -34,7 +34,7 @@ def load_ground_truth() -> dict:
 
 
 def load_output(framework: str, patient_id: str) -> dict | None:
-    path = OUTPUT_DIR / framework / f"{patient_id}.json"
+    path = OUTPUT_DIR / "02_rerun" / framework / f"{patient_id}.json"
     if not path.exists():
         return None
     with open(path) as f:

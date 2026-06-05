@@ -192,7 +192,7 @@ def output_node(state: MatchingState) -> MatchingState:
         wall_time_seconds=round(time.time() - state["_t0"], 1),
     )
 
-    out_dir = Path(__file__).parent.parent.parent / "outputs" / "langgraph"
+    out_dir = Path(__file__).parent.parent.parent / "outputs" / "02_rerun" / "langgraph"
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / f"{patient.patient_id}.json"
     out_path.write_text(result.model_dump_json(indent=2))

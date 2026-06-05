@@ -233,7 +233,7 @@ def save_matching_result(result_json: str, patient_id: str) -> str:
     Returns:
         Confirmation string with output path and match counts.
     """
-    out_dir = Path(__file__).parent.parent.parent / "outputs" / "smolagents"
+    out_dir = Path(__file__).parent.parent.parent / "outputs" / "02_rerun" / "smolagents"
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / f"{patient_id}.json"
 
@@ -316,7 +316,7 @@ eligible must be a boolean: true only when verdict == "ELIGIBLE".
 
 if __name__ == "__main__":
     print("=== smolagents: Clinical Trial Matching ===")
-    out_dir = Path(__file__).parent.parent.parent / "outputs" / "smolagents"
+    out_dir = Path(__file__).parent.parent.parent / "outputs" / "02_rerun" / "smolagents"
     out_dir.mkdir(parents=True, exist_ok=True)
 
     agent = build_agent()
