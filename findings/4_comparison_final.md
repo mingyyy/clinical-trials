@@ -386,6 +386,81 @@ Model: claude-sonnet-4-6 | June 3 2026 | 5 patients | 193 trials assessed (rerun
 
 ---
 
+## Post-Comparison: The Inference Problem and Fix D
+
+The P004 finding — every system produced the wrong verdict for NCT04511013, via different paths — prompted a follow-on experiment. The question: can prompt engineering fix the inference problem, or is it architectural?
+
+**Short answer:** architectural. Full analysis in `findings/7_prompt_fix_experiments.md`.
+
+### The experiment
+
+Four prompt fixes were designed and tested against the same four cases (target + 3 sanity checks):
+
+| Fix | Change | Target result |
+|-----|--------|---------------|
+| Baseline | Existing prompt | FAIL — INELIGIBLE 0.92 |
+| Fix 1 | Stronger "no-inference" rule language | FAIL — INELIGIBLE 0.90 |
+| Fix 2 | Citation field required in exclusion_flags | FAIL — INELIGIBLE 0.85 |
+| Fix 3 | Two-stage: extract facts first, assess against facts only | FAIL — INELIGIBLE 0.82 |
+| Fix C | Annotation-first + literal citation check (code) | PASS — UNCERTAIN |
+| Fix D | Typed extraction + ontology + deterministic code evaluation | PASS — UNCERTAIN |
+
+Fixes 1–3 are prompt patches. Fix C and Fix D are architectural changes.
+
+### Why prompting fails here
+
+The LLM acknowledged the ambiguity in `uncertain_items` in the baseline run:
+
+> *"Whether ipilimumab and nivolumab were given in the neoadjuvant/adjuvant setting vs. for metastatic disease"*
+
+Then returned INELIGIBLE anyway with:
+
+> *"The context of 'metastatic melanoma' ... strongly suggests they were given for metastatic disease."*
+
+The "absence of information" rule was not violated — the LLM believed it had enough context for a confident inference. Clinical priors (metastatic melanoma + ipi+nivo → most likely metastatic-setting treatment) live in the model weights. The system prompt rule lives in the context window. When confidence is high, the rule does not activate. Stronger wording does not override confidence; it is still context, and context loses to weights when the prior is strong.
+
+Two-stage extraction (Fix 3) surfaced the gap clearly — `treatment_setting` marked as `NOT_in_profile` — but the model's Stage 2 response was: *"the treatment setting is explicitly noted as unknown... there is a high likelihood this constitutes prior metastatic-setting therapy."* The model acknowledged the absence and acted anyway.
+
+### Fix C: annotation-first
+
+Instead of asking the LLM to assess eligibility, ask it to annotate each criterion: `CONFIRMED_MET`, `CONFIRMED_FAILED`, or `DATA_MISSING`. For `CONFIRMED_FAILED`, require an exact profile quote. Code validates that the quote is a literal substring of the profile. Citations that don't appear verbatim are downgraded to `DATA_MISSING` by code.
+
+This passed all targeted tests and worked on full runs, with one residual issue: Fix C cited "stage III" as a CONFIRMED_FAILED citation for "advanced or metastatic disease" criteria on P002. "Stage III" is a valid substring — the citation check passes — but the inference that "stage III = not advanced" requires clinical knowledge. The literal match cannot detect inference embedded in a valid citation.
+
+### Fix D: LLM as data extractor, code as judge
+
+The complete solution — removes the verdict from the LLM path entirely:
+
+1. **LLM extracts a typed patient record** — explicit `null` for any unstated field. `prior_treatments[*].setting = null` means "treatment setting not stated," not "metastatic."
+2. **LLM parses eligibility criteria into structured predicates** — variable + operator + required_value, patient-agnostic. This is an ontology.
+3. **Code evaluates predicates** — `null` in the record → `DATA_MISSING`. No LLM judgment.
+
+For P004 × NCT04511013: the "no prior systemic therapy for metastatic disease" criterion maps to `list_none_eq(prior_treatments[*].setting, "metastatic")`. P004's record has `setting = null` for both treatments. Code evaluates: some values are null, cannot confirm none are metastatic → `DATA_MISSING`. Verdict: UNCERTAIN.
+
+**Full-run results (Fix D vs Fix C vs LangGraph rerun):**
+
+| Patient | Assessed | E/U/I (Fix D) | E/U/I (Fix C) | E/U/I (LangGraph) |
+|---------|----------|---------------|----------------|-------------------|
+| P001 | 68 | 0 / 9 / 59 | 0 / 8 / 64 | 0 / 3 / 70 |
+| P002 | 49 | 1 / 9 / 39 | 0 / 9 / 43 | 0 / 27 / 25 |
+| P003 | 18 | 2 / 9 / 7 | 0 / 5 / 13 | 0 / 7 / 11 |
+| P004 | 17 | 1 / 5 / 11 | 1 / 7 / 10 | 1 / 8 / 9 |
+| P005 | 31 | 1 / 3 / 26 | — (anomaly) | 0 / 7 / 25 |
+
+P002 improvement: LangGraph had 27 UNCERTAIN (correct — TNBC with ambiguous prior lines); Fix C collapsed this to 9 UNCERTAIN by over-citing "stage III"; Fix D restored 9 UNCERTAIN through OR-predicate handling (is_locally_advanced=null → DATA_MISSING for "locally advanced OR metastatic" criteria). Fix D does not resolve the full P002 divergence from LangGraph — the remaining gap reflects different evaluation logic, not a clear error in either direction.
+
+**Cost:** $2.16 (Fix D) vs $3.84 (Fix C) for ~190 trials. Patient extraction is amortized over all trials for that patient; predicate parsing is more token-efficient than full annotation.
+
+**Remaining limitation:** ~5% parse error rate on very long eligibility texts. Currently returns `verdict=ERROR`. Mitigated by `MAX_CRITERIA_CHARS=6000` truncation; not eliminated.
+
+### The architectural lesson
+
+The pattern that works: LLM as data extractor and semantic parser; code as evaluator. This is the same separation of concerns underlying rule-based expert systems. The LLM contribution is the hard part (unstructured text → typed records; natural language criteria → structured predicates). The evaluation logic is the part that must be deterministic, auditable, and explainable — so it belongs in code.
+
+Any AI system where a rule must reliably override an LLM inference should move the rule enforcement out of the LLM and into code. This is not a limitation of clinical AI specifically — it is a structural property of all autoregressive LLMs: rules are applied conditionally on confidence, and confidence is shaped by model weights, not just the context window.
+
+---
+
 ## Closing
 
 This project asked: a pharma client wants to build an AI system to match patients to clinical trials — which framework?
