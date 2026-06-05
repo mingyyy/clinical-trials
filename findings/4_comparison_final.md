@@ -230,7 +230,16 @@ ml-intern's top result was NCT04511013, ranked as "top priority referral." But i
 
 The other four ml-intern ELIGIBLE results (NCT06047379 — oral NEO212 in brain mets; NCT06500455 — fractionated SRS; NCT05098210 — neoantigen vaccine; NCT03452774 — matching registry) are more defensible. The four frameworks assessed all of these and most returned UNCERTAIN, not INELIGIBLE — the divergence on those trials is a batch context effect, not a criteria reading difference.
 
-**What the P004 case actually shows:** Both the four frameworks and ml-intern converged on a wrong answer for NCT04511013 — via different reasoning paths. The frameworks violated their UNCERTAIN rule by converting a confident clinical inference into INELIGIBLE. ml-intern hallucinated a permissive arm into ELIGIBLE. The correct answer per the prompt rule is UNCERTAIN. This is the harder problem: the LLM's confidence calibration is not transparent, and explicit rules don't reliably override it in either direction.
+**What the P004 case actually shows:** Every system in this study produced a wrong answer for NCT04511013 — via different reasoning paths:
+
+| System | Verdict | Error |
+|--------|---------|-------|
+| Four structured frameworks | INELIGIBLE | Acknowledged ambiguity in `uncertain_items`, then overrode the UNCERTAIN rule with a clinical inference |
+| ml-intern | ELIGIBLE | Hallucinated that the comparator arm signals the trial accepts prior-treated patients |
+| OpenHands | INELIGIBLE | Stated the trial "excludes brain mets" — factually wrong, the trial specifically enrolls brain mets patients |
+| **Elicit** | **Effectively UNCERTAIN** | Surfaced NCT04511013 as the top match, explicitly left the prior ipi+nivo question unresolved: "because the protocol's own control arm is ipi+nivo, this does not look like a trivial adjuvant/metastatic misclassification" |
+
+Elicit was the only system that correctly handled this case. Its biology-first approach with explicit epistemic humility — "I cannot verify from the snippet whether prior ipi+nivo is an exclusion" — produced an answer closer to correct than all four purpose-built frameworks. The structured frameworks' problem was not retrieval or schema or framework choice: it was that their LLM confidence calibration overrode an explicit prompt rule when a plausible inference was available. Elicit, returning a shortlist with caveats rather than a verdict, avoided this failure mode entirely.
 
 **How it differed from the four frameworks (rerun):**
 

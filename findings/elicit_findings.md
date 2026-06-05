@@ -65,9 +65,37 @@ Elicit searched ClinicalTrials.gov and returned 5 ranked results with reasoning.
 
 ---
 
+---
+
+## Session C — Direct Patient Matching (P004)
+
+**Date:** 2026-06-05
+**Query:** 55yo male, metastatic melanoma with brain metastases, BRAF V600E mutant, prior ipilimumab + nivolumab, ECOG 2, Seattle WA.
+**Raw output:** `outputs/04_agents/elicit/elicit_p004_trial_ranking.md`
+
+Elicit surfaced one clearly on-target recruiting trial:
+
+| Rank | NCT ID | Trial | Elicit's assessment |
+|------|--------|-------|---------------------|
+| 1 | NCT04511013 | Encorafenib + Binimetinib + Nivolumab vs. Ipilimumab + Nivolumab | Best biologic match: brain mets, BRAF V600E, recruiting, phase 2. Prior ipi+nivo **not resolved as definitive exclusion** — "because the protocol's own control arm is ipi+nivo, this does not look like a trivial adjuvant/metastatic misclassification." |
+
+Elicit's caveats: could not confirm Seattle-area site (331 US sites listed, no city-level breakdown); ECOG 2 eligibility not resolved from snippet; search scope narrower than structured frameworks.
+
+**The critical observation:** Elicit did not infer that prior ipi+nivo is a definitive exclusion — the only system in this study that correctly left the question open. Its reasoning was sound: the trial's control arm *administers* ipi+nivo, which signals the protocol treats prior ipi+nivo history as nuanced. This is functionally equivalent to UNCERTAIN on the NCT04511013 assessment.
+
+For comparison:
+- Four structured frameworks: INELIGIBLE — all acknowledged the ambiguity in `uncertain_items`, then overrode it with a clinical inference
+- ml-intern: ELIGIBLE — hallucinated that the comparator arm signals the trial accepts prior-treated patients
+- OpenHands: INELIGIBLE — stated the trial "excludes brain mets" (factually wrong; the trial specifically enrolls brain mets patients)
+- **Elicit: Effectively UNCERTAIN** — correct trial, prior treatment question unresolved, flagged for follow-up
+
+---
+
 ## Finding
 
 **The prior question answer is nuanced.** Elicit is a shortlist generator, not a replacement for systematic eligibility screening. It covers roughly 60% of the problem (biological fit, initial matching) and stops before the hard part (full exclusion criteria, geographic verification, data gaps).
+
+The P004 session adds a sharper finding: **on the hardest case in this study, Elicit's biology-first approach with epistemic humility outperformed all four structured frameworks.** The frameworks over-inferred from context and returned confident wrong verdicts. Elicit surfaced the right trial and explicitly left the ambiguous criterion unresolved.
 
 For a pharma client without proprietary data integration requirements, Elicit should be evaluated before committing to a custom build. For a client needing auditable per-criterion verdicts, EHR integration, or systematic recall across all recruiting trials, a custom pipeline is necessary — and the framework comparison in this study applies.
 

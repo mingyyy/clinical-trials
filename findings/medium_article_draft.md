@@ -147,7 +147,7 @@ The choice determines the character of the system:
 
 ---
 
-## Finding 6: Two Different Systems, Two Different Errors, Same Wrong Result
+## Finding 6: Every System Got It Wrong — Except the One That Didn't Try to Decide
 
 Both errors read as confident and clinical. Neither output contains a signal that anything is wrong. That is what makes this case worth examining carefully.
 
@@ -161,14 +161,21 @@ Its criterion table for NCT04511013 included this assessment:
 
 This is factually wrong. NCT04511013 has two arms: Arm A (Encorafenib + Binimetinib + Nivolumab) and Arm B (Ipilimumab + Nivolumab as comparator). Both arms enroll treatment-naive patients. The trial title says "vs. Ipilimumab + Nivolumab" — describing what the trial *administers* in one arm, not what prior treatment history it *accepts*. ml-intern read the treatment comparator as a permissive eligibility criterion. That is a hallucination.
 
-So two systems arrived at opposite verdicts, both for wrong reasons:
+So the systems arrived at three different wrong answers:
 
-- **Four structured frameworks:** INELIGIBLE — based on a defensible clinical inference that violated the explicit UNCERTAIN rule
+- **Four structured frameworks:** INELIGIBLE — acknowledged the ambiguity in their own output, then overrode it with a clinical inference
 - **ml-intern:** ELIGIBLE — based on a hallucinated trial design feature
+- **OpenHands:** INELIGIBLE — stated the trial "excludes brain mets," which is factually wrong; the trial specifically enrolls patients with brain metastases
 
-The correct verdict, per the explicit prompt rule, is UNCERTAIN. The prior treatment setting is absent data. Neither system got there.
+The correct verdict, per the explicit prompt rule, is UNCERTAIN. The prior treatment setting — whether ipi+nivo was given in the adjuvant or metastatic context — is absent from the profile. The trial itself explicitly permits prior adjuvant ipi+nivo. Without knowing when those drugs were given, the eligibility question cannot be resolved.
 
-The LangGraph explanation cites the exclusion criterion accurately, acknowledges the ambiguity, and proceeds to INELIGIBLE. The ml-intern table presents a positive criterion assessment in clean structured format. Both read as authoritative. There is no output signal in either case that something went wrong.
+One system handled this correctly. After the framework runs, Elicit was given the same P004 query. It surfaced NCT04511013 as its top match — and explicitly left the prior treatment question unresolved:
+
+> *"Because the protocol's own control arm is ipi+nivo, this does not look like a trivial adjuvant/metastatic misclassification."*
+
+Elicit did not return a verdict. It returned a shortlist with a caveat: the trial fits the biology, the prior treatment question needs follow-up. That is the correct answer.
+
+The LangGraph explanation cites the exclusion criterion accurately, acknowledges the ambiguity, and proceeds to INELIGIBLE. The ml-intern table presents a positive criterion assessment in clean structured format. The Elicit response says "I cannot resolve this from what I retrieved." All three read differently in tone. Only one got the epistemic posture right — and it was the one that declined to decide.
 
 ---
 
@@ -184,7 +191,7 @@ The LangGraph explanation cites the exclusion criterion accurately, acknowledges
 
 **"Absence of information" rules are guidance, not enforcement.** In a patient profile derived from electronic health records (EHR), where clinical context is rich and implicit inferences are everywhere, the UNCERTAIN rule may almost never fire — not because it was removed, but because the model is confident enough not to need it. Test this explicitly with known-ambiguous cases.
 
-**The prior question is still Elicit.** The specialist tool returned 5 ranked trials for Patient 1 in four minutes at no cost. Four approaches built over four days independently confirmed the same top result. For a pharma client without proprietary data integration requirements, "build vs. buy" should be answered before "which framework."
+**The prior question is still Elicit.** For Patient 1, Elicit returned 5 ranked trials in four minutes at no cost, and four approaches built over four days confirmed the same top result. For Patient 4 — the hardest case in the study — Elicit surfaced the correct trial and explicitly left the ambiguous prior-treatment criterion unresolved, while all four structured frameworks overrode their own uncertainty with a confident wrong inference. For a pharma client without proprietary data integration requirements, "build vs. buy" should be answered before "which framework."
 
 ---
 
