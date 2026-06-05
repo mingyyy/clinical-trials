@@ -256,20 +256,24 @@ Ground truth was hand-labeled June 5, 2026 by reading actual ClinicalTrials.gov 
 
 **Note on P002:** The Fix D full run and the ground-truth labeling fetched the ClinicalTrials.gov API on different days and received largely different trial sets (7 of 50 GT trials overlapped). P002 is excluded from the accuracy computation; overlap is insufficient for a meaningful comparison.
 
+**Ground truth correction (June 6, 2026):** An independent LLM verification agent re-assessed all 182 patient × trial pairs (see `findings/ground_truth_verification.json`). It found 26 labeling errors where the original GT said `ambiguous` (UNCERTAIN) but the trial's required inclusion criterion was directly contradicted by an explicitly-stated profile fact — for example, P001 (HER2+) in trials requiring HER2-negative tumors, or P002 (stage III locally advanced) in trials requiring metastatic/unresectable disease. These were corrected: moved from `ambiguous` to `ineligible`. One case (P005 × NCT04585750, TP53 Y220C required mutation) was kept as `ambiguous` because the mutation status is genuinely unknown in the profile.
+
+Root cause of the labeling errors: the original reviewer applied "absence of information = UNCERTAIN" too broadly, including cases where profile information was **explicitly present and negative** (e.g., stated HER2+ when HER2- is required). The correct rule is: absent data = UNCERTAIN; explicitly present data that contradicts a requirement = INELIGIBLE.
+
 | Patient | Correct | Total | Accuracy |
 |---------|---------|-------|----------|
 | P001    | 51      | 60    | 85.0%    |
 | P003    | 9       | 18    | 50.0%    |
 | P004    | 14      | 17    | 82.4%    |
-| P005    | 22      | 29    | 75.9%    |
-| **All** | **96**  | **124** | **77.4%** |
+| P005    | 20      | 29    | 69.0%    |
+| **All** | **94**  | **124** | **75.8%** |
 
-**Error type breakdown (28 errors total):**
+**Error type breakdown (30 errors total):**
 
 | Error type | Count | Clinical impact |
 |-----------|-------|----------------|
-| INELIGIBLE → should be UNCERTAIN | 13 | Missed trial opportunities (false disqualification) |
-| UNCERTAIN → should be INELIGIBLE | 11 | Extra noise (unnecessary review burden) |
+| UNCERTAIN → should be INELIGIBLE | 18 | Extra review burden (safe failure mode) |
+| INELIGIBLE → should be UNCERTAIN | 8 | Missed trial opportunities |
 | ELIGIBLE → should be INELIGIBLE | 3 | Safety risk (false qualification) |
 | ELIGIBLE → should be UNCERTAIN | 1 | Over-optimistic |
 
@@ -277,9 +281,11 @@ Ground truth was hand-labeled June 5, 2026 by reading actual ClinicalTrials.gov 
 - P003 × NCT06545331 and NCT05283330: trials require advanced/metastatic solid tumors; P003 is NED post-mastectomy. Fix D's predicate extraction did not capture the "advanced/metastatic" inclusion requirement.
 - P005 × NCT06551116 (QuantifyHER): trial explicitly excludes HER2-overexpressing mBC (IHC 3+ or IHC 2+ FISH+); P005 is HER2+. Fix D's predicate extraction missed the HER2-exclusion arm.
 
-**The dominant miss pattern (13 false INELIGIBLE):** Fix D generated an INELIGIBLE verdict for trials where the patient profile simply lacked a data field. For example, a trial with an activity level requirement returned INELIGIBLE because Fix D's predicate evaluation treated a missing value as a failed check, rather than UNCERTAIN. This is the inverse of the original problem: the original framework was too confident inferring a match; Fix D is occasionally too confident inferring a mismatch.
+**The dominant error pattern (18 false UNCERTAIN):** Fix D generated UNCERTAIN for trials where the profile explicitly fails a stated requirement. The predicate ontology did not reliably encode "active/measurable disease required" as a hard inclusion gate (P003 NED cases), and did not capture all biomarker requirement predicates. Fix D is over-cautious: it surfaces cases for human review that are actually clear INELIGIBLEs.
 
-**P003's low accuracy (50%):** Twelve of the 18 trials Fix D processed for P003 were labeled INELIGIBLE in ground truth (requiring advanced/metastatic disease; P003 is NED). Fix D returned UNCERTAIN for 9 of these — it correctly avoided INELIGIBLE but failed to close on it, generating unnecessary uncertainty. The predicate ontology did not reliably encode "active/measurable disease required" as a hard inclusion gate.
+**P003's low accuracy (50%):** Most trials in P003's set require advanced/metastatic disease; P003 is NED. Fix D returned UNCERTAIN for 9 of these — it correctly avoided INELIGIBLE but failed to close on it, generating unnecessary uncertainty. The predicate ontology gap is "active/measurable disease required" as an inclusion gate.
+
+**Error mode assessment:** Fix D's dominant error (UNCERTAIN when INELIGIBLE) is clinically safer than the original LLM's dominant error (INELIGIBLE when UNCERTAIN). A false UNCERTAIN sends a case for human review. A false INELIGIBLE removes a potentially eligible patient from consideration without any review. Fix D errs toward caution.
 
 ---
 
