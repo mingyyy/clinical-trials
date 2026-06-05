@@ -1,6 +1,6 @@
 # I Built the Same AI System Four Different Ways. The Framework Didn't Matter. Everything Else Did.
 
-*A clinical trial matching experiment — four frameworks, five patients, one model, and the findings that had nothing to do with any of them.*
+*A clinical trial matching experiment — four frameworks, five patients, one model, and seven findings that had almost nothing to do with any of them.*
 
 ---
 
@@ -179,6 +179,48 @@ The LangGraph explanation cites the exclusion criterion accurately, acknowledges
 
 ---
 
+## Finding 7: You Can't Prompt Your Way Out of a Confidence Problem
+
+After Finding 6, I wanted to understand whether the inference error was fixable — and what fixing it would actually require.
+
+The target case was narrow: P004 × NCT04511013. The prior treatment setting was absent from the profile. The model had acknowledged this in `uncertain_items`. Then it overrode its own uncertainty. Could a better prompt stop that?
+
+I tested four increasingly aggressive prompt fixes against the same case:
+
+**Fix 1:** Added to the existing rule: *"Direct evidence means text explicitly stated in the profile — NOT inferences from diagnosis, disease stage, or standard-of-care context."* Result: INELIGIBLE at 0.90. The model's explanation: *"while not explicitly confirmed... there is a high likelihood this constitutes metastatic-setting therapy."*
+
+**Fix 2:** Required an exact profile quote in every exclusion flag — a citation field in the output schema. The model provided a quote: *"Prior treatments: ipilimumab, nivolumab."* That quote appears in the profile. It does not prove the treatments were in the metastatic setting. The citation field was satisfied; the inference survived.
+
+**Fix 3:** Two-stage architecture. Stage 1: extract only facts explicitly stated in the profile; produce a list of what is NOT in the profile. Stage 2: assess eligibility using only those extracted facts. Stage 1 correctly identified `treatment_setting` as `NOT_in_profile`. Stage 2 received that explicit absence marker and still returned: *"the treatment setting is explicitly noted as unknown... there is a high likelihood this constitutes prior metastatic-setting therapy."*
+
+Confidence dropped from 0.92 to 0.82. Verdict unchanged: INELIGIBLE.
+
+All three failed for the same structural reason. The model has a clinical prior — metastatic melanoma plus ipi+nivo combination equals metastatic-setting treatment, probabilistically — and that prior lives in the model weights, not in the context window. System prompt rules live in the context window. When the prior is strong, the model is confident. A confident model doesn't need a "use UNCERTAIN when unsure" rule, because it isn't unsure. You cannot override a confident belief by asking nicely.
+
+The only fix that worked required changing the architecture.
+
+**Fix C — Annotation-first, verdict by code.** Instead of asking the model to assess eligibility, ask it only to annotate each criterion: `CONFIRMED_MET`, `CONFIRMED_FAILED`, or `DATA_MISSING`. For `CONFIRMED_FAILED`, require a verbatim quote from the patient profile. Code checks whether the quote is literally a substring of the profile text. Quotes that pass the literal match but require inference to prove the criterion — like citing the drug names to prove they were given for metastatic disease — would ideally fail. In practice, the code can only check whether the quote exists in the profile, not whether the quote actually proves the claim without inference.
+
+Fix C passed the targeted tests. On the full 5-patient run, it over-fired on P002: it cited "stage III" as evidence against "advanced or metastatic" criteria. "Stage III" is a real quote. But the inference that "stage III means not advanced" is clinical knowledge, not text-in-the-profile. The literal match check could not detect that the inference was embedded in a valid citation.
+
+**Fix D — The model never sees patient and criterion together.** The solution that resolved both the target case and the P002 residual issue required removing the verdict from the model's job entirely. The architecture has three steps:
+
+1. **LLM extracts a typed patient record.** Every field is explicit: `ecog_ps: 2`, `prior_treatments[*].setting: null`. That `null` is not a default — it means "not stated in the profile." The extraction prompt makes this the critical rule: setting must be `null` unless the profile explicitly names when the drug was given.
+
+2. **LLM parses eligibility criteria into structured predicates** — independently of the patient. A criterion like "no prior systemic therapy for metastatic disease" becomes: `{variable: "prior_treatments[*].setting", operator: "list_none_eq", required_value: "metastatic"}`. This is an ontology: a shared vocabulary of typed variables that makes evaluation code-writable.
+
+3. **Code evaluates each predicate against the typed record.** For each treatment, look up the `setting` field. If any value is `null`, return `DATA_MISSING` — you cannot confirm that none of the treatments were metastatic-setting. Verdict: UNCERTAIN.
+
+The model never sees the patient and the eligibility criterion at the same time in a judgment context. There is no step where it can apply a clinical prior to reach a verdict. The verdict is computed deterministically by code. `null` means `null`; there is no path from `null` to INELIGIBLE.
+
+Fix D passed all targeted tests, produced better full-run calibration than Fix C, and cost 44% less ($2.16 vs $3.84 for comparable trial volume) — patient extraction is amortized over all trials for a patient, and predicate parsing is more token-efficient than full annotation.
+
+**The broader lesson:** This isn't a clinical AI problem specifically. It's an architectural principle. Wherever you have a rule that must reliably override an LLM inference — a compliance requirement, a safety check, a clinical eligibility criterion — and that rule can be expressed as a code evaluation, it should be. The LLM's job is the hard part: converting unstructured text into typed records and converting natural language criteria into structured predicates. The part that must be deterministic belongs in code.
+
+A rule in a system prompt has soft authority. It can be overridden not by contradiction, but simply by confidence. A rule in code has hard authority. It runs the same way regardless of how confident the model is about anything.
+
+---
+
 ## What to Decide Before You Pick a Framework
 
 **The framework decision is the last decision, not the first.** Use LangGraph when you need a team to debug the pipeline in production. Use PydanticAI when output schema stability at the API boundary is load-bearing. Use smolagents when the task is genuinely open-ended and the agent needs to decide what to do, not just how. Use the raw API when cost and simplicity are priorities and the pipeline is stable. None of these choices will affect clinical output quality.
@@ -190,6 +232,8 @@ The LangGraph explanation cites the exclusion criterion accurately, acknowledges
 **Make the trials-per-call decision explicitly.** Decide how many trials share a context window, document the reasoning, and verify the effect on verdict distributions before going to production. The choice is not a framework default — it is a design decision about how conservative or inclusive you want the screening to be.
 
 **"Absence of information" rules are guidance, not enforcement.** In a patient profile derived from electronic health records (EHR), where clinical context is rich and implicit inferences are everywhere, the UNCERTAIN rule may almost never fire — not because it was removed, but because the model is confident enough not to need it. Test this explicitly with known-ambiguous cases.
+
+**If a rule must reliably hold, it belongs in code.** If your system has a requirement that the model must honor regardless of its confidence — an eligibility exclusion, a compliance check, a safety gate — ask whether that requirement can be expressed as a code evaluation against a structured record. If yes, don't put it in the prompt. Extract the relevant fields from the LLM into typed values, and enforce the rule in code. Prompts persuade. Code enforces.
 
 **The prior question is still Elicit.** For Patient 1, Elicit returned 5 ranked trials in four minutes at no cost, and four approaches built over four days confirmed the same top result. For Patient 4 — the hardest case in the study — Elicit surfaced the correct trial and explicitly left the ambiguous prior-treatment criterion unresolved, while all four structured frameworks overrode their own uncertainty with a confident wrong inference. For a pharma client without proprietary data integration requirements, "build vs. buy" should be answered before "which framework."
 
