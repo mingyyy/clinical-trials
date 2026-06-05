@@ -30,7 +30,7 @@ Going in, the working hypothesis was:
 
 ### Frameworks produced identical reasoning quality — but different operational behavior
 
-Explanation quality across all four frameworks: 2.00 / 2.0 (LangGraph, PydanticAI), 1.95 (smolagents), 1.90 (Claude Direct). Zero parse errors across 834 LLM calls. The rankings were effectively flat.
+Explanation quality across all four frameworks: 2.00 / 2.0 (LangGraph, PydanticAI), 1.95 (smolagents), 1.90 (Claude Direct). Zero parse errors across 662 LLM calls in the controlled rerun. The rankings were effectively flat.
 
 The expected differentiation on reasoning quality didn't materialize. The LLM does the reasoning. The framework is scaffolding around it. When you give four frameworks the same model, the same prompt, and the same three-step task, the output is roughly equivalent regardless of the wrapper.
 
@@ -78,9 +78,9 @@ Variant B's explanation: *"the context of 'metastatic melanoma' as the current d
 
 **The P004 notes test told half the story.** The notes were irrelevant for P004 because the clinical signals were strong enough to anchor the verdict regardless of framing. The hypothesis required a genuinely borderline case to test properly.
 
-**We then ran the same test on all 6 UNCERTAIN trials from P001 — and got both expected and unexpected results.**
+**We then ran the same test on all 6 UNCERTAIN trials from the P001 LangGraph rerun — and got both expected and unexpected results.**
 
-P001 notes: *"Baseline case. Should match several HER2+ trials in NYC area."* — expectation-setting framing. Three variants (A: notes at end, B: notes stripped, C: notes at top) run on all 6 UNCERTAIN trials:
+P001 notes: *"Baseline case. Should match several HER2+ trials in NYC area."* — expectation-setting framing. Three variants (A: notes at end, B: notes stripped, C: notes at top) run on all 6 UNCERTAIN trials from the rerun (vs 3 in the original 50-trial run):
 
 | NCT ID | B (clean baseline) | A (notes end) | C (notes top) |
 |---|---|---|---|

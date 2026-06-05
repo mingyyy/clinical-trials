@@ -25,7 +25,7 @@ Numbers from the matched-pipeline rerun (100mi radius, 10 pages, 193 trials asse
 | LangGraph | State machine | 193 (206) | 410k | $1.23 ($1.41) | 646s | 1 | 54 | 2.00/2.0 |
 | PydanticAI | Type safety | 193 (206) | 598k | $1.79 ($2.02) | 395s | 1 | 45 | 2.00/2.0 |
 | smolagents | Code generation | 254 (206) | 564k | $1.69 ($1.41) | 1163s | 2 | 51 | 1.95/2.0 |
-| Claude Direct | Zero framework | 22 | 310k | $0.93 ($1.09) | 307s | 7 | 70 | 1.90/2.0 |
+| Claude Direct | Zero framework | 22 | 310k | $0.93 ($1.09) | 307s | 7 | 46 | 1.90/2.0 |
 
 All frameworks: claude-sonnet-4-6, 5 patients, 100mi radius, 10 pages, same three-state verdict prompt. 0 parse errors.
 
@@ -81,7 +81,7 @@ Raw API (LangGraph, smolagents, Claude Direct): ~2,282 tokens/call
 Tool use (PydanticAI): ~3,272 tokens/call
 ```
 
-A team choosing PydanticAI for type safety must account for this overhead. At 10,000 patients × 50 trials each, the difference is $1,490 vs $2,130 per run — for identical clinical output.
+A team choosing PydanticAI for type safety must account for this overhead. At 10,000 patients × 50 trials each, the cost is ~$3,400 (LangGraph) vs ~$4,900 (PydanticAI) per run — for identical clinical output.
 
 ### 2. Assessment context changes verdicts — and the root cause is trials-per-call, not the framework
 
@@ -134,7 +134,7 @@ This is not specific to claude-sonnet-4-6. It is a structural property of all au
 
 **The P001 notes test: 2/6 borderline trials changed verdict, in opposite directions.**
 
-To test whether notes matter on genuinely borderline cases, the same three-variant test was run on all 6 UNCERTAIN trials from the P001 LangGraph run. P001 notes: *"Baseline case. Should match several HER2+ trials in NYC area."* — expectation-setting framing.
+To test whether notes matter on genuinely borderline cases, the same three-variant test was run on all 6 UNCERTAIN trials from the P001 LangGraph rerun. P001 notes: *"Baseline case. Should match several HER2+ trials in NYC area."* — expectation-setting framing.
 
 | NCT ID | LangGraph baseline | A (notes end) | B (clean) | C (notes top) |
 |---|---|---|---|---|

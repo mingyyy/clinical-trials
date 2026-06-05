@@ -48,7 +48,7 @@ I added one sentence to the system prompt:
 
 *"Absence of information is NOT evidence of ineligibility."*
 
-After the change: 0 ELIGIBLE, 6 UNCERTAIN. The patient was correctly classified as ambiguous — needing further review — rather than incorrectly cleared. Every framework's output changed. No framework produced or prevented that insight. It came from understanding the clinical problem.
+After the change: 0 ELIGIBLE, 3 UNCERTAIN. The patient was correctly classified as ambiguous — needing further review — rather than incorrectly cleared. Every framework's output changed. No framework produced or prevented that insight. It came from understanding the clinical problem.
 
 The most important technical decision in the entire project was a sentence.
 
@@ -68,7 +68,7 @@ I suspected these researcher notes were contaminating the LLM's verdicts. To tes
 
 For Patient 4, the result was definitive: all three variants returned INELIGIBLE at nearly identical confidence (0.90–0.92). The notes made no difference. The model reasoned from the clinical facts — a metastatic melanoma diagnosis plus prior ipilimumab and nivolumab (two immunotherapy drugs commonly combined as first-line treatment for advanced melanoma) — and inferred the treatment context from the data itself. Strong clinical signals made the framing irrelevant.
 
-So I ran the same test on Patient 1's six borderline cases — the trials that came back UNCERTAIN in the LangGraph run. Genuinely uncertain: low-confidence assessments where the patient might qualify but data was missing.
+So I ran the same test on Patient 1's six borderline cases — the trials that came back UNCERTAIN in the LangGraph rerun (the expanded 100-mile run that assessed 73 trials, vs 3 UNCERTAIN in the original 50-trial run). Genuinely uncertain: low-confidence assessments where the patient might qualify but data was missing.
 
 The results were different. And stranger.
 
