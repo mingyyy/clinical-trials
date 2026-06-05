@@ -57,7 +57,7 @@ Graph prescribed before execution: `fetch → filter → [analyze_batch ×N para
 
 **Architectural contribution:** Adaptability. The agent self-corrected from two failures (import blocked, schema validation error) without human intervention. For a pipeline that evolves mid-run or handles unexpected edge cases, this matters.
 
-**Cost:** Same as LangGraph ($1.41) — both use raw Anthropic API, no tool_use overhead. The code-generation steps (meta-LLM calls) are not counted in the reported llm_calls but add ~280s wall time overhead.
+**Cost:** Same as LangGraph in the original run ($1.41) — both use raw Anthropic API, no tool_use overhead. In the rerun, smolagents cost $1.69 vs LangGraph $1.23: smolagents generated its own API fetch code and retrieved more trials than the shared pipeline (P001: 92 fetched vs 74, P005: 44 vs 32), adding 61 extra assessments. The code-generation steps (meta-LLM calls) are not counted in the reported llm_calls but add ~280s wall time overhead.
 
 **Limitation:** 19 steps per patient (vs 4 LangGraph nodes) for the same pipeline. `import json` was blocked by the sandbox, causing the agent to count `'"nct_id"'` occurrences as a workaround. The sandbox restrictions limit what code the agent can write.
 
@@ -93,13 +93,13 @@ The four frameworks and ml-intern use three distinct assessment architectures, a
 | smolagents | **1** | 73+ | 2 | 53 |
 | PydanticAI | **1** | 73 | 1 | 45 |
 | Claude Direct | **10** | ~8 | 7 | 46 |
-| ml-intern | **all 68** | 1 | 9 total | ~84 total |
+| ml-intern | **all 68–74** | 1 | 2 (P001) | ~21 (P001) |
 
 **Root cause:** the number of trials the LLM sees simultaneously in one context window determines how it calibrates verdicts.
 
 - **1 trial per call (LangGraph, PydanticAI, smolagents):** each trial assessed against an abstract implicit standard. No anchoring. Conservative — borderline trials trend UNCERTAIN or INELIGIBLE.
 - **10 trials per call (Claude Direct):** the LLM sees 9 neighbours alongside each trial. Clearly ineligible neighbours anchor the comparison and pull borderline trials toward ELIGIBLE. 7 ELIGIBLE vs 0–1 from per-trial frameworks.
-- **All trials per call (ml-intern):** Python scripts fetch, haversine-filter, and format all 68 P001 trials into a single text file. The `read` tool loads the entire file into the LLM's context in one step. The LLM then generates the full eligibility assessment as one continuous response, reasoning across all 68 trials simultaneously. Maximum comparative context.
+- **All trials per call (ml-intern):** Python scripts fetch, haversine-filter, and format all P001 trials into a single text file (68 post-haversine-filter; 74 total fetched within 100mi). The `read` tool loads the entire file into the LLM's context in one step. The LLM then generates the full eligibility assessment as one continuous response. Maximum comparative context.
 
 The batch-all architecture is one contributing factor, but the P004 finding has a more precise explanation with three distinct layers.
 
@@ -251,7 +251,7 @@ After the four framework runs, OpenHands v0.40 (CodeAct paradigm) was given the 
 
 **What it did:** 6 steps. MCP fetch blocked by robots.txt → immediate fallback to Python requests → API call succeeded → three IPython cells to process and classify trials → one `think` step → `finish`.
 
-**What it found:** 20 trials fetched, 15 HER2+ specific, 1 ELIGIBLE (NCT07214532, consistent with LangGraph and smolagents), ~14 INELIGIBLE. Correctly identified Stage II as the key discriminator — "75% of trials require advanced/metastatic disease, making them unsuitable for a Stage II patient."
+**What it found:** 20 trials fetched, 15 HER2+ specific, 1 ELIGIBLE (NCT07214532), ~14 INELIGIBLE. LangGraph and smolagents returned 0 ELIGIBLE for P001 — they marked NCT07214532 UNCERTAIN (possible match, needs review), not ELIGIBLE. The agreement is on the clinical conclusion (Stage II excluded from most trials), not the verdict label. Correctly identified Stage II as the key discriminator — "75% of trials require advanced/metastatic disease, making them unsuitable for a Stage II patient."
 
 **How it differed from the four frameworks:**
 
@@ -362,6 +362,8 @@ Model: claude-sonnet-4-6 | June 3 2026 | 5 patients | 193 trials assessed (rerun
 
 *Explanation quality scores converge because all frameworks use the same underlying model and prompt. Differentiation requires manual criteria accuracy review, not automated scoring.
 
+**Rubric coverage note:** The rubric allocated 20% to Criteria Accuracy (spot-check of specific failure modes) and 55% to Recall + Precision (ground truth NCT ID matching). Criteria Accuracy was partially spot-checked per framework (see individual findings files) but never aggregated into a final score. Recall and Precision were not scored — ground truth NCT IDs were never labeled (see `findings/ground_truth.json`). The comparison above covers the 45% of the rubric that was systematically scored: explanation quality (20%) and cost/operational metrics (25%). The unscored dimensions would require a labeled ground truth set and a full per-trial criteria audit.
+
 ---
 
 ## Closing
@@ -376,7 +378,7 @@ After two runs (original 250mi/1-page, rerun 100mi/10-page), three autonomous ag
 
 **The prompt was the product.** One sentence — "Absence of information is NOT evidence of ineligibility" — changed the clinical meaning of every output. No framework produced or could have produced that insight. It came from understanding the clinical problem.
 
-**Autonomous agents found more eligible trials — but the gap is about reasoning depth, not retrieval.** ml-intern found 9 ELIGIBLE across 5 patients vs 1–7 for the four frameworks. The most significant case: P004 (melanoma, brain mets, ECOG 2, prior ICI — the hard exclusion test case) got 5 ELIGIBLE from ml-intern vs 0–1 from frameworks. The top match, NCT04511013, was purpose-built for this exact combination of factors. Per-trial isolated LLM calls couldn't recognize that trial was designed for this patient; full-text narrative reasoning could. This is the clearest evidence that assessment method — not retrieval, not framework — determines match quality for complex patients.
+**Autonomous agents found more eligible trials overall — but the P004 case is more instructive than the headline count suggests.** ml-intern found 9 ELIGIBLE across 5 patients vs 1–7 for the four frameworks. The most significant case: P004 got 5 ELIGIBLE from ml-intern vs 0–1 from frameworks. But ml-intern's top match, NCT04511013, was based on a hallucinated design feature — it read the Ipi+Nivo comparator arm as a permissive prior-treatment eligibility criterion. The four frameworks returned INELIGIBLE through a different error: confident clinical inference that overrode their own UNCERTAIN rule. Both errors read as authoritative in the output. The P004 case is the clearest evidence in this study that LLM confidence calibration — not retrieval depth, not framework choice — is the hardest problem in production clinical AI.
 
 OpenHands answered correctly in 6 steps for P001 with Python string matching and no prompt engineering — consistent with LangGraph and smolagents. Both approaches get the right answer for simple patients. The gap opens for patients like P004 where eligibility depends on recognizing a specific combination across brain mets, ECOG, prior ICI history, and BRAF mutation status simultaneously. For a one-off analysis, autonomous agents are faster and more capable. For a production system where a clinician must audit every verdict, the four-framework approach is still correct.
 

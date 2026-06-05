@@ -55,7 +55,7 @@ No graph. No state machine. Three async functions and a Pydantic schema.
 | Parse errors | 0 | 0 | — |
 | Model | claude-sonnet-4-6 | claude-sonnet-4-6 | — |
 
-**Token overhead explanation:** PydanticAI uses Anthropic's tool_use (function calling) to enforce `output_type=`. Every request includes the full `EligibilityAssessment` JSON schema as a tool definition. This adds ~688 tokens per call (674,086 − 470,099 = 203,987 extra tokens ÷ 206 calls ≈ 990 tokens/call overhead vs LangGraph). This is the cost of schema enforcement — the LLM gets told exactly what fields to return, in exchange for more tokens.
+**Token overhead explanation:** PydanticAI uses Anthropic's tool_use (function calling) to enforce `output_type=`. Every request includes the full `EligibilityAssessment` JSON schema as a tool definition. This adds ~990 tokens per call (674,086 − 470,099 = 203,987 extra tokens ÷ 206 calls ≈ 990 tokens/call overhead vs LangGraph). This is the cost of schema enforcement — the LLM gets told exactly what fields to return, in exchange for more tokens.
 
 **Wall time explanation:** PydanticAI 415s vs LangGraph 665s — 1.6× faster at identical BATCH_SIZE=12. Same number of parallel calls (206), same model, same batch structure. The difference is architectural overhead: LangGraph's graph compilation, state machine evaluation, and Annotated reducer merging add latency that doesn't appear in PydanticAI's plain `asyncio.gather`. The parallelism implementation in PydanticAI is ~10 lines vs ~40 lines in LangGraph; the simpler approach is also faster.
 
@@ -125,7 +125,7 @@ The initial agent.py used `trial.get("protocolSection", {})` — the raw Clinica
 The difference: the all-UNCERTAIN output was actually correct (no criteria provided → can't determine eligibility). The schema validation caught nothing wrong because the output was structurally valid. A data pipeline bug upstream of the LLM is invisible to both frameworks.
 
 **2. Token overhead from tool_use is a real cost.**
-43% more tokens at identical functionality. For 206 trials, this is $0.61. At scale (10,000 patients × 50 trials each = 500,000 LLM calls), the difference is $1,490 vs $2,130 — a meaningful cost difference for the same clinical output. Teams choosing PydanticAI for type safety should be aware of this overhead.
+43% more tokens at identical functionality. For 206 trials, this is $0.61. At scale (10,000 patients × 50 trials each = 500,000 LLM calls), the cost is ~$3,400 (LangGraph) vs ~$4,900 (PydanticAI) — a meaningful cost difference for the same clinical output. Teams choosing PydanticAI for type safety should be aware of this overhead.
 
 **3. The schema doesn't enforce clinical correctness.**
 `confidence: float = Field(ge=0.0, le=1.0)` validates the range. It doesn't validate that the confidence value is calibrated or meaningful. A model that returns `confidence=0.9` on an incorrect verdict passes validation. Type safety is a structural guarantee, not a clinical accuracy guarantee.

@@ -63,7 +63,7 @@ Should show: `[P001] N eligible / 23 assessed | 23 LLM calls`. If LLM calls > 0,
 
 **Day 2 Block 1 — build `pipeline/scoring.py`:**
 Before writing any scoring code:
-1. Look at the real `outputs/langgraph/P001.json` — confirm `MatchingResult` structure matches what a scorer needs
+1. Look at the real `outputs/01_original_runs/langgraph/P001.json` — confirm `MatchingResult` structure matches what a scorer needs
 2. Manually label 5–10 P001 trials (eligible/ineligible) as ground truth using ClinicalTrials.gov
 3. Then write scoring.py against real data, not hypothetical structure
 

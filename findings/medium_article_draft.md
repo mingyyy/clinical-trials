@@ -131,9 +131,9 @@ Three distinct patterns, all using the same model:
 |---------|---------------------|----------------------|
 | LangGraph / PydanticAI / smolagents | 1 | 1–2 |
 | Claude Direct | 10 | 7 |
-| ml-intern | all (~68–74) | 9 total across all 5 patients* |
+| ml-intern | all (~68–74) | 2* |
 
-\* ml-intern ran all 5 patients; 9 ELIGIBLE verdicts were distributed across the full run.
+\* ml-intern returned 2 ELIGIBLE for Patient 1; 9 ELIGIBLE total across all 5 patients.
 
 Any framework can implement any of these patterns — LangGraph with a different `BATCH_SIZE` would behave like Claude Direct. What matters is the explicit choice, and most teams making this decision don't realize they are making it.
 
