@@ -60,7 +60,7 @@ Stage 1 correctly identified `treatment_setting` as `NOT_in_profile`. Stage 2 re
 
 ---
 
-## Fix C — Annotation-First + Literal Citation Check
+## Annotation-First — Annotation + Literal Citation Check
 
 ### Design
 
@@ -84,7 +84,7 @@ The key constraint: a `CONFIRMED_FAILED` annotation with a citation that does no
 
 ### Full-run results (5 patients)
 
-| Patient | Assessed | E/U/I (Fix C) | E/U/I (LangGraph rerun) |
+| Patient | Assessed | E/U/I (Annotation-First) | E/U/I (LangGraph rerun) |
 |---------|----------|----------------|-------------------------|
 | P001 | 73 | 0 / 8 / 64 | 0 / 3 / 70 |
 | P002 | 52 | 0 / 9 / 43 | 0 / 27 / 25 |
@@ -98,19 +98,19 @@ The key constraint: a `CONFIRMED_FAILED` annotation with a citation that does no
 
 ### Residual issues
 
-**Over-decisive on P002:** Fix C used "stage III" as a CONFIRMED_FAILED citation against "advanced or metastatic disease" criteria. "Stage III" is a valid substring of the profile — the citation check passed. But the inference that "stage III = not advanced/not metastatic" requires clinical knowledge: in oncology, "advanced" often includes Stage III, and "metastatic" is Stage IV. The literal citation check cannot detect clinically-required inference.
+**Over-decisive on P002:** Annotation-First used "stage III" as a CONFIRMED_FAILED citation against "advanced or metastatic disease" criteria. "Stage III" is a valid substring of the profile — the citation check passed. But the inference that "stage III = not advanced/not metastatic" requires clinical knowledge: in oncology, "advanced" often includes Stage III, and "metastatic" is Stage IV. The literal citation check cannot detect clinically-required inference.
 
-P002 had 27 UNCERTAIN in LangGraph (correct: TNBC patient with ambiguous prior treatment lines) vs 9 UNCERTAIN in Fix C — a −18 UNCERTAIN shift toward INELIGIBLE, likely over-driven by the "stage III" citation.
+P002 had 27 UNCERTAIN in LangGraph (correct: TNBC patient with ambiguous prior treatment lines) vs 9 UNCERTAIN in Annotation-First — a −18 UNCERTAIN shift toward INELIGIBLE, likely over-driven by the "stage III" citation.
 
 **Under-decisive on P001 NCT06568692:** Profile states "HER2+"; trial requires "HER2−". The LLM did not cite "HER2+" as CONFIRMED_FAILED evidence. Unclear whether this was a citation failure or the trial genuinely wasn't assessed — not verified.
 
 ---
 
-## Fix D — Structured Extraction + Deterministic Evaluation
+## Structured Extraction — Typed Records + Deterministic Evaluation
 
 ### Design
 
-The core insight from Fix C: the literal citation check is a clever proxy, but it cannot handle inferences embedded in the citation itself. Fix D removes the LLM from the verdict path entirely by introducing an ontology — a shared vocabulary of typed variables — that makes evaluation deterministic.
+The core insight from Annotation-First: the literal citation check is a clever proxy, but it cannot handle inferences embedded in the citation itself. Structured Extraction removes the LLM from the verdict path entirely by introducing an ontology — a shared vocabulary of typed variables — that makes evaluation deterministic.
 
 **Step 1 (LLM, once per patient):** Extract a typed patient record.
 
@@ -175,7 +175,7 @@ Verdict computation (code):
 
 ### OR predicate handling
 
-Many criteria are disjunctive: "locally advanced or metastatic disease." Fix D evaluates each branch independently:
+Many criteria are disjunctive: "locally advanced or metastatic disease." Structured Extraction evaluates each branch independently:
 
 ```
 is_metastatic = false (stated)     → CONFIRMED_FAILED branch
@@ -183,7 +183,7 @@ is_locally_advanced = null         → DATA_MISSING branch
 OR result: any DATA_MISSING → DATA_MISSING overall
 ```
 
-This correctly handles P002 (TNBC, Stage III, is_locally_advanced=null): the "locally advanced OR metastatic" criterion evaluates to DATA_MISSING, not CONFIRMED_FAILED. Fix C would have cited "stage III" and returned INELIGIBLE.
+This correctly handles P002 (TNBC, Stage III, is_locally_advanced=null): the "locally advanced OR metastatic" criterion evaluates to DATA_MISSING, not CONFIRMED_FAILED. Annotation-First would have cited "stage III" and returned INELIGIBLE.
 
 ### Targeted test results (4/4 pass)
 
@@ -198,7 +198,7 @@ Initial run failed on target + SANITY3: `max_tokens=2048` too low for long eligi
 
 ### Full-run results (5 patients)
 
-| Patient | Assessed | E/U/I (Fix D) | E/U/I (Fix C) | E/U/I (LangGraph rerun) |
+| Patient | Assessed | E/U/I (Structured Extraction) | E/U/I (Annotation-First) | E/U/I (LangGraph rerun) |
 |---------|----------|---------------|----------------|-------------------------|
 | P001 | 68 | 0 / 9 / 59 | 0 / 8 / 64 | 0 / 3 / 70 |
 | P002 | 49 | 1 / 9 / 39 | 0 / 9 / 43 | 0 / 27 / 25 |
@@ -208,11 +208,11 @@ Initial run failed on target + SANITY3: `max_tokens=2048` too low for long eligi
 
 P004 NCT04511013: UNCERTAIN ✓, data_missing_exclusions=7.
 
-**Cost:** $2.16 (192 trials). Fix C cost $3.84 for comparable trial count — Fix D 44% cheaper because patient extraction is amortized (1 LLM call per patient vs per trial), and predicate parsing tends to be more token-efficient than full annotation.
+**Cost:** $2.16 (192 trials). Annotation-First cost $3.84 for comparable trial count — Structured Extraction 44% cheaper because patient extraction is amortized (1 LLM call per patient vs per trial), and predicate parsing tends to be more token-efficient than full annotation.
 
-**P002 improvement:** LangGraph 0/27/25. Fix C 0/9/43 (over-INELIGIBLE from "stage III" citation). Fix D 1/9/39 — UNCERTAIN count closer to Fix C but INELIGIBLE shifted back down. The OR predicate handling prevents "stage III" from triggering "locally advanced OR metastatic" exclusions.
+**P002 improvement:** LangGraph 0/27/25. Annotation-First 0/9/43 (over-INELIGIBLE from "stage III" citation). Structured Extraction 1/9/39 — UNCERTAIN count closer to Annotation-First but INELIGIBLE shifted back down. The OR predicate handling prevents "stage III" from triggering "locally advanced OR metastatic" exclusions.
 
-**P003 ELIGIBLE increase:** 2 ELIGIBLE in Fix D vs 0 in LangGraph/Fix C. Not verified by spot-check; may be correct (trial criteria that cannot be evaluated without lab values → ELIGIBLE if no explicit failures). Worth auditing.
+**P003 ELIGIBLE increase:** 2 ELIGIBLE in Structured Extraction vs 0 in LangGraph/Annotation-First. Not verified by spot-check; may be correct (trial criteria that cannot be evaluated without lab values → ELIGIBLE if no explicit failures). Worth auditing.
 
 **Known limitation:** ~5% parse error rate (JSON truncation or schema deviation) on very long eligibility criteria texts. Currently returns `verdict=ERROR`. Mitigation: increase `MAX_CRITERIA_CHARS` or add retry logic.
 
@@ -224,15 +224,15 @@ P004 NCT04511013: UNCERTAIN ✓, data_missing_exclusions=7.
 
 Three prompt fixes that failed share a common structure: they all still asked the LLM to produce a holistic judgment. The fixes added constraints (stronger rules, citation requirements, two-stage extraction) but they could not remove the LLM's final judgment step. When the LLM is confident, a rule saying "don't be confident" does not work. Rules live in context; clinical priors live in weights. Weights win.
 
-### Why Fix C worked better than Fixes 1–3
+### Why Annotation-First worked better than Fixes 1–3
 
-Fix C changed the task from "assess eligibility" to "annotate criteria." The LLM was never asked for a verdict. The citation check added a code-enforced gate: inferences without a literal profile quote cannot reach INELIGIBLE. This is not a stronger prompt — it is a different architecture. The judgment step is removed from the LLM; code takes it.
+Annotation-First changed the task from "assess eligibility" to "annotate criteria." The LLM was never asked for a verdict. The citation check added a code-enforced gate: inferences without a literal profile quote cannot reach INELIGIBLE. This is not a stronger prompt — it is a different architecture. The judgment step is removed from the LLM; code takes it.
 
 The remaining weakness: if the inference is embedded in the citation itself (e.g., citing "stage III" to support "not metastatic"), the literal match check passes but the claim is still inferential. The code cannot detect inference inside a valid citation.
 
-### Why Fix D is more robust than Fix C
+### Why Structured Extraction is more robust than Annotation-First
 
-Fix D removes the inference surface entirely by introducing typed variables. When the patient record has `prior_treatments[*].setting = null`, the code cannot infer that `null == "metastatic"`. The code only knows: `null` means "unknown." The verdict path is deterministic from that point.
+Structured Extraction removes the inference surface entirely by introducing typed variables. When the patient record has `prior_treatments[*].setting = null`, the code cannot infer that `null == "metastatic"`. The code only knows: `null` means "unknown." The verdict path is deterministic from that point.
 
 The ontology (structured predicate variables) is the enabling mechanism. Without a shared vocabulary of typed variables, you cannot write evaluation code. The cost is that the predicate vocabulary must be maintained as the scope of trials expands — it is a design surface that requires ongoing curation, not a one-shot prompt.
 
@@ -250,11 +250,11 @@ The pattern generalizes beyond clinical trial matching: any system where a "rule
 
 ---
 
-## Fix D Accuracy Against Ground Truth
+## Structured Extraction Accuracy Against Ground Truth
 
 Ground truth was hand-labeled June 5, 2026 by reading actual ClinicalTrials.gov eligibility criteria for all trials independently of any framework output. Labels: `eligible` (clearly meets stated criteria), `ineligible` (confirmed disqualifier in profile), `ambiguous` (eligibility depends on data not in profile → maps to UNCERTAIN).
 
-**Note on P002:** The Fix D full run and the ground-truth labeling fetched the ClinicalTrials.gov API on different days and received largely different trial sets (7 of 50 GT trials overlapped). P002 is excluded from the accuracy computation; overlap is insufficient for a meaningful comparison.
+**Note on P002:** The Structured Extraction full run and the ground-truth labeling fetched the ClinicalTrials.gov API on different days and received largely different trial sets (7 of 50 GT trials overlapped). P002 is excluded from the accuracy computation; overlap is insufficient for a meaningful comparison.
 
 **Ground truth correction (June 6, 2026):** An independent LLM verification agent re-assessed all 182 patient × trial pairs (see `findings/ground_truth_verification.json`). It found 26 labeling errors where the original GT said `ambiguous` (UNCERTAIN) but the trial's required inclusion criterion was directly contradicted by an explicitly-stated profile fact — for example, P001 (HER2+) in trials requiring HER2-negative tumors, or P002 (stage III locally advanced) in trials requiring metastatic/unresectable disease. These were corrected: moved from `ambiguous` to `ineligible`. One case (P005 × NCT04585750, TP53 Y220C required mutation) was kept as `ambiguous` because the mutation status is genuinely unknown in the profile.
 
@@ -278,14 +278,14 @@ Root cause of the labeling errors: the original reviewer applied "absence of inf
 | ELIGIBLE → should be UNCERTAIN | 1 | Over-optimistic |
 
 **The 3 critical errors (ELIGIBLE when INELIGIBLE):**
-- P003 × NCT06545331 and NCT05283330: trials require advanced/metastatic solid tumors; P003 is NED post-mastectomy. Fix D's predicate extraction did not capture the "advanced/metastatic" inclusion requirement.
-- P005 × NCT06551116 (QuantifyHER): trial explicitly excludes HER2-overexpressing mBC (IHC 3+ or IHC 2+ FISH+); P005 is HER2+. Fix D's predicate extraction missed the HER2-exclusion arm.
+- P003 × NCT06545331 and NCT05283330: trials require advanced/metastatic solid tumors; P003 is NED post-mastectomy. Structured Extraction's predicate extraction did not capture the "advanced/metastatic" inclusion requirement.
+- P005 × NCT06551116 (QuantifyHER): trial explicitly excludes HER2-overexpressing mBC (IHC 3+ or IHC 2+ FISH+); P005 is HER2+. Structured Extraction's predicate extraction missed the HER2-exclusion arm.
 
-**The dominant error pattern (18 false UNCERTAIN):** Fix D generated UNCERTAIN for trials where the profile explicitly fails a stated requirement. The predicate ontology did not reliably encode "active/measurable disease required" as a hard inclusion gate (P003 NED cases), and did not capture all biomarker requirement predicates. Fix D is over-cautious: it surfaces cases for human review that are actually clear INELIGIBLEs.
+**The dominant error pattern (18 false UNCERTAIN):** Structured Extraction generated UNCERTAIN for trials where the profile explicitly fails a stated requirement. The predicate ontology did not reliably encode "active/measurable disease required" as a hard inclusion gate (P003 NED cases), and did not capture all biomarker requirement predicates. Structured Extraction is over-cautious: it surfaces cases for human review that are actually clear INELIGIBLEs.
 
-**P003's low accuracy (50%):** Most trials in P003's set require advanced/metastatic disease; P003 is NED. Fix D returned UNCERTAIN for 9 of these — it correctly avoided INELIGIBLE but failed to close on it, generating unnecessary uncertainty. The predicate ontology gap is "active/measurable disease required" as an inclusion gate.
+**P003's low accuracy (50%):** Most trials in P003's set require advanced/metastatic disease; P003 is NED. Structured Extraction returned UNCERTAIN for 9 of these — it correctly avoided INELIGIBLE but failed to close on it, generating unnecessary uncertainty. The predicate ontology gap is "active/measurable disease required" as an inclusion gate.
 
-**Error mode assessment:** Fix D's dominant error (UNCERTAIN when INELIGIBLE) is clinically safer than the original LLM's dominant error (INELIGIBLE when UNCERTAIN). A false UNCERTAIN sends a case for human review. A false INELIGIBLE removes a potentially eligible patient from consideration without any review. Fix D errs toward caution.
+**Error mode assessment:** Structured Extraction's dominant error (UNCERTAIN when INELIGIBLE) is clinically safer than the original LLM's dominant error (INELIGIBLE when UNCERTAIN). A false UNCERTAIN sends a case for human review. A false INELIGIBLE removes a potentially eligible patient from consideration without any review. Structured Extraction errs toward caution.
 
 ---
 
@@ -297,8 +297,8 @@ Root cause of the labeling errors: the original reviewer applied "absence of inf
 | Fix 1 | Stronger prompt rule | FAIL (INELIGIBLE 0.90) | — |
 | Fix 2 | Citation in schema | FAIL (INELIGIBLE 0.85) | — |
 | Fix 3 | Two-stage extraction | FAIL (INELIGIBLE 0.82) | — |
-| Fix C | Annotation + literal citation check | PASS (UNCERTAIN) | Over-INELIGIBLE on P002 |
-| Fix D | Typed extraction + ontology + code evaluation | PASS (UNCERTAIN) | 77.4% accuracy (P001,P003-P005); 3 false-ELIGIBLE errors |
+| Annotation-First | Annotation + literal citation check | PASS (UNCERTAIN) | Over-INELIGIBLE on P002 |
+| Structured Extraction | Typed extraction + ontology + code evaluation | PASS (UNCERTAIN) | 75.8% accuracy (P001,P003-P005); 3 false-ELIGIBLE errors |
 
 **All scripts:** `test_prompt_fixes.py` (Fixes 1–2), `test_prompt_fix3.py` (Fix 3), `test_prompt_fixC.py` (Fix C), `test_prompt_fixD.py` (Fix D), `run_fixC_all_patients.py`, `run_fixD_all_patients.py`.
 
