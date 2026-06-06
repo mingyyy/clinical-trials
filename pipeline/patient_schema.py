@@ -24,6 +24,7 @@ class PatientProfile(BaseModel):
     lat: float = 0.0
     lon: float = 0.0
     search_condition: str = ""  # simplified term for ClinicalTrials.gov query.cond; defaults to diagnosis if empty
+    her2_ihc_score: int | None = None  # HER2 IHC score: 0, 1, 2, or 3. None if not tested/reported.
     notes: str = ""  # anything the framework should know but doesn't fit above
 
 

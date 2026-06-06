@@ -23,6 +23,7 @@ TEST_PROFILES: list[PatientProfile] = [
         lat=40.7128,
         lon=-74.0060,
         search_condition="HER2-positive breast cancer",
+        her2_ihc_score=3,
         notes="Baseline case. Should match several HER2+ trials in NYC area.",
     ),
     PatientProfile(
@@ -37,6 +38,7 @@ TEST_PROFILES: list[PatientProfile] = [
         lat=34.0522,
         lon=-118.2437,
         search_condition="triple negative breast cancer",
+        her2_ihc_score=0,
         notes="Biomarker eligibility test. BRCA1 opens some trials, TNBC excludes HER2+ trials.",
     ),
     PatientProfile(
@@ -51,6 +53,7 @@ TEST_PROFILES: list[PatientProfile] = [
         lat=41.8781,
         lon=-87.6298,
         search_condition="hormone receptor positive breast cancer",
+        her2_ihc_score=0,
         notes="Preference reasoning test. Patient prefers oral agents, avoids infusion. "
               "Framework should surface this if it can reason about patient preferences.",
     ),
@@ -80,6 +83,7 @@ TEST_PROFILES: list[PatientProfile] = [
         location="Boston, MA",
         lat=42.3601,
         lon=-71.0589,
+        her2_ihc_score=3,
         notes="Multi-line history test. Two prior HER2-targeted lines completed. "
               "Some trials require exactly 1-2 prior lines; framework must count correctly.",
     ),

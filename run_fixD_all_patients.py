@@ -32,6 +32,7 @@ from test_prompt_fixD import (
     evaluate_single,
     compute_verdict,
     patient_text,
+    add_derived_fields,
 )
 
 load_dotenv(Path(__file__).parent / ".env")
@@ -63,6 +64,7 @@ def extract_patient_record(client, patient) -> tuple[dict, int]:
         client, EXTRACT_SYSTEM,
         f"Extract structured record from this patient profile:\n\n{patient_text(patient)}"
     )
+    record = add_derived_fields(record)
     return record, tokens
 
 

@@ -74,6 +74,20 @@ CRITICAL RULES:
   "locally advanced" or "unresectable". null otherwise.
 - "disease.is_unresectable" = true only if the profile explicitly says
   "unresectable". null otherwise.
+- "disease.is_advanced_measurable" = true if the profile indicates active,
+  measurable, or progressive disease (e.g. "metastatic", "locally advanced",
+  "unresectable", "progressive disease", "relapsed"). false if the profile
+  explicitly says "NED", "no evidence of disease", "in remission",
+  "post-curative treatment with no active disease", or "post-mastectomy NED".
+  null if unclear.
+- "biomarkers.her2_ihc_score": extract the IHC integer score (0, 1, 2, or 3)
+  if stated (e.g. "IHC 3+", "IHC score 2", "HER2 IHC 1+"). If the profile
+  provides it as a structured field directly, use that value. null if not stated.
+- "biomarkers.tp53_status": "Y220C" if TP53 Y220C mutation stated; "mutant" if
+  any TP53 mutation stated without specifying variant; "wildtype" if explicitly
+  TP53 wild-type. null if not stated.
+- "biomarkers.pik3ca_status": "mutant" if PIK3CA mutation stated; "wildtype" if
+  explicitly PIK3CA wild-type. null if not stated.
 - Do NOT set a field to false unless the profile explicitly contradicts it.
   Missing information is null, not false.
 
@@ -91,6 +105,7 @@ Return ONLY valid JSON, no markdown. Schema:
     "is_locally_advanced": true | false | null,
     "is_unresectable": true | false | null,
     "is_recurrent": true | false | null,
+    "is_advanced_measurable": true | false | null,
     "metastatic_sites": [string] or null,
     "brain_metastases_present": true | false | null,
     "brain_metastases_irradiated": true | false | null,
@@ -98,6 +113,7 @@ Return ONLY valid JSON, no markdown. Schema:
   },
   "biomarkers": {
     "her2": "positive" | "negative" | "equivocal" | null,
+    "her2_ihc_score": 0 | 1 | 2 | 3 | null,
     "er": "positive" | "negative" | null,
     "pr": "positive" | "negative" | null,
     "braf_status": "mutant" | "wildtype" | null,
@@ -105,7 +121,9 @@ Return ONLY valid JSON, no markdown. Schema:
     "brca1": "pathogenic" | "wildtype" | null,
     "brca2": "pathogenic" | "wildtype" | null,
     "msi": "MSI-H" | "MSS" | null,
-    "pdl1_expression": string or null
+    "pdl1_expression": string or null,
+    "tp53_status": "wildtype" | "mutant" | "Y220C" | null,
+    "pik3ca_status": "wildtype" | "mutant" | null
   },
   "prior_treatments": [
     {
@@ -136,6 +154,7 @@ Variable paths use dot-notation into this patient record schema:
   disease.is_metastatic                      (bool)
   disease.is_locally_advanced                (bool)
   disease.is_unresectable                    (bool)
+  disease.is_advanced_measurable             (bool) — true=active/measurable disease; false=NED/remission
   disease.stage_numeric                      ("I","II","III","IV")
   disease.brain_metastases_present           (bool)
   disease.brain_metastases_irradiated        (bool)
@@ -143,6 +162,7 @@ Variable paths use dot-notation into this patient record schema:
   disease.primary_condition                  (string)
   disease.histology_subtype                  (string)
   biomarkers.her2                            ("positive","negative","equivocal")
+  biomarkers.her2_ihc_score                  (integer 0-3)
   biomarkers.er                              ("positive","negative")
   biomarkers.pr                              ("positive","negative")
   biomarkers.braf_status                     ("mutant","wildtype")
@@ -150,6 +170,11 @@ Variable paths use dot-notation into this patient record schema:
   biomarkers.brca1                           ("pathogenic","wildtype")
   biomarkers.brca2                           ("pathogenic","wildtype")
   biomarkers.msi                             ("MSI-H","MSS")
+  biomarkers.tp53_status                     ("wildtype","mutant","Y220C")
+  biomarkers.pik3ca_status                   ("wildtype","mutant")
+  biomarkers.hormone_receptor_positive       (bool) — DERIVED: true if er=positive OR pr=positive
+  prior_line_count_metastatic                (integer) — DERIVED: count of prior treatments in metastatic setting
+  prior_line_count_total                     (integer) — DERIVED: total count of prior treatments
   prior_treatments[*].setting                (list field: "adjuvant","neoadjuvant","metastatic",null)
   prior_treatments[*].drug                   (list field: string)
   prior_treatments[*].drug_class             (list field: string)
@@ -340,15 +365,51 @@ def call_claude(system: str, user: str, max_tokens: int = 2048) -> dict | list:
 
 
 def patient_text(patient) -> str:
-    return (
-        f"Age: {patient.age}, Sex: {patient.sex}\n"
-        f"Diagnosis: {patient.diagnosis}\n"
-        f"Biomarkers: {', '.join(patient.biomarkers)}\n"
-        f"Prior treatments: {', '.join(patient.prior_treatments)}\n"
-        f"ECOG PS: {patient.ecog_ps}\n"
-        f"Location: {patient.location}\n"
-        f"Notes: {patient.notes}"
+    lines = [
+        f"Age: {patient.age}, Sex: {patient.sex}",
+        f"Diagnosis: {patient.diagnosis}",
+        f"Biomarkers: {', '.join(patient.biomarkers)}",
+    ]
+    if getattr(patient, 'her2_ihc_score', None) is not None:
+        lines.append(f"HER2 IHC score: {patient.her2_ihc_score}+")
+    lines += [
+        f"Prior treatments: {', '.join(patient.prior_treatments)}",
+        f"ECOG PS: {patient.ecog_ps}",
+        f"Location: {patient.location}",
+        f"Notes: {patient.notes}",
+    ]
+    return "\n".join(lines)
+
+
+def add_derived_fields(record: dict) -> dict:
+    """
+    Compute derived fields from the extracted record.
+    These are deterministic aggregations — no LLM needed.
+    """
+    treatments = record.get("prior_treatments") or []
+
+    # Line count by setting
+    record["prior_line_count_metastatic"] = sum(
+        1 for t in treatments if t.get("setting") == "metastatic"
     )
+    record["prior_line_count_total"] = len(treatments)
+
+    # Hormone receptor positive: true if ER+ OR PR+, false if both negative, null if both null
+    bm = record.get("biomarkers") or {}
+    er, pr = bm.get("er"), bm.get("pr")
+    if er == "positive" or pr == "positive":
+        bm["hormone_receptor_positive"] = True
+    elif er == "negative" and pr == "negative":
+        bm["hormone_receptor_positive"] = False
+    else:
+        bm["hormone_receptor_positive"] = None
+
+    # Populate her2_ihc_score from PatientProfile if not already extracted
+    # (The LLM may not extract it if it only sees the free-text profile;
+    #  the structured field is passed in separately via patient_text.)
+    record["biomarkers"] = bm
+
+    return record
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -404,6 +465,7 @@ def main():
         if patient.patient_id not in patient_records:
             print(f"\nExtracting typed record for {patient.patient_id}...")
             record = call_claude(EXTRACT_SYSTEM, f"Extract structured record from this patient profile:\n\n{patient_text(patient)}")
+            record = add_derived_fields(record)
             patient_records[patient.patient_id] = record
             print(f"  prior_treatments: {[{'drug': t['drug'], 'setting': t.get('setting')} for t in record.get('prior_treatments', [])]}")
             print(f"  disease.is_metastatic: {record.get('disease', {}).get('is_metastatic')}")
