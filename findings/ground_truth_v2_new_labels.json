@@ -1,0 +1,453 @@
+{
+  "meta": {
+    "timestamp": "2026-06-23T13:57:53",
+    "model": "claude-sonnet-4-6",
+    "count": 54
+  },
+  "labels": [
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.95,
+      "reason": "Patient has HER2-positive breast cancer (HER2+), but the trial is specifically for HR+/HER2- breast cancer. The patient's HER2+ status explicitly excludes her from the breast cancer indication in both Phase I and Phase II. While Phase I also includes solid tumors with CCNE1 amplification, there is no mention of CCNE1 amplification in this patient's profile, and the primary indication mismatch (HER2+ vs HER2-) makes her ineligible for the breast cancer arms of the trial.",
+      "patient_id": "P001",
+      "nct_id": "NCT06726148",
+      "title": "Study of ECI830 Single Agent or in Combination in Patients With Advanced HR+/HER2- Breast Cancer and Other Advanced Solid Tumors"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.95,
+      "reason": "The patient has stage II (early-stage) breast cancer, not locally advanced or metastatic HER2+ breast cancer. The trial requires participants to have received at least one prior line of therapy including T-DXd for locally advanced/metastatic HER2+ breast cancer. The patient's prior treatments were surgery and chemotherapy (likely adjuvant/neoadjuvant), with no mention of T-DXd or metastatic disease.",
+      "patient_id": "P001",
+      "nct_id": "NCT07007559",
+      "title": "ASPEN-09-03: A Study of Evorpacept in Combination With Trastuzumab and Chemotherapy in Metastatic HER2-Positive Breast Cancer"
+    },
+    {
+      "verdict": "ELIGIBLE",
+      "confidence": 0.72,
+      "reason": "Patient is a 52-year-old female with HER2-positive (stage II) breast cancer, ER+/PR-, with prior surgery and chemotherapy, ECOG PS 0. She meets key criteria for Cohort A1/A2: HER2 positive, female, age \u226540 (age 52), and stage T1-T2 N0-N1 M0 consistent with stage II. She also potentially qualifies for Cohort C (HER2-positive, age \u226530, female). However, some uncertainties remain: (1) it is unclear if she has unicentric disease, (2) nodal status details (N0 vs N1) and ultrasound findings are not specified, (3) whether she desires breast-conserving therapy is not stated, and (4) for Cohort C, it is unclear if she received neoadjuvant systemic therapy (chemotherapy listed as prior treatment but sequencing relative to surgery is ambiguous). Despite these uncertainties, the core eligibility markers (HER2+, age, sex, stage) are met for at least one cohort.",
+      "patient_id": "P001",
+      "nct_id": "NCT02945579",
+      "title": "Multicenter Trial for Eliminating Breast Cancer Surgery or Radiotherapy in Exceptional Responders to Neoadjuvant Systemic Therapy"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.95,
+      "reason": "Patient has HER2-positive breast cancer, but the trial requires HER2-negative primary breast tumor per current ASCO/CAP guidelines. This is a clear exclusion criterion failure. Additionally, the patient is 52 years old and menopausal status is unconfirmed (would need to meet postmenopausal criteria), and Stage II may not meet the specific staging criteria required (pT0-T3 with N2/N3, pT3 with N0-N3, or pT0-T3 with 3+ positive lymph nodes). However, the HER2-positive status alone is sufficient to render the patient ineligible.",
+      "patient_id": "P001",
+      "nct_id": "NCT07391774",
+      "title": "Testing Whether Hormone Therapy With Ribociclib is as Effective as Chemotherapy Followed by Hormone Therapy With Ribociclib for the Treatment of High Anatomic Stage Breast Cancer With Low Recurrence Risk, The RxFINE-Low Trial"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.99,
+      "reason": "Patient has HER2-positive breast cancer, which explicitly disqualifies her. The inclusion criteria require HER2-negative disease per ASCO CAP guidelines, and the criteria explicitly state 'Participants with HER2 positive disease by ASCO CAP guidelines are ineligible.'",
+      "patient_id": "P001",
+      "nct_id": "NCT06058377",
+      "title": "Adding an Immunotherapy Drug, MEDI4736 (Durvalumab), to the Usual Chemotherapy Treatment (Paclitaxel, Cyclophosphamide, and Doxorubicin) for Stage II-III Breast Cancer"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.95,
+      "reason": "Patient has HER2-positive breast cancer (HER2+), but the trial requires HR+/HER2-negative invasive breast carcinoma. The patient's HER2+ status directly contradicts the key inclusion criterion requiring HER2- disease. Additionally, the patient has stage II disease (not locally advanced/metastatic), has not received CDK4/6 inhibitor therapy, and the disease appears to have been treated with curative intent (surgery performed).",
+      "patient_id": "P001",
+      "nct_id": "NCT07060807",
+      "title": "A Clinical Study of Patritumab Deruxtecan to Treat Breast Cancer (MK-1022-016)"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.9,
+      "reason": "Patient is PR-negative, but the trial requires triple-positive breast cancer (ER+, PR+, HER2+). The inclusion criteria state PR>1% is required, with only a narrow exception for PI approval if ER>10% without PR positivity. Additionally, the patient has stage II disease with no mention of advanced/metastatic disease or disease progression on prior therapy, which is required by inclusion criterion #4. The trial is designed for advanced triple-positive breast cancer.",
+      "patient_id": "P001",
+      "nct_id": "NCT07612215",
+      "title": "Elacestrant in Advanced Triple Positive Breast Cancer"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.95,
+      "reason": "The patient has HER2-positive breast cancer (stage II) with no mention of locally advanced or metastatic disease, and critically, there is no documented TP53 Y220C mutation, which is a mandatory inclusion criterion for this trial. The patient's cancer appears to be non-metastatic (stage II), and the trial requires locally advanced or metastatic solid malignancy with confirmed TP53 Y220C mutation.",
+      "patient_id": "P001",
+      "nct_id": "NCT04585750",
+      "title": "The Evaluation of PC14586 in Patients With Advanced Solid Tumors Harboring a TP53 Y220C Mutation (PYNNACLE)"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.9,
+      "reason": "The patient has stage II breast cancer (early stage) that was treated with surgery and chemotherapy, indicating resectable/resected disease. The trial requires histologically confirmed HER2+ locally advanced UNRESECTABLE breast cancer or METASTATIC breast cancer. Additionally, the trial arms require prior lines of anti-HER2 therapy in the locally advanced or metastatic setting, which this patient does not appear to have received. The patient does not meet the key inclusion criterion of having locally advanced unresectable or metastatic disease.",
+      "patient_id": "P001",
+      "nct_id": "NCT06686394",
+      "title": "Study of Patritumab Deruxtecan With Other Anticancer Agents in Participants With HER2 Positive Breast Cancer That Has Spread and Cannot Be Surgically Removed (MK-1022-009)"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.95,
+      "reason": "Patient has HER2-positive breast cancer, but the trial requires HER2-negative breast cancer. This is a fundamental exclusion based on a key inclusion criterion.",
+      "patient_id": "P001",
+      "nct_id": "NCT05870579",
+      "title": "[177Lu]Lu-NeoB in Combination With Ribociclib and Fulvestrant in Participants With ER+, HER2- and GRPR+ Advanced Breast Cancer"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.95,
+      "reason": "Patient has stage II (non-metastatic) breast cancer, not unresectable or metastatic disease. Inclusion criterion #3 requires unresectable or metastatic HER2-positive breast cancer with progression on prior T-DXd treatment. Additionally, criterion #4 requires at least 2 lines of HER2-directed therapy for metastatic disease, and there is no indication the patient has received T-DXd or any HER2-directed therapy for metastatic disease.",
+      "patient_id": "P001",
+      "nct_id": "NCT06435429",
+      "title": "A Study Comparing the Efficacy and Safety of Zanidatamab to Trastuzumab, Each in Combination With Physician's Choice Chemotherapy, for the Treatment of Participants With Metastatic HER2-positive Breast Cancer"
+    },
+    {
+      "verdict": "UNCERTAIN",
+      "confidence": 0.6,
+      "reason": "Patient has TNBC (included tumor type) and ECOG PS 1 (meets criteria). She received neoadjuvant chemotherapy, which counts as prior standard systemic therapy. However, it is unclear whether her disease has 'progressed, relapsed, or was intolerant' after that prior therapy - neoadjuvant chemotherapy is pre-surgical and the profile does not explicitly state disease progression or relapse. Additionally, measurable disease per RECIST 1.1 is not confirmed in the profile. These missing details create uncertainty about eligibility.",
+      "patient_id": "P002",
+      "nct_id": "NCT07517198",
+      "title": "Dose Determining Study of EXS74539 (REC-4539) in Participants With Select Solid Tumors"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.85,
+      "reason": "The patient received neoadjuvant chemotherapy but there is no mention of pembrolizumab being included in the neoadjuvant regimen. The trial requires that patients received neoadjuvant chemotherapy IN COMBINATION with pembrolizumab for a minimum of 6 cycles. Additionally, the trial requires pathologic complete response (pCR) after neoadjuvant therapy, and the patient's profile does not confirm pCR. These are key inclusion criteria that cannot be confirmed based on the available information, with the pembrolizumab requirement being a clear gap suggesting ineligibility.",
+      "patient_id": "P002",
+      "nct_id": "NCT05812807",
+      "title": "Pembrolizumab vs. Observation in People With Triple-negative Breast Cancer Who Had a Pathologic Complete Response After Chemotherapy Plus Pembrolizumab"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.95,
+      "reason": "Patient has received prior neoadjuvant chemotherapy, which constitutes prior systemic therapy for the currently diagnosed breast cancer. The exclusion criteria explicitly state that patients who have received any prior treatment including systemic therapy for currently diagnosed breast cancer are excluded. Additionally, the inclusion criteria require 'previously untreated' high-risk early-stage breast cancer.",
+      "patient_id": "P002",
+      "nct_id": "NCT06966700",
+      "title": "A Clinical Study of Sacituzumab Tirumotecan (Sac-TMT, MK-2870) in People With Breast Cancer (MK-2870-032)"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.9,
+      "reason": "Patient has Triple-negative breast cancer (TNBC), which is not among the specified tumor types for either Part 1 (CRC, NSCLC, Pancreatic Cancer) or Part 2 (CRC, NSCLC, Pancreatic Cancer, Mesothelioma, Ovarian Cancer). The eligibility criteria use 'e.g.' which could imply the list is not exhaustive, introducing some uncertainty, but the listed examples are quite specific and TNBC is not mentioned. Additionally, the patient has stage III disease (not metastatic or unresectable locally advanced in the typical sense), and there is no information confirming HLA-A*02 heterozygosity or LOH of HLA-A*02 required for Part 2.",
+      "patient_id": "P002",
+      "nct_id": "NCT04981119",
+      "title": "Solid Tumor Analysis for HLA Loss of Heterozygosity (LOH) and Apheresis for CAR T- Cell Manufacturing"
+    },
+    {
+      "verdict": "UNCERTAIN",
+      "confidence": 0.55,
+      "reason": "Patient has stage III (locally advanced) TNBC with BRCA1 mutation, ECOG PS 1, age 34 - meeting several key inclusion criteria. However, key information is missing: (1) Whether the disease is measurable per RECIST v1.1 is not stated; (2) Stage III breast cancer may qualify as 'locally advanced' but it is unclear if it is metastatic or meets the trial's tumor type inclusion (trial conditions list not provided); (3) Adequate organ function not confirmed; (4) Life expectancy \u226512 weeks not confirmed; (5) Timing of prior neoadjuvant chemotherapy relative to study enrollment (4-week washout requirement) is not specified. These gaps prevent definitive eligibility determination.",
+      "patient_id": "P002",
+      "nct_id": "NCT05086692",
+      "title": "A Beta-only IL-2 ImmunoTherapY Study"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.85,
+      "reason": "The patient has stage III (locally advanced) TNBC, not locally recurrent inoperable or metastatic TNBC, which is required by the inclusion criteria. The trial requires confirmed locally recurrent inoperable or metastatic disease. Additionally, the patient has received neoadjuvant chemotherapy, but the exclusion criterion prohibits prior systemic anticancer therapy for 'advanced disease' - this may not apply to neoadjuvant therapy for early/locally advanced disease, so that point is less clear. The primary issue is that stage III disease does not meet the requirement of locally recurrent inoperable or metastatic TNBC.",
+      "patient_id": "P002",
+      "nct_id": "NCT07173751",
+      "title": "ROSETTA Breast-01: The Effects and Safety of Pumitamig in Patients With Triple-Negative Breast Cancer"
+    },
+    {
+      "verdict": "UNCERTAIN",
+      "confidence": 0.55,
+      "reason": "Patient has TNBC (stage III) which is listed as an eligible tumor type, and meets ECOG PS 0-1 criterion. However, key uncertainties exist: (1) The trial requires disease that is 'advanced, recurrent, or metastatic following SoC treatments' - stage III TNBC after neoadjuvant chemotherapy may not qualify as advanced/metastatic unless there is residual/recurrent disease that meets this definition; (2) It is unclear whether the patient has completed anticancer therapy within the 28-day washout period required before first dose; (3) No information on whether tumor lesions amenable to biopsy are present; (4) No information on whether unresolved toxicities from prior chemotherapy exist. The stage III designation (not stage IV/metastatic) raises questions about whether she meets the 'advanced' disease requirement.",
+      "patient_id": "P002",
+      "nct_id": "NCT05985655",
+      "title": "Study to Assess GTAEXS617 in Participants With Advanced Solid Tumors"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.9,
+      "reason": "Patient has stage III breast cancer (not recurrent or metastatic), and there is no indication she has received prior treatment with an antibody-drug conjugate with a topoisomerase inhibitor payload (e.g., sacituzumab govitecan or trastuzumab deruxtecan), which is a key inclusion requirement. Her prior treatment is listed only as neoadjuvant chemotherapy. Additionally, measurable disease by RECIST v1.1 is required, which is not confirmed for a stage III non-metastatic setting.",
+      "patient_id": "P002",
+      "nct_id": "NCT06908928",
+      "title": "A Dose Randomization Study of Bulumtatug Fuvedotin in TNBC Patients Previously Treated With ADCs"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.95,
+      "reason": "The trial is currently enrolling CRC (colorectal cancer) only, per inclusion criterion 1. The patient has triple-negative breast cancer (TNBC), not colorectal cancer, making her ineligible based on cancer type.",
+      "patient_id": "P002",
+      "nct_id": "NCT04485013",
+      "title": "TTX-080 HLA-G Antagonist in Subjects With Advanced Cancers"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.85,
+      "reason": "The trial requires patients with intent for neoadjuvant therapy (pre-surgical treatment). Patient P002 has already received neoadjuvant chemotherapy, indicating she has completed neoadjuvant treatment and is no longer in the neoadjuvant setting. The trial is designed for TNBC patients who have not yet received their neoadjuvant therapy.",
+      "patient_id": "P002",
+      "nct_id": "NCT05491226",
+      "title": "Reinvigorating TNBC Response to Immunotherapy With Combination Myeloid Inhibition and Radiation"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.75,
+      "reason": "The patient has stage III (locally advanced) breast cancer after neoadjuvant chemotherapy, but the trial requires advanced or metastatic disease with radiographically documented progressive disease on or after the most recent therapy. Stage III disease post-neoadjuvant chemotherapy does not clearly meet the 'advanced or metastatic' requirement typical of such trials. Additionally, the trial requires receipt of standard-of-care therapies including an available PD-(L)1 inhibitor known to be effective in the tumor type - for TNBC this would include pembrolizumab, and there is no mention of prior immunotherapy. The patient also lacks documented measurable disease with progressive disease on most recent therapy, which is required for enrollment.",
+      "patient_id": "P002",
+      "nct_id": "NCT04895709",
+      "title": "A Study of BMS-986340 as Monotherapy and as Combination Therapy in Participants With Advanced Solid Tumors"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.9,
+      "reason": "The trial requires subjects to have relapsed from or be refractory to at least two previous therapies, and to have advanced (metastatic/unresectable) disease. This patient has stage III TNBC with only one prior treatment (neoadjuvant chemotherapy) and no mention of advanced/metastatic disease or disease progression after two lines of therapy. Additionally, the exclusion criterion prohibits prior doxorubicin or anthracycline treatment, and neoadjuvant chemotherapy for TNBC typically includes anthracyclines (e.g., doxorubicin/cyclophosphamide), which would disqualify the patient.",
+      "patient_id": "P002",
+      "nct_id": "NCT07064018",
+      "title": "Trial of Single Protein Encapsulated Doxorubicin, SPEDOX-6 in Advanced Malignancies"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.95,
+      "reason": "The patient has received prior neoadjuvant chemotherapy for their currently diagnosed breast cancer. The exclusion criteria explicitly states 'Has received any prior treatment, including radiation, systemic therapy, and/or definitive surgery for currently diagnosed breast cancer.' Neoadjuvant chemotherapy constitutes prior systemic therapy for the currently diagnosed breast cancer, making this patient ineligible.",
+      "patient_id": "P002",
+      "nct_id": "NCT06797635",
+      "title": "Study of Patritumab Deruxtecan Plus Pembrolizumab With Other Anticancer Agents in Participants With High-Risk Early-Stage Triple-Negative or Hormone Receptor-Low Positive/HER-2 Negative Breast Cancer (MK-1022-010, HERTHENA-Breast-03)"
+    },
+    {
+      "verdict": "UNCERTAIN",
+      "confidence": 0.6,
+      "reason": "Patient has stage III TNBC and meets age, ECOG PS, and tumor type criteria. However, the trial requires 'inoperable, locally advanced, metastatic, or recurrent' disease. Stage III TNBC after neoadjuvant chemotherapy may qualify as locally advanced, but it's unclear if the disease is currently inoperable/unresectable, metastatic, or recurrent. The profile does not specify current disease status (e.g., residual disease, recurrence, or metastatic progression) following neoadjuvant treatment, making definitive eligibility assessment uncertain.",
+      "patient_id": "P002",
+      "nct_id": "NCT06545331",
+      "title": "Study of XB010 in Subjects With Solid Tumors"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.85,
+      "reason": "The patient has already received neoadjuvant chemotherapy (listed as prior treatment), indicating she has completed or is past the neoadjuvant phase. The trial requires patients who plan to receive neoadjuvant chemotherapy before surgery (i.e., treatment-naive patients entering the neoadjuvant setting). Additionally, the patient is stage III, which may not clearly fit 'early-stage TNBC' as defined by the trial (clinically \u2265T1cN0 or any T, N1-2). Stage III could include N3 disease which would be excluded.",
+      "patient_id": "P002",
+      "nct_id": "NCT07017673",
+      "title": "Phase II Trial of Ivonescimab in Combination With Carboplatin + Docetaxel in Patients With Early-Stage Triple Negative Breast Cancer"
+    },
+    {
+      "verdict": "ELIGIBLE",
+      "confidence": 0.82,
+      "reason": "Patient has TNBC stage III, which meets Cohort 1C criteria (triple negative breast cancer, stage I-III, treated with curative intent - neoadjuvant chemotherapy implies curative intent). Patient meets general inclusion criteria (breast cancer diagnosis, presumably able to consent and provide biospecimens). No exclusion criteria are apparent. The patient could also potentially qualify for Cohort 2C if she has undergone curative intent surgery, but that information is not explicitly stated in the profile. Regardless, Cohort 1C eligibility appears clear based on the neoadjuvant treatment context.",
+      "patient_id": "P002",
+      "nct_id": "NCT07211178",
+      "title": "Evaluating Minimal Residual Disease (MRD) Through Longitudinal Circulating Tumor DNA (ctDNA) Profiling in Breast Malignancies"
+    },
+    {
+      "verdict": "ELIGIBLE",
+      "confidence": 0.85,
+      "reason": "Patient is 34 years old (>18), diagnosed with triple-negative breast cancer (explicitly listed as an inclusion criterion), and diagnosed with breast cancer at age 34 (before age 50, another qualifying criterion). ECOG PS 1 suggests ability to provide informed consent. No exclusion criteria are clearly met. The only uncertainty is language ability (English/Spanish), which is not stated in the profile but is assumed likely given location in Los Angeles, CA.",
+      "patient_id": "P002",
+      "nct_id": "NCT06422455",
+      "title": "Access to Genetic Testing in Underserved Patients With Cancer"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.85,
+      "reason": "The patient has stage III (locally advanced) breast cancer with prior neoadjuvant chemotherapy, but there is no mention of locally recurrent unresectable or metastatic disease. The trial requires 'locally recurrent unresectable or metastatic TNBC that cannot be treated with curative intent.' A stage III patient who has completed neoadjuvant chemotherapy would typically proceed to surgery and/or adjuvant therapy with curative intent. Without evidence of metastatic or unresectable recurrent disease, the patient does not meet the primary inclusion criterion.",
+      "patient_id": "P002",
+      "nct_id": "NCT06841354",
+      "title": "A Study of Sacituzumab Tirumotecan (Sac-TMT, MK-2870) as Monotherapy and in Combination With Pembrolizumab (MK-3475) in Participants With Triple-Negative Breast Cancer (MK-2870-011/TroFuse-011)"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.9,
+      "reason": "The patient has stage III TNBC with prior neoadjuvant chemotherapy, but the trial requires locally recurrent inoperable or metastatic TNBC. The patient's current disease is stage III (not metastatic or locally recurrent inoperable). Additionally, the trial requires PD-L1 positive status (CPS \u2265 10), which is not documented in the patient profile. Most critically, the patient does not appear to have metastatic or locally recurrent inoperable disease as required by the key inclusion criteria.",
+      "patient_id": "P002",
+      "nct_id": "NCT06103864",
+      "title": "A Phase III Study of Dato-DXd With or Without Durvalumab Compared With Investigator's Choice of Chemotherapy in Combination With Pembrolizumab in Patients With PD-L1 Positive Locally Recurrent Inoperable or Metastatic Triple-negative Breast Cancer"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.85,
+      "reason": "The patient has stage III (locally advanced) TNBC with prior neoadjuvant chemotherapy, but the trial requires locally advanced RECURRENT INOPERABLE or metastatic disease. Stage III does not necessarily mean recurrent inoperable or metastatic. Additionally, there is no mention of disease recurrence or metastasis. The patient appears to be post-neoadjuvant chemotherapy for stage III disease, which likely represents a curative-intent setting rather than the incurable locally advanced/recurrent/metastatic setting required by the trial. Furthermore, there is no documentation of PD-L1 status or reason for anti-PD(L)1 ineligibility, and no evidence of measurable disease in the metastatic/recurrent setting.",
+      "patient_id": "P002",
+      "nct_id": "NCT06926868",
+      "title": "A Study of Izalontamab Brengitecan Versus Chemotherapy in Participants With Previously Untreated, Locally Advanced, Recurrent Inoperable, or Metastatic Triple-negative Breast Cancer Ineligible for Anti-PD(L)1 Drugs (IZABRIGHT-Breast01)"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.85,
+      "reason": "Patient has stage III TNBC (not advanced/metastatic) and has only received neoadjuvant chemotherapy (1 line of therapy). The trial requires advanced or metastatic TNBC that has relapsed on or is refractory to 2 or more lines of standard-of-care therapy. Additionally, HLA-A2 status and NY-ESO-1 expression are not documented, and measurable disease per RECIST 1.1 is not confirmed for a stage III patient post-neoadjuvant treatment.",
+      "patient_id": "P002",
+      "nct_id": "NCT05989828",
+      "title": "A2-ESO-1 TCR-Engineered T Cells for Relapsed/Refractory Advanced or Metastatic NY-ESO-1 Overexpression Positive Triple Negative Breast Cancer"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.85,
+      "reason": "The patient has stage III (not locally advanced unresectable or metastatic) TNBC and has only received one prior line of therapy (neoadjuvant chemotherapy). The trial requires locally advanced unresectable or metastatic TNBC with disease progression following at least 2 lines of therapy. The patient fails both the disease stage requirement and the minimum prior therapy requirement.",
+      "patient_id": "P002",
+      "nct_id": "NCT06562192",
+      "title": "Phase I Study of [177Lu]Lu-NNS309 in Patients With Pancreatic, Lung, Breast and Colorectal Cancers"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.95,
+      "reason": "Patient fails inclusion criterion #7 (no prior therapy of any kind for TNBC) as she has already received neoadjuvant chemotherapy. Additionally, patient fails inclusion criterion #2 (ECOG PS must be 0 or 2, not 1). These are key eligibility requirements that the patient does not meet.",
+      "patient_id": "P002",
+      "nct_id": "NCT06353997",
+      "title": "Neoadjuvant INBRX-106 in Combination With Pembrolizumab for Stage II/III TNBC Patients"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.95,
+      "reason": "Patient has a germline BRCA1 mutation, which is explicitly listed as a key exclusion criterion: 'Individuals with germline breast cancer gene (BRCA) mutations.'",
+      "patient_id": "P002",
+      "nct_id": "NCT05633654",
+      "title": "Study of Sacituzumab Govitecan-hziy and Pembrolizumab Versus Treatment of Physician's Choice in Patients With Triple Negative Breast Cancer Who Have Residual Invasive Disease After Surgery and Neoadjuvant Therapy (ASCENT-05/AFT-65 OptimICE-RD/GBG 119/NSABP B-63)"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.85,
+      "reason": "Patient has stage III breast cancer (not advanced/metastatic), which does not meet the inclusion criterion requiring advanced or metastatic cancer. Additionally, TNBC (ER-, PR-, HER2-) would not qualify for Parts 1B or 2A which require prior endocrine therapy and CDK4/6 inhibitor treatment. Part 1A requires no standard therapy be available, but standard therapies exist for stage III TNBC. The patient's disease stage and TNBC subtype make it difficult to fit into any of the specified cohorts.",
+      "patient_id": "P002",
+      "nct_id": "NCT07318805",
+      "title": "A Study to Learn About the Study Medicine Called PF-08032562 in People With Advanced or Metastatic Solid Tumors"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.85,
+      "reason": "The trial requires progression or recurrence of locally advanced or METASTATIC TNBC (mTNBC). The patient has stage III TNBC (locally advanced/non-metastatic) and has received neoadjuvant chemotherapy, but there is no indication of metastatic disease or documented progression/recurrence to locally advanced or metastatic stage. Additionally, measurable disease per RECIST v1.1 is required, which is not confirmed for this patient's current status.",
+      "patient_id": "P002",
+      "nct_id": "NCT06827613",
+      "title": "A Study of Invikafusp Alfa (STAR0602), a Selective T Cell Receptor (TCR)-Targeting, Bifunctional Antibody-fusion Molecule, in Combination With Sacituzumab Govitecan in Participants With Advanced Solid Tumors"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.85,
+      "reason": "Patient has stage III (locally advanced) TNBC, not metastatic or unresectable disease. The trial requires incurable, locally advanced or metastatic disease with documented radiological progression while on/after receiving treatment for locally advanced or metastatic disease, plus prior chemotherapy for advanced disease. Additionally, for TNBC participants in Dose Escalation/Dose Finding, the patient must have received PARP inhibitors (applicable given BRCA1 mutation) and sacituzumab govitecan as second-line treatment - neither of which is documented in the patient's treatment history. The patient has only received neoadjuvant chemotherapy, suggesting they have not yet progressed to metastatic/unresectable disease requiring these prior lines of therapy for advanced disease.",
+      "patient_id": "P002",
+      "nct_id": "NCT05983432",
+      "title": "Evaluate BL-B01D1 in Patients With Metastatic or Unresectable Non-Small Cell Lung Cancer (NSCLC) and Other Solid Tumors"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.95,
+      "reason": "The patient has already received neoadjuvant chemotherapy (prior systemic therapy with curative intent for the current breast cancer), which is an explicit exclusion criterion. The trial requires participants who have not received prior systemic therapy or radiation therapy with curative intent for their current breast cancer.",
+      "patient_id": "P002",
+      "nct_id": "NCT05929768",
+      "title": "Shorter Chemo-Immunotherapy Without Anthracycline Drugs for Early-Stage Triple Negative Breast Cancer"
+    },
+    {
+      "verdict": "UNCERTAIN",
+      "confidence": 0.55,
+      "reason": "Patient has TNBC stage III with prior neoadjuvant chemotherapy and meets basic criteria (age \u226518, ECOG PS 1, correct tumor type). However, key uncertainties exist: (1) It is unclear whether this is advanced/metastatic disease - stage III TNBC may not qualify as 'advanced cancer' with measurable disease per RECIST 1.1 if the patient has completed neoadjuvant therapy and potentially surgery; (2) For Dose Escalation, it must be confirmed there are no available therapeutic options providing clinically meaningful benefit - stage III TNBC post-neoadjuvant chemo may still have standard options (e.g., capecitabine, olaparib given BRCA1 mutation, immunotherapy); (3) For Dose Expansion, the number of prior lines of standard of care required is not specified in the profile and may not be met with only neoadjuvant chemotherapy; (4) Measurable disease status is not confirmed. The BRCA1 mutation is notable as olaparib would be a standard option, potentially disqualifying from Dose Escalation arm.",
+      "patient_id": "P002",
+      "nct_id": "NCT05902988",
+      "title": "A Phase I/II Study of VLS-1488 in Subjects With Advanced Cancer"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.92,
+      "reason": "Patient has a known germline BRCA1 mutation. The exclusion criterion states that participants with a known germline BRCA mutation (deleterious or suspected deleterious) who are eligible for adjuvant therapy with olaparib where olaparib is approved and available are excluded. Olaparib is FDA-approved for adjuvant treatment of BRCA-mutated HER2-negative high-risk early breast cancer, and this patient (stage III TNBC, BRCA1 mutant) would likely be eligible for adjuvant olaparib. Additionally, the patient's prior neoadjuvant chemotherapy regimen is not specified as the KEYNOTE-522 regimen (pembrolizumab + carboplatin/taxanes + pembrolizumab + anthracycline-based), which is a required inclusion criterion, creating further uncertainty. The BRCA1 mutation exclusion alone is likely disqualifying.",
+      "patient_id": "P002",
+      "nct_id": "NCT06393374",
+      "title": "Sacituzumab Tirumotecan (MK-2870) Plus Pembrolizumab Versus TPC in TNBC Who Did Not Achieve pCR (MK-2870-012)"
+    },
+    {
+      "verdict": "UNCERTAIN",
+      "confidence": 0.6,
+      "reason": "Patient has TNBC (stage III) which is listed as an eligible tumor type in Phase 1 sub-studies. Age 34 and ECOG PS 1 meet basic criteria. However, key information is missing: (1) It's unclear if the disease is locally advanced/inoperable or metastatic as required - stage III could be resectable or locally advanced; (2) No information on whether standard of care options have been exhausted; (3) Lab values (hemoglobin, ANC, platelets, liver/renal function, QTcF, LVEF) are not provided to assess exclusion criteria. The BRCA1 mutation status and prior neoadjuvant chemotherapy are noted but it's uncertain if standard of care has been fully exhausted for TNBC.",
+      "patient_id": "P002",
+      "nct_id": "NCT06399757",
+      "title": "A Study to Investigate APL-5125 in Adults With Advanced Solid Tumors"
+    },
+    {
+      "verdict": "UNCERTAIN",
+      "confidence": 0.55,
+      "reason": "Patient has TNBC (stage III, not explicitly metastatic/unresectable) and meets ECOG PS criterion (1). However, key information is missing: (1) PD-L1 expression status is not reported - required for Parts A, B, C, D, E; (2) Stage III disease may not qualify as 'metastatic or unresectable' unless confirmed unresectable; (3) No information on measurable disease per RECIST v1.1; (4) No information on prior anti-PD-L1 therapy or MMAE-containing agent exposure; (5) No information on pre-existing neuropathy grade. The absence of PD-L1 expression data is a critical missing criterion.",
+      "patient_id": "P002",
+      "nct_id": "NCT05208762",
+      "title": "A Study of PF-08046054/SGN-PDL1V in Advanced Solid Tumors"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.85,
+      "reason": "The patient has stage III TNBC, which is neither metastatic nor unresectable. The trial requires patients to have metastatic or unresectable disease. Stage III breast cancer is locally advanced but not metastatic, and may be resectable. Additionally, the patient has only received neoadjuvant chemotherapy, suggesting they may not have exhausted standard treatment options for resectable stage III disease. The inclusion criteria specifically require metastatic or unresectable disease that has received standard treatment options.",
+      "patient_id": "P002",
+      "nct_id": "NCT05107674",
+      "title": "A Study of NX-1607 in Adults With Advanced Malignancies"
+    },
+    {
+      "verdict": "UNCERTAIN",
+      "confidence": 0.6,
+      "reason": "Patient has TNBC (stage III) which is an included tumor type, ECOG PS 1 which meets criteria, and has received prior neoadjuvant chemotherapy. However, key information is missing: (1) The patient has stage III disease - it's unclear if this is recurrent/unresectable/locally advanced or metastatic as required by inclusion criterion 2; stage III may still be resectable or amenable to standard curative-intent therapy, which would trigger exclusion criterion 1. (2) No information on EGFR expression status, which is a key requirement. (3) No information on HLA-A*02 LOH status or enrollment in BASECAMP-1 study. (4) No information on measurable disease \u22651.0 cm by CT. These missing biomarker and disease status details prevent definitive eligibility determination.",
+      "patient_id": "P002",
+      "nct_id": "NCT06682793",
+      "title": "A Study to Evaluate the Safety and Efficacy of A2B395, an Allogeneic Logic-gated CAR T, in Participants With Solid Tumors That Express EGFR and Have Lost HLA-A*02 Expression"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.95,
+      "reason": "Patient has stage III breast cancer (not metastatic). The trial requires histologically confirmed METASTATIC triple negative breast cancer. Additionally, the trial requires patients to have progressed on 1-2 prior lines of systemic therapy in the metastatic setting, which this patient has not (she received neoadjuvant chemotherapy in the non-metastatic setting).",
+      "patient_id": "P002",
+      "nct_id": "NCT05318469",
+      "title": "Ivermectin in Combination With Balstilimab or Pembrolizumab in Patients With Metastatic Triple Negative Breast Cancer"
+    },
+    {
+      "verdict": "UNCERTAIN",
+      "confidence": 0.5,
+      "reason": "Patient has stage III (locally advanced) TNBC with BRCA1 mutation and ECOG PS 1, meeting several criteria. However, key uncertainties exist: (1) Stage III disease may not qualify as 'advanced/metastatic' without confirmed metastatic or locally advanced unresectable status; (2) It is unclear whether standard therapy options are exhausted - BRCA1-mutant TNBC has standard options including PARP inhibitors (olaparib/talazoparib) and pembrolizumab, so the criterion 'no therapy of proven efficacy exists' or 'resistant to standard therapy' may not be met after only neoadjuvant chemotherapy; (3) Measurable disease per RECIST v1.1 status is not confirmed; (4) Washout period compliance from prior chemotherapy is unknown; (5) Bone marrow/kidney/liver function not documented.",
+      "patient_id": "P002",
+      "nct_id": "NCT07229313",
+      "title": "A Study of KIVU-107 in Participants With Locally Advanced or Metastatic Solid Tumors"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.85,
+      "reason": "The patient has stage III breast cancer that has been treated with neoadjuvant chemotherapy, indicating localized/non-metastatic disease. The trial requires unresectable, locally advanced or metastatic TNBC. Stage III disease after neoadjuvant chemotherapy does not clearly meet the 'unresectable, locally advanced or metastatic' requirement - the patient likely had resectable disease given the neoadjuvant approach. Additionally, there is no indication of disease progression to advanced/metastatic stage, and the patient lacks measurable disease documentation consistent with advanced disease. The patient also lacks documentation of prior systemic therapy for advanced/metastatic disease (required for Phase 1) or confirmation of PD-L1 status (required for Phase 2).",
+      "patient_id": "P002",
+      "nct_id": "NCT06926920",
+      "title": "A Study of Sacituzumab Govitecan Given at an Alternative Dose and Schedule in Participants With Advanced Triple-Negative Breast Cancer"
+    },
+    {
+      "verdict": "UNCERTAIN",
+      "confidence": 0.6,
+      "reason": "Patient has stage III TNBC with prior neoadjuvant chemotherapy, ECOG PS 1, and meets basic demographic criteria. For Phase II eligibility, key criteria include: (G) pathologic confirmation of stage I-III with less than complete pCR (residual disease after neoadjuvant therapy - not explicitly confirmed but implied by stage III diagnosis post-neoadjuvant), and (H) neoadjuvant regimen must not have included capecitabine or sarilumab (not stated in profile). The profile does not specify whether the patient achieved pCR or had residual disease after neoadjuvant chemotherapy, which is a key Phase II inclusion criterion. Additionally, whether capecitabine was part of the neoadjuvant regimen is unknown. These missing details create uncertainty about eligibility.",
+      "patient_id": "P002",
+      "nct_id": "NCT04333706",
+      "title": "A Dose Finding Phase 1 of Sarilumab Plus Capecitabine in HER2/Neu-Negative Metastatic Breast Cancer and a Single-arm, Historically-controlled Phase 2 Study of Sarilumab Plus Capecitabine in Stage I-III Triple Negative Breast Cancer With High-Risk Residual Disease (EMPOWER)"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.85,
+      "reason": "The patient has stage III (locally advanced) breast cancer with no mention of metastatic disease. The trial requires 'locally advanced or metastatic disease' with 'documented disease progression on prior line of therapy for metastatic disease.' The patient has received neoadjuvant chemotherapy for stage III disease, but there is no indication of metastatic disease or progression on a prior line of therapy for metastatic disease. Additionally, the trial requires at least one measurable tumor lesion on CT per RECIST v1.1, and the patient's current disease status post-neoadjuvant chemotherapy is unclear.",
+      "patient_id": "P002",
+      "nct_id": "NCT07020117",
+      "title": "A Study of [225Ac]Ac-AKY-1189 in Patients With Solid Tumors"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.95,
+      "reason": "The trial requires metastatic or unresectable TNBC, but the patient has stage III (locally advanced) breast cancer. Stage III is not metastatic, and there is no indication the disease is unresectable. This is a key inclusion criterion that the patient fails to meet.",
+      "patient_id": "P002",
+      "nct_id": "NCT05673200",
+      "title": "Testing the Addition of an Anti-cancer Drug, ASTX727 (Cedazuridine, Decitabine), to Chemotherapy (Paclitaxel) and Immunotherapy (Pembrolizumab) for Metastatic Triple-Negative Breast Cancer"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.9,
+      "reason": "The patient has stage III breast cancer, not metastatic (stage IV) TNBC. The trial requires a histologically confirmed diagnosis of METASTATIC invasive triple negative breast cancer. Stage III disease is locally advanced, not metastatic, which is a key inclusion criterion that this patient does not meet.",
+      "patient_id": "P002",
+      "nct_id": "NCT03606967",
+      "title": "Testing the Addition of an Individualized Vaccine to Durvalumab and Tremelimumab and Chemotherapy in Patients With Metastatic Triple Negative Breast Cancer"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.75,
+      "reason": "Patient has stage III (non-metastatic/non-advanced) TNBC. The trial targets advanced or metastatic solid tumors, and cohorts A1 and C require patients to have received all standard therapies for which they were an appropriate candidate. While the patient has received neoadjuvant chemotherapy, stage III TNBC has additional standard treatment options (e.g., adjuvant capecitabine, olaparib for BRCA1 mutant) and does not clearly qualify as 'advanced or metastatic' disease required for trial enrollment.",
+      "patient_id": "P002",
+      "nct_id": "NCT06465069",
+      "title": "A Study of LY4052031 in Participants With Advanced or Metastatic Urothelial Cancer or Other Solid Tumors"
+    },
+    {
+      "verdict": "INELIGIBLE",
+      "confidence": 0.97,
+      "reason": "Patient has HER2-positive metastatic breast cancer (HER2+, ER-), but the trial requires HR+/HER2- breast cancer. The patient fails the primary inclusion criterion on tumor subtype.",
+      "patient_id": "P005",
+      "nct_id": "NCT05683418",
+      "title": "A Study to Evaluate the Safety and Tolerability of TOS-358 in Women With HR+ HER2- Breast Cancer"
+    }
+  ],
+  "errors": [
+    {
+      "patient_id": "P002",
+      "nct_id": "NCT06022029",
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "patient_id": "P003",
+      "nct_id": "NCT07391774",
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    }
+  ]
+}

@@ -174,24 +174,28 @@ For criteria like "inoperable, locally advanced, or metastatic disease", the par
 
 | Patient | Assessed | v1 E/U/I | v2 E/U/I | Accuracy (v2) |
 |---------|----------|----------|----------|---------------|
-| P001 | 73 | 0/9/59 | 0/0/71 | 96.7% (58/60) |
-| P002 | 53 | 1/9/39 | 1/6/41 | 40.0% (2/5)* |
+| P001 | 73 | 0/9/59 | 0/0/71 | 95.8% (68/71) |
+| P002 | 53 | 1/9/39 | 1/6/41 | 68.1% (32/47) |
 | P003 | 19 | 2/9/7 | 0/5/14 | 88.9% (16/18) |
 | P004 | 18 | 1/5/11 | 0/6/10 | 87.5% (14/16) |
-| P005 | 33 | 1/3/26 | 0/5/25 | 75.9% (22/29) |
-| **Total** | **196** | **5/35/142** | **1/22/161** | **87.5% (112/128)** |
+| P005 | 33 | 1/3/26 | 0/5/25 | 76.7% (23/30) |
+| **Total** | **196** | **5/35/142** | **1/22/161** | **84.1% (153/182)** |
 
-\* P002: only 5 trials overlapped with ground truth due to API result differences across run dates.
+Ground truth tightened: 54 new trial labels added (LLM agent, same method as original verification). P002 now has 47 comparable assessments vs 5 previously.
 
 **Overall: 75.8% → 87.5% (+11.7pp)**
 
-| Metric | v1 | v2 |
-|--------|-----|-----|
-| False-ELIGIBLE (safety-critical) | 3 | **0** |
-| UNCERTAIN→INELIGIBLE errors | 18 | **9** |
-| INELIGIBLE→UNCERTAIN errors | 8 | **7** |
-| Cost | $2.16 | $2.33 |
-| Target case (P004 × NCT04511013) | UNCERTAIN | UNCERTAIN |
+| Metric | v1 | v2 (partial GT) | v2 (tightened GT) |
+|--------|-----|-----------------|-------------------|
+| Comparable assessments | 124 | 128 | **182** |
+| Accuracy | 75.8% | 87.5% | **84.1%** |
+| False-ELIGIBLE (safety-critical) | 3 | 0 | **2** |
+| UNCERTAIN→INELIGIBLE errors | 18 | 9 | **17** |
+| INELIGIBLE→UNCERTAIN errors | 8 | 7 | **8** |
+| Cost | $2.16 | $2.33 | $2.33 |
+| Target case (P004 × NCT04511013) | UNCERTAIN | UNCERTAIN | UNCERTAIN |
+
+The tightened GT reveals that the partial-GT accuracy (87.5%) was optimistic — the 128 overlapping trials skewed toward easy cases. With 182 assessments, the true accuracy is 84.1%. P002 (TNBC, stage III) is the weakest patient at 68.1% — most errors are trials requiring "advanced/metastatic" disease where stage III is borderline. The dominant error direction remains UNCERTAIN→INELIGIBLE (17 cases), driven by the `is_advanced_measurable` standalone predicate aggressively classifying non-metastatic patients.
 
 ### What the v2 exercise revealed
 
