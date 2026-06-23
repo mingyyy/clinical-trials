@@ -1,0 +1,5075 @@
+[
+  {
+    "pid": "P001",
+    "nct_id": "NCT07192432",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "UNCERTAIN",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 16,
+    "num_failures": 1,
+    "num_unknowns": 7,
+    "driving_predicates": [
+      {
+        "criterion_text": "Part 1: advanced or metastatic disease with progression after prior treatment",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "required_value": null,
+        "record_value": false,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "Age \u226518 years",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "HER2-positive solid tumor (histologically or cytologically confirmed)",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.her2",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Part 1: advanced or metastatic disease with progression after prior treatment",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Part 2: Early stage HER2-positive cancer with high risk for relapse after SOC or",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "AAV specified capsid total antibody \u22641:400",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ECOG performance status of 0 or 1",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Life expectancy \u22653 months",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Adequate renal, liver, cardiac and pulmonary function",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Adequate hematology parameters",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Hepatotoxicity (AST or ALT > 2x ULN)",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Known active CNS or leptomeningeal disease",
+        "criterion_type": "exclusion",
+        "variable": "disease.brain_metastases_present",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of thrombotic microangiopathy, cardiomyopathy, or sensory neuropathy",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Pregnant or nursing (lactating) women",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of other malignancy within 5 years prior to screening",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of hypersensitivity to corticosteroids or corticosteroid-related toxicit",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Concurrent anti-cancer treatment in another investigational trial",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P001",
+    "nct_id": "NCT02945579",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "ELIGIBLE",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 29,
+    "num_failures": 2,
+    "num_unknowns": 0,
+    "driving_predicates": [
+      {
+        "criterion_text": "Pathologically confirmed invasive breast cancer (Cohort A1/A2)",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "required_value": "invasive breast cancer",
+        "record_value": "HER2-positive breast cancer",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "HER2 negative (Cohort B1/B2)",
+        "variable": "biomarkers.her2",
+        "operator": "eq",
+        "required_value": "negative",
+        "record_value": "positive",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "Pathologically confirmed invasive breast cancer (Cohort A1/A2)",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Clinical stage M0 (Cohort A1/A2)",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_metastatic",
+        "operator": "is_false",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "HER2 positive (IHC 3+ and/or FISH amplified) OR triple negative (ER/PR<10%, HER2",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Age 40 years or older (Cohort A1/A2)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Female sex (Cohort A1/A2)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "No evidence of disease for prior non-breast cancer (Cohort A1/A2)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Initial nodal ultrasound showing no more than four suspicious lymph nodes (Cohor",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Breast lesion size on final imaging must be \u22642 cm prior to biopsy procedure (Coh",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ER and/or PR positive, HER2 negative (Cohort B1/B2)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "HER2 negative (Cohort B1/B2)",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.her2",
+        "operator": "eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Clinical stage T1N0M0, unicentric non-lobular breast cancer, no lymphovascular s",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Age at least 40 years (Cohort B1/B2)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Oncotype \u226425 if age \u226550 years (Cohort B1/B2)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Oncotype 0-20 and tumor size \u22641.5 cm if age 40-49 years (Cohort B1/B2)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Patient agrees to take anti-estrogen therapy and interested in breast conservati",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Female sex (Cohort B1/B2)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "No evidence of disease for prior non-breast cancer (Cohort B1/B2)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "No history of prior radiation to the breast area (Cohort B1/B2)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Pathologically confirmed invasive breast cancer, clinical stage M0 (Cohort C)",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_metastatic",
+        "operator": "is_false",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "HER2 positive (IHC 3+ and/or FISH amplified) T1-T2 N0 OR triple negative T1 N0 (",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Age \u226530 if HER2 positive, age \u226550 if triple negative (Cohort C)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Female sex (Cohort C)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "No evidence of disease for prior non-breast cancer (Cohort C)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Initial nodal ultrasound showing no suspicious lymph nodes (Cohort C)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "No evidence of residual invasive tumor or DCIS on lumpectomy pathology (Cohort C",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "No evidence of metastatic disease or isolated tumor cells in lymph nodes on path",
+        "criterion_type": "inclusion",
+        "variable": "disease.brain_metastases_present",
+        "operator": "is_false",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Unifocal or limited multifocal disease excisable in single lumpectomy (Cohort C)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Triple negative or HER2 positive tumor amenable to breast conserving treatment w",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Received or planned for neoadjuvant systemic therapy prior to surgery (Cohort D)",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].setting",
+        "operator": "list_any_eq",
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P001",
+    "nct_id": "NCT05232916",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "UNCERTAIN",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 24,
+    "num_failures": 3,
+    "num_unknowns": 9,
+    "driving_predicates": [
+      {
+        "criterion_text": "Primary condition is breast cancer",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "required_value": "breast cancer",
+        "record_value": "HER2-positive breast cancer",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "Completion of both neoadjuvant and adjuvant trastuzumab-based therapy",
+        "variable": "prior_treatments[*].drug",
+        "operator": "list_any_eq",
+        "required_value": "trastuzumab",
+        "record_value": null,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "Stage IV cancer or metastatic breast cancer at any time",
+        "variable": "disease.is_metastatic",
+        "operator": "is_true",
+        "required_value": null,
+        "record_value": false,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "exclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "HLA-A*02-positive (unless enrolled in non-HLA-A*02 arm)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Histologically confirmed HER2/neu positive primary breast cancer",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.her2",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Primary condition is breast cancer",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Completion of both neoadjuvant and adjuvant trastuzumab-based therapy",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].drug",
+        "operator": "list_any_eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Prior neoadjuvant trastuzumab-based therapy",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].setting",
+        "operator": "list_any_eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Prior adjuvant trastuzumab-based therapy",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].setting",
+        "operator": "list_any_eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Stage I, II, or III at presentation with residual disease at surgery OR Stage II",
+        "criterion_type": "inclusion",
+        "variable": "disease.stage_numeric",
+        "operator": "in_set",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Study therapy begins within one year of completion of adjuvant trastuzumab-based",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "No clinical evidence of residual or persistent breast cancer",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_false",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "ECOG performance status 0-2",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Adequate organ function",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Negative pregnancy test or post-menopausal status",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Willing to use highly effective contraception if of childbearing potential",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Subject resides and was treated in the country of the clinical site",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Stage IV cancer or metastatic breast cancer at any time",
+        "criterion_type": "exclusion",
+        "variable": "disease.is_metastatic",
+        "operator": "is_true",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Inflammatory breast cancer histology",
+        "criterion_type": "exclusion",
+        "variable": "disease.histology_subtype",
+        "operator": "eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Currently receiving other investigational agents",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Currently receiving chemotherapy",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Requiring long-term systemic corticosteroids or other immunosuppressive therapy",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of immunodeficiency or active autoimmune disease",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of serious allergic reactions to sargramostim, yeast-derived products, o",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Other malignancies (except adequately treated cervical CIS or basal/squamous cel",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Active infection",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Known HIV infection with detectable viral load within 6 months of treatment star",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT07517198",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "UNCERTAIN",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 9,
+    "num_failures": 1,
+    "num_unknowns": 5,
+    "driving_predicates": [
+      {
+        "criterion_text": "Histologically confirmed diagnosis of specified solid tumors (SCLC, high grade n",
+        "variable": "disease.primary_condition",
+        "operator": "in_set",
+        "required_value": [
+          "SCLC",
+          "high grade neuroendocrine carcinoma",
+          "small cell carcinoma non-lung",
+          "NSCLC",
+          "prostate cancer",
+          "ovarian cancer",
+          "renal carcinoma",
+          "head and neck squamous cell carcinoma",
+          "hepatic cancer",
+          "gastric cancer",
+          "triple-negative breast cancer"
+        ],
+        "record_value": "Triple-negative breast cancer (TNBC)",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "ECOG performance status of 0-1",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Histologically confirmed diagnosis of specified solid tumors (SCLC, high grade n",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "in_set",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Progressed, relapsed, or intolerant to at least one prior standard systemic ther",
+        "criterion_type": "inclusion",
+        "variable": "prior_line_count_total",
+        "operator": "gte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Measurable disease per RECIST v1.1",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Any medical or psychiatric condition that could jeopardize participant safety or",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Symptomatic brain metastases, leptomeningeal metastases, or spinal cord compress",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Active and clinically significant infection requiring systemic antibacterial, an",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Significant cardiac abnormalities",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Major surgery within 28 days prior to start of study treatment",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT05985655",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "UNCERTAIN",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 21,
+    "num_failures": 3,
+    "num_unknowns": 12,
+    "driving_predicates": [
+      {
+        "criterion_text": "Histologically/cytologically confirmed advanced solid tumor: HNSCC, pancreatic a",
+        "variable": "OR",
+        "operator": null,
+        "required_value": null,
+        "record_value": null,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "HR+/HER2- breast cancer must have progressed on prior CDK4/6 inhibitor",
+        "variable": "prior_treatments",
+        "operator": "list_any_eq",
+        "required_value": "CDK4/6 inhibitor",
+        "record_value": [
+          {
+            "drug": "chemotherapy",
+            "drug_class": "chemotherapy",
+            "setting": "neoadjuvant",
+            "line_of_therapy": null,
+            "completed": null,
+            "irae_grade_3_4": null
+          }
+        ],
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "HR positive (ER or PR positive) for applicable breast cancer subtype",
+        "variable": "biomarkers.hormone_receptor_positive",
+        "operator": "is_true",
+        "required_value": null,
+        "record_value": false,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "ECOG performance status 0-1",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Life expectancy > 3 months",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Histologically/cytologically confirmed advanced solid tumor: HNSCC, pancreatic a",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "HR+/HER2- breast cancer must have progressed on prior CDK4/6 inhibitor",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments",
+        "operator": "list_any_eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "HR positive (ER or PR positive) for applicable breast cancer subtype",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.hormone_receptor_positive",
+        "operator": "is_true",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "HER2 negative for applicable breast cancer subtype",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.her2",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Disease is advanced, recurrent, or metastatic following standard of care treatme",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Adequate hematological, liver, and renal function",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Must have tumor lesion(s) or metastases amenable to biopsy, excluding bone metas",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Active and clinically significant infection",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Refractory nausea/vomiting, chronic GI disease, or significant bowel resection p",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Symptomatic CNS malignancy or metastases",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Concurrent active or previous malignancy",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Prior organ or allogeneic stem-cell transplantation",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Moderate or severe cardiovascular disease",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Received anticancer therapy within 28 days or 5 half-lives before first dose",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Received strong/moderate CYP3A inhibitors or strong CYP3A inducers within 14 day",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Received P-gp or BCRP inhibitors or inducers within 14 days or 5 half-lives befo",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Received known substrates of organic anion transporting peptide or BCRP within 1",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Unresolved or unstable serious toxic side-effects of prior chemotherapy or radio",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Major surgery within 28 days prior to first dose or scheduled major surgery",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT06545331",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "UNCERTAIN",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 6,
+    "num_failures": 1,
+    "num_unknowns": 0,
+    "driving_predicates": [
+      {
+        "criterion_text": "Cohort Expansion: tumor type must be NSCLC, HR+ breast cancer, head and neck can",
+        "variable": "disease.primary_condition",
+        "operator": "in_set",
+        "required_value": [
+          "non-small cell lung cancer",
+          "hormone-receptor-positive breast cancer",
+          "head and neck cancer",
+          "esophageal squamous cell carcinoma",
+          "triple-negative breast cancer"
+        ],
+        "record_value": "Triple-negative breast cancer (TNBC)",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "Age 18 years or older",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ECOG Performance Status of 0-1",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Adequate organ and marrow function",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Confirmed solid tumor that is inoperable, locally advanced, metastatic, or recur",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Cohort Expansion: tumor type must be NSCLC, HR+ breast cancer, head and neck can",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "in_set",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Capable of understanding/complying with protocol and signed informed consent",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT07211178",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "ELIGIBLE",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 22,
+    "num_failures": 5,
+    "num_unknowns": 3,
+    "driving_predicates": [
+      {
+        "criterion_text": "Must be diagnosed with breast cancer",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "required_value": "breast cancer",
+        "record_value": "Triple-negative breast cancer (TNBC)",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "Cohort 1B: HER2+ breast cancer, Stage II to III",
+        "variable": "biomarkers.her2",
+        "operator": "eq",
+        "required_value": "positive",
+        "record_value": "negative",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "Cohort 1C: Triple negative breast cancer",
+        "variable": "disease.histology_subtype",
+        "operator": "eq",
+        "required_value": "triple negative",
+        "record_value": "Triple-negative breast cancer",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "Cohort 2B: HER2+ breast cancer, Stage II to III",
+        "variable": "biomarkers.her2",
+        "operator": "eq",
+        "required_value": "positive",
+        "record_value": "negative",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "Cohort 2C: Triple negative breast cancer, Stage I to III",
+        "variable": "disease.histology_subtype",
+        "operator": "eq",
+        "required_value": "triple negative",
+        "record_value": "Triple-negative breast cancer",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "Willing and able to participate and provide biospecimens",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Willing and able to provide informed consent",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Must be diagnosed with breast cancer",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Cohort 1A: HR+, HER2- breast cancer",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Cohort 1A/2A/3: Stage II to III disease",
+        "criterion_type": "inclusion",
+        "variable": "disease.stage_numeric",
+        "operator": "in_set",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Cohort 1A/2A/3: High risk of recurrence (4+ positive ALNs, or 1-3 ALNs with grad",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Cohort 1B: HER2+ breast cancer, Stage II to III",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.her2",
+        "operator": "eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Cohort 1B: Stage II to III disease",
+        "criterion_type": "inclusion",
+        "variable": "disease.stage_numeric",
+        "operator": "in_set",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Cohort 1C: Triple negative breast cancer",
+        "criterion_type": "inclusion",
+        "variable": "disease.histology_subtype",
+        "operator": "eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Cohort 1C: Stage I to III disease",
+        "criterion_type": "inclusion",
+        "variable": "disease.stage_numeric",
+        "operator": "in_set",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Cohort 2A: HR+, HER2- breast cancer",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Cohort 2A: Have undergone curative intent surgery with no clinical evidence of d",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_false",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Cohort 2B: HER2+ breast cancer, Stage II to III",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.her2",
+        "operator": "eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Cohort 2B: Have undergone curative intent surgery with no clinical evidence of d",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_false",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Cohort 2C: Triple negative breast cancer, Stage I to III",
+        "criterion_type": "inclusion",
+        "variable": "disease.histology_subtype",
+        "operator": "eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Cohort 2C: Have undergone curative intent surgery with no clinical evidence of d",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_false",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Cohort 3: HR+, HER2- breast cancer, Stage II to III",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Cohort 3: No Evidence of Disease (NED) \u22655 years from initial diagnosis",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_false",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Cohort 3: NED duration \u22655 years from initial diagnosis",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Not willing or able to adhere with study procedures",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Active secondary malignancy",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Diagnosis of a malignancy within 3 years of breast cancer diagnosis (excluding D",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT06422455",
+    "v2_verdict": "UNCERTAIN",
+    "gt_verdict": "ELIGIBLE",
+    "retrace_verdict": "UNCERTAIN",
+    "step1_issues": [],
+    "num_predicates": 9,
+    "num_failures": 0,
+    "num_unknowns": 5,
+    "driving_predicates": [],
+    "all_evaluated": [
+      {
+        "criterion_text": "Age > 18 years old",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Diagnosed with at least one of: epithelial ovarian cancer, exocrine pancreatic c",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Able to read and write in English or Spanish",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Able to provide informed consent",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Patients who cannot provide informed consent",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Patients who cannot see, read, or write",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Patients with qualifying cancer who do not speak English or Spanish",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Patients with none of the listed cancer diagnoses and clinical characteristics",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Healthcare providers who do not treat cancer patients",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT06827613",
+    "v2_verdict": "UNCERTAIN",
+    "gt_verdict": "INELIGIBLE",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 15,
+    "num_failures": 1,
+    "num_unknowns": 10,
+    "driving_predicates": [
+      {
+        "criterion_text": "mTNBC: locally advanced or metastatic TNBC (Cohort A)",
+        "variable": "disease.histology_subtype",
+        "operator": "eq",
+        "required_value": "TNBC",
+        "record_value": "Triple-negative breast cancer",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "Measurable disease per RECIST v1.1",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "mTNBC: locally advanced or metastatic TNBC (Cohort A)",
+        "criterion_type": "inclusion",
+        "variable": "disease.histology_subtype",
+        "operator": "eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "HR+/HER2- mBC: locally advanced or metastatic HR+/HER2- breast cancer (Cohort B)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Symptomatic CNS metastases must have been treated and be asymptomatic \u226514 days w",
+        "criterion_type": "inclusion",
+        "variable": "disease.brain_metastases_irradiated",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "No measurable unirradiated brain metastases at enrollment",
+        "criterion_type": "inclusion",
+        "variable": "disease.brain_metastases_measurable_unirradiated",
+        "operator": "is_false",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of known autoimmune disease (with exceptions)",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Major surgery or traumatic injury within 8 weeks before first dose",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Unhealed wounds from surgery or injury",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Clinically significant cardiovascular/vascular disease, gastrointestinal disorde",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Active viral, bacterial, or systemic fungal infection requiring parenteral treat",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Vaccination with live virus vaccine within 4 weeks prior to study intervention",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Known HIV positive or hepatitis B or C positive with uncontrolled disease",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Second primary invasive malignancy not in remission for \u22651 year (with exceptions",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Pregnant, likely to become pregnant, or lactating women",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Treatment with >10 mg/day prednisone or equivalent immune-suppressive drugs with",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT05902988",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "UNCERTAIN",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 15,
+    "num_failures": 3,
+    "num_unknowns": 6,
+    "driving_predicates": [
+      {
+        "criterion_text": "Dose Escalation: Tumor type must be one of the specified types (High Grade Serou",
+        "variable": "disease.primary_condition",
+        "operator": "in_set",
+        "required_value": [
+          "High Grade Serous Ovarian Cancer",
+          "Squamous Non-Small Cell Lung Cancer",
+          "Triple Negative Breast Cancer",
+          "Gastric Adenocarcinoma",
+          "Colorectal Cancer",
+          "Esophageal Squamous Cell Carcinoma",
+          "Esophageal Adenocarcinoma",
+          "Gastroesophageal Junction Cancer",
+          "Bladder Transitional Cell Carcinoma",
+          "Head and Neck Squamous Cell Carcinoma",
+          "Ovarian Carcinosarcoma",
+          "Endometrial Cancer",
+          "Uterine Cancer"
+        ],
+        "record_value": "Triple-negative breast cancer (TNBC)",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "Dose Expansion: Tumor type must be one of the specified types (High Grade Serous",
+        "variable": "disease.primary_condition",
+        "operator": "in_set",
+        "required_value": [
+          "High Grade Serous Ovarian Cancer",
+          "Squamous Non-Small Cell Lung Cancer",
+          "Triple Negative Breast Cancer",
+          "Gastric Adenocarcinoma",
+          "Colorectal Cancer",
+          "Esophageal Squamous Cell Carcinoma",
+          "Esophageal Adenocarcinoma",
+          "Head and Neck Squamous Cell Carcinoma",
+          "Endometrial Cancer",
+          "Uterine Cancer"
+        ],
+        "record_value": "Triple-negative breast cancer (TNBC)",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "Previously received KIF18A inhibitor",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "required_value": "KIF18A inhibitor",
+        "record_value": null,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "exclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "Age \u2265 18 years",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ECOG Performance Status \u2264 1",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "At least 1 site of measurable disease evaluable by CT scan or MRI per RECIST 1.1",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Able to take oral medication without alteration",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Dose Escalation: Tumor type must be one of the specified types (High Grade Serou",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "in_set",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Dose Escalation: No available therapeutic options to provide clinically meaningf",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Dose Expansion: Tumor type must be one of the specified types (High Grade Serous",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "in_set",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Dose Expansion: Previously treated with several lines of standard of care treatm",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "MSI-H, dMMR, POLE gene hotspot mutated, or known hypermutator phenotype",
+        "criterion_type": "exclusion",
+        "variable": "biomarkers.msi",
+        "operator": "eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Previously received KIF18A inhibitor",
+        "criterion_type": "exclusion",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Current CNS metastases or leptomeningeal disease",
+        "criterion_type": "exclusion",
+        "variable": "disease.brain_metastases_present",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "MI or stroke \u2264 1 year, unstable angina/PE/DVT/CABG \u2264 6 months, NYHA Class \u2265 II, ",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Inability to comply with concomitant medication restrictions (strong CYP3A inhib",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Any clinically significant ascites or pleural effusions at enrollment, or therap",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Bowel obstruction or GI perforation within 6 months of planned first dose",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT06399757",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "UNCERTAIN",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 28,
+    "num_failures": 7,
+    "num_unknowns": 14,
+    "driving_predicates": [
+      {
+        "criterion_text": "Phase 1: Tumor type must be Colorectal carcinoma, Cholangiocarcinoma, or Appendi",
+        "variable": "disease.primary_condition",
+        "operator": "in_set",
+        "required_value": [
+          "colorectal carcinoma",
+          "cholangiocarcinoma",
+          "appendiceal adenocarcinoma"
+        ],
+        "record_value": "Triple-negative breast cancer (TNBC)",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "Phase 1 sub-studies: Tumor type must be one of CRC, Cholangiocarcinoma, Appendic",
+        "variable": "disease.primary_condition",
+        "operator": "in_set",
+        "required_value": [
+          "colorectal carcinoma",
+          "cholangiocarcinoma",
+          "appendiceal adenocarcinoma",
+          "pancreatic adenocarcinoma",
+          "gastric adenocarcinoma",
+          "endometrial adenocarcinoma",
+          "triple negative breast cancer",
+          "ovarian cancer",
+          "prostate cancer"
+        ],
+        "record_value": "Triple-negative breast cancer (TNBC)",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "Phase 2: Colorectal carcinoma",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "required_value": "colorectal carcinoma",
+        "record_value": "Triple-negative breast cancer (TNBC)",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "CRC participants must have previously received fluoropyrimidine-based chemothera",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "required_value": "fluoropyrimidine",
+        "record_value": null,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "CRC participants must have previously received oxaliplatin-based chemotherapy",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "required_value": "oxaliplatin",
+        "record_value": null,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "CRC participants must have previously received irinotecan-based chemotherapy",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "required_value": "irinotecan",
+        "record_value": null,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "CRC participants must have previously received anti-VEGF therapy",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "required_value": "anti-VEGF",
+        "record_value": null,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "18 years or older",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1: Histologically confirmed locally advanced, inoperable, or metastatic tu",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1: Tumor type must be Colorectal carcinoma, Cholangiocarcinoma, or Appendi",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "in_set",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Phase 1 sub-studies: Tumor type must be one of CRC, Cholangiocarcinoma, Appendic",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "in_set",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Phase 2: Colorectal carcinoma",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "CRC participants must have previously received fluoropyrimidine-based chemothera",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "CRC participants must have previously received oxaliplatin-based chemotherapy",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "CRC participants must have previously received irinotecan-based chemotherapy",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "CRC participants must have previously received anti-VEGF therapy",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "ECOG performance status \u22641",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Body weight \u226540 kg",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Female participants of childbearing potential must have negative serum pregnancy",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Male participants must comply with contraception requirements",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Participant must be willing and able to provide written informed consent and com",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Active brain metastases",
+        "criterion_type": "exclusion",
+        "variable": "disease.brain_metastases_present",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Carcinomatous meningitis or other significant medical conditions (unstable angin",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Anti-cancer treatment within 2 weeks of Cycle 1 Day 1 or other prohibited prior ",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Major surgery within 1 month of screening",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Hemoglobin < 9.0 g/dL",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Absolute neutrophil count < 1.5 x 10^9/L",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Platelet count < 100 x 10^9/L",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Hepatic function: AST/ALT >3x ULN (>5x ULN for liver metastases)",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Total bilirubin >1.5x ULN (except Gilbert's syndrome)",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Albumin < 3 g/dL",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Creatinine clearance < 60 mL/minute",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "QTcF >470 msec or family history of Long QT Syndrome",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "LVEF <45% at rest on echocardiogram or MUGA",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Positive for HIV (unless controlled with active retroviral therapy), hepatitis B",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT05208762",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "UNCERTAIN",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 18,
+    "num_failures": 2,
+    "num_unknowns": 6,
+    "driving_predicates": [
+      {
+        "criterion_text": "Part C: Relapsed/refractory or intolerant to SoC therapies with eligible tumor t",
+        "variable": "disease.primary_condition",
+        "operator": "in_set",
+        "required_value": [
+          "HNSCC",
+          "NSCLC",
+          "Esophageal SCC",
+          "Pancreatic cancer",
+          "Hepatocellular carcinoma",
+          "TNBC",
+          "Gastric cancer",
+          "Endometrial cancer"
+        ],
+        "record_value": "Triple-negative breast cancer (TNBC)",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "Parts D and E: Histologically/cytologically confirmed HNSCC or NSCLC",
+        "variable": "disease.primary_condition",
+        "operator": "in_set",
+        "required_value": [
+          "HNSCC",
+          "NSCLC"
+        ],
+        "record_value": "Triple-negative breast cancer (TNBC)",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "Metastatic or unresectable solid tumor (NSCLC, HNSCC, Esophageal SCC, or TNBC) f",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Parts A and B: Relapsed/refractory, progressed on approved therapies, intolerant",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Parts A and B: PD-L1 expression based on historical testing",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Part C: Relapsed/refractory or intolerant to SoC therapies with eligible tumor t",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "in_set",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Part C: Previously tested for PD-L1 expression (CPS or TPS \u22651 or <1)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Parts D and E: Histologically/cytologically confirmed HNSCC or NSCLC",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "in_set",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Parts D and E: PD-L1 expression based on historical testing",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Parts D and E: NSCLC participants must have PD-L1 TPS \u22651%",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Parts D and E: HNSCC participants must have PD-L1 CPS \u22651",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ECOG performance status score of 0 or 1",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "in_set",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Measurable disease per RECIST v1.1 at baseline",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of another malignancy within 3 years or residual disease from prior mali",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Known active CNS metastases",
+        "criterion_type": "exclusion",
+        "variable": "disease.brain_metastases_present",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Previously treated brain metastases that are clinically stable \u22654 weeks, no new/",
+        "criterion_type": "inclusion",
+        "variable": "disease.brain_metastases_irradiated",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Leptomeningeal disease",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Prior treatment with an anti-PD-L1 agent within less than 5 half-lives",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Prior treatment with an MMAE-containing agent",
+        "criterion_type": "exclusion",
+        "variable": "drug_class",
+        "operator": "list_any_eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Pre-existing neuropathy \u2265Grade 2 per NCI CTCAE v5.0",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT06682793",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "UNCERTAIN",
+    "retrace_verdict": "UNCERTAIN",
+    "step1_issues": [],
+    "num_predicates": 19,
+    "num_failures": 0,
+    "num_unknowns": 11,
+    "driving_predicates": [],
+    "all_evaluated": [
+      {
+        "criterion_text": "Enrolled in BASECAMP-1 A2 Biotherapeutics study with tissue demonstrating LOH of",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Histologically confirmed recurrent unresectable, locally advanced, or metastatic",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Primary condition is CRC, NSCLC, HNSCC, TNBC, RCC, or other solid tumor with EGF",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Received previous required therapy for the appropriate solid tumor disease",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Adequate organ function",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ECOG performance status of 0 to 1",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Life expectancy of \u22653 months",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Willing to comply with study schedule including long-term safety follow-up",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Disease suitable for local therapy or able to receive standard of care therapeut",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Prior allogeneic stem cell transplant",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Prior solid organ transplant",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Cancer therapy within 3 weeks or 3 half-lives of A2B395 infusion",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Radiotherapy within 28 days of A2B395 infusion",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Unstable angina, arrhythmia, myocardial infarction, or significant cardiac disea",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "New symptomatic pulmonary embolism or deep vein thrombosis within 3 months of en",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of interstitial lung disease (including drug-induced ILD and radiation p",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Requires supplemental home oxygen",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Females of childbearing potential who are pregnant or breastfeeding",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Subjects of childbearing potential not willing to practice birth control from co",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT04585750",
+    "v2_verdict": "UNCERTAIN",
+    "gt_verdict": "INELIGIBLE",
+    "retrace_verdict": "UNCERTAIN",
+    "step1_issues": [],
+    "num_predicates": 32,
+    "num_failures": 0,
+    "num_unknowns": 23,
+    "driving_predicates": [],
+    "all_evaluated": [
+      {
+        "criterion_text": "At least 18 years of age (or 12-17 after Safety Review Committee approval)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Locally advanced or metastatic solid malignancy",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "TP53 Y220C mutation",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.tp53_status",
+        "operator": "eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ECOG performance status of 0 or 1",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Previously treated with one or more lines of anticancer therapy",
+        "criterion_type": "inclusion",
+        "variable": "prior_line_count_total",
+        "operator": "gte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Adequate organ function",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Measurable disease per RECIST v1.1 (Phase 2)",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Anti-PD-1/PD-L1 naive or must have progressed on treatment (not discon",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Measurable disease",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Anti-cancer therapy within 21 days (or 5 half-lives) of study drug",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Radiotherapy within 14 days of study drug",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Primary CNS tumor",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of leptomeningeal disease or spinal cord compression",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Brain metastases unless neurologically stable and not requiring steroids",
+        "criterion_type": "exclusion",
+        "variable": "disease.brain_metastases_present",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Stroke or transient ischemic attack within 6 months prior to screening",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Significant heart conditions (unstable angina, uncontrolled hypertension, recent",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Strong CYP3A4 inducers or strong CYP2C9 inhibitors/inducers within 14 days of fi",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of GI disease that may interfere with absorption or inability to take or",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of prior organ transplant",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Known active malignancy (except treated cervical intraepithelial neoplasia or no",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Known active uncontrolled Hepatitis B, Hepatitis C, or HIV infection",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 2: Known KRAS mutation (SNV)",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Prior anti-PD-1/PD-L1/PD-L2 or T-cell co-receptor agent discontinued d",
+        "criterion_type": "exclusion",
+        "variable": "prior_treatments[*].irae_grade_3_4",
+        "operator": "list_any_eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Received live or live-attenuated vaccine within 30 days prior to first",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Diagnosis of immunodeficiency or receiving chronic systemic steroid th",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Hypersensitivity (>=Grade 3) to pembrolizumab or its excipients",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Active autoimmune disease requiring systemic treatment in past 2 years",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: History of radiation pneumonitis",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: History of or active non-infectious pneumonitis/interstitial lung dise",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Active infection requiring systemic therapy",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Known history of HIV infection",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Previously received rezatapopt",
+        "criterion_type": "exclusion",
+        "variable": "prior_treatments[*].drug",
+        "operator": "list_any_eq",
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT04333706",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "UNCERTAIN",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 29,
+    "num_failures": 3,
+    "num_unknowns": 11,
+    "driving_predicates": [
+      {
+        "criterion_text": "Metastatic triple negative or hormone resistant, HER2-negative breast cancer (Ph",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "required_value": "breast cancer",
+        "record_value": "Triple-negative breast cancer (TNBC)",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "Metastatic disease (Phase I)",
+        "variable": "disease.is_metastatic",
+        "operator": "is_true",
+        "required_value": null,
+        "record_value": false,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "TNBC confirmed histologically: ER/PR IHC <10% and HER2-negative (Phase II and Pa",
+        "variable": "disease.histology_subtype",
+        "operator": "eq",
+        "required_value": "TNBC",
+        "record_value": "Triple-negative breast cancer",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "Written informed consent and ability to comply with study procedures",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Age >= 18 years",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Metastatic triple negative or hormone resistant, HER2-negative breast cancer (Ph",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Metastatic disease (Phase I)",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_metastatic",
+        "operator": "is_true",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "TNBC: ER/PR IHC positivity <10% and HER2-negative (Phase I)",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.her2",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "TNBC: ER negative (Phase I)",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.er",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "TNBC: PR negative (Phase I)",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.pr",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Life expectancy at least 6 months (Phase I)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Prior cytotoxic chemotherapy at least 3 weeks before study drug; capecitabine no",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "TNBC confirmed histologically: ER/PR IHC <10% and HER2-negative (Phase II and Pa",
+        "criterion_type": "inclusion",
+        "variable": "disease.histology_subtype",
+        "operator": "eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Stage I, II, or III breast cancer with less than complete pCR (Phase II and Para",
+        "criterion_type": "inclusion",
+        "variable": "disease.stage_numeric",
+        "operator": "in_set",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Must not have received prior systemic treatment except neoadjuvant regimen; neoa",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].setting",
+        "operator": "list_none_eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Neoadjuvant regimen must not have included capecitabine (Phase II and Parallel B",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].drug",
+        "operator": "list_none_eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Neoadjuvant regimen must not have included sarilumab (Phase II and Parallel Base",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].drug",
+        "operator": "list_none_eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "ECOG Performance Status <= 2",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Adequate organ function (ANC, platelets, hemoglobin, ALT, AST, bilirubin, GFR)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "WOCBP must use highly effective contraception during study and for 24 weeks afte",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Males with female partners of childbearing potential must use contraception duri",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Unwilling/unable to use acceptable contraception for entire study and 24 weeks a",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Pregnant or breastfeeding females",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of disease or condition contraindicating protocol therapy or putting sub",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Hepatitis B infection (except prior vaccination) (Phase I and II)",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Known history of tuberculosis (Phase I and II)",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of diverticulitis (Phase I and II)",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Use of live vaccines within 30 days prior to study treatment (Phase I and II)",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of other malignancy with higher risk of recurrence or death than study-r",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Prisoners or involuntarily incarcerated subjects",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Subjects compulsorily detained for treatment of psychiatric or physical illness",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Inability to comply with study and/or follow-up procedures",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT05673200",
+    "v2_verdict": "ELIGIBLE",
+    "gt_verdict": "INELIGIBLE",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 29,
+    "num_failures": 1,
+    "num_unknowns": 5,
+    "driving_predicates": [
+      {
+        "criterion_text": "Histologically confirmed triple-negative breast cancer (ER and PR =< 10%, HER2-n",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "required_value": "breast cancer",
+        "record_value": "Triple-negative breast cancer (TNBC)",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "Histologically confirmed triple-negative breast cancer (ER and PR =< 10%, HER2-n",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "ER negative (=< 10%)",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.er",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "PR negative (=< 10%)",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.pr",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "HER2-negative per ASCO/CAP guidelines",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.her2",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Disease is metastatic or unresectable",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Age >= 18 years",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ECOG performance status =< 2",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Absolute neutrophil count (ANC) >= 1500/mm^3",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Platelets >= 100,000/mm^3",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Hemoglobin >= 9 g/dL without pRBC transfusion within prior 14 days",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Creatinine clearance >= 30 mL/min",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Total bilirubin =< 1.5 x ULN OR direct bilirubin =< ULN",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "AST and ALT =< 3 x institutional ULN",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Chronic HBV: undetectable viral load on suppressive therapy",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of HCV: treated and cured, or currently on treatment with undetectable v",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Treated brain metastases eligible if measurable extracranial disease present and",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Carcinomatous meningitis \u2014 not eligible",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "New York Heart Association Functional Classification class II or better",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "No live attenuated vaccines within 30 days prior to registration",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Prior peripheral neuropathy recovered to grade 1 or less",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "HIV-infected patients on effective antiretroviral therapy with undetectable vira",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "0-3 prior lines of chemotherapy in the metastatic setting",
+        "criterion_type": "inclusion",
+        "variable": "prior_line_count_metastatic",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Prior PD-1/PD-L1 monoclonal antibodies in any disease setting are eligible",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Dose Expansion Cohort: measurable disease per RECIST 1.1",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Pregnant women excluded",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Breastfeeding should be discontinued if mother treated with pembrolizumab",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Ability to understand and willingness to sign written informed consent",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Recovered from adverse events due to prior anti-cancer therapy (residual toxicit",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "No transfusion of blood products or administration of colony stimulating factors",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT06568692",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "UNCERTAIN",
+    "retrace_verdict": "UNCERTAIN",
+    "step1_issues": [],
+    "num_predicates": 19,
+    "num_failures": 0,
+    "num_unknowns": 11,
+    "driving_predicates": [],
+    "all_evaluated": [
+      {
+        "criterion_text": "Aged \u226518 years at Screening",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Triple-negative breast cancer, advanced or metastatic",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "HR positive, ER positive, HER2 negative advanced or metastatic breast cancer",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Has measurable disease per RECIST 1.1",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Resistant or intolerant to taxanes and/or anthracycline-containing regimen for a",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Life expectancy of at least 24 weeks",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ECOG PS 0 or 1 at screening",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "in_set",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Adequate bone marrow, liver, and renal function (lab requirements)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Received any line of treatment for advanced or metastatic breast cancer within 2",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Currently receiving hormone replacement therapy not discontinued within 21 days ",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Received IV or oral 5-FU analog in the 4 weeks prior to C1D1",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Received DPD inhibitor within 4 weeks prior to C1D1",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Homozygous or compound heterozygous DPYD variants resulting in complete or near-",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History or presence of clinically significant abnormal 12-lead ECG results",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Prolonged QTc (Fridericia's correction) >480 msec at Screening",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of prolonged QTc interval, ventricular tachycardia/fibrillation, signifi",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Congenital long QT syndrome or family history of long QT syndrome",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Clinically significant cardiac disease including myocardial infarction, unstable",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Is pregnant or breastfeeding",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT05377996",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "UNCERTAIN",
+    "retrace_verdict": "UNCERTAIN",
+    "step1_issues": [],
+    "num_predicates": 13,
+    "num_failures": 0,
+    "num_unknowns": 8,
+    "driving_predicates": [],
+    "all_evaluated": [
+      {
+        "criterion_text": "Recurrent or advanced solid tumor and has disease",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ECOG performance status 0 or 1",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "At least one measurable or non-target lesion per RECIST 1.1",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Tumor tissue available or willing to undergo biopsy",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Brain MRI during screening required for TNBC or history/suspicion of brain metas",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Prior treatment with an ADC containing an auristatin payload",
+        "criterion_type": "exclusion",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Major surgery within 28 days, systemic anticancer therapy within 28 days or 5 ha",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Diagnosis of additional malignancy requiring active treatment within 2 years pri",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Untreated CNS metastases (including new and progressive brain metastases), histo",
+        "criterion_type": "exclusion",
+        "variable": "disease.brain_metastases_present",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Prior B7-H4 targeted treatment",
+        "criterion_type": "exclusion",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of cirrhosis, hepatic fibrosis, esophageal or gastric varices, or other ",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Current severe, uncontrolled systemic disease or intercurrent illness that could",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Clinically significant cardiovascular disease",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P003",
+    "nct_id": "NCT07214532",
+    "v2_verdict": "UNCERTAIN",
+    "gt_verdict": "INELIGIBLE",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 24,
+    "num_failures": 1,
+    "num_unknowns": 7,
+    "driving_predicates": [
+      {
+        "criterion_text": "Distant metastases beyond regional lymph nodes (Stage IV) or evidence of recurre",
+        "variable": "disease.is_metastatic",
+        "operator": "is_true",
+        "required_value": null,
+        "record_value": false,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "exclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "Signed and dated Informed Consent Form obtained prior to screening",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Patient is >= 18 years old at time of ICF signature",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Patient is female with known menopausal status or male",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Histologically confirmed unilateral and unifocal primary invasive adenocarcinoma",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Breast cancer positive for ER and/or PR",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.hormone_receptor_positive",
+        "operator": "is_true",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "HER2-negative breast cancer (ISH negative or IHC 0 or 1+; if IHC 2+ then ISH neg",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.her2",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Available archival tumor tissue for Signatera testing",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "After surgical resection with negative margins and Anatomic Stage II (N1, or if ",
+        "criterion_type": "inclusion",
+        "variable": "disease.stage_numeric",
+        "operator": "eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "No contraindication to adjuvant endocrine therapy; planned ET for 5 or more year",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Provider and patient agreeable to initiate CDK4/6 inhibitors only upon ctDNA det",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Patient may have received up to 6 months of standard adjuvant ET at enrollment a",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ECOG Performance Status of 0 or 1",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "No clinical contraindication to ribociclib or abemaciclib",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Willing and able to comply with scheduled visits, treatment plans, and trial pro",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Women of childbearing potential must have negative serum pregnancy test within 1",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Women of reproductive potential must use effective contraception during CDK4/6 i",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Prior exposure to a CDK4/6 inhibitor",
+        "criterion_type": "exclusion",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Concurrently using hormone replacement therapy",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Known contraindication or hypersensitivity to ribociclib or abemaciclib per FDA ",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Multicentric and/or multifocal and synchronous contralateral breast cancer",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Distant metastases beyond regional lymph nodes (Stage IV) or evidence of recurre",
+        "criterion_type": "exclusion",
+        "variable": "disease.is_metastatic",
+        "operator": "is_true",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Concurrent invasive malignancy or prior invasive malignancy whose treatment was ",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Concurrent severe/uncontrolled medical condition causing safety risks or limitin",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Received investigational product within 30 days prior to enrollment or within 5 ",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P003",
+    "nct_id": "NCT06106477",
+    "v2_verdict": "UNCERTAIN",
+    "gt_verdict": "INELIGIBLE",
+    "retrace_verdict": "UNCERTAIN",
+    "step1_issues": [],
+    "num_predicates": 28,
+    "num_failures": 0,
+    "num_unknowns": 14,
+    "driving_predicates": [],
+    "all_evaluated": [
+      {
+        "criterion_text": "Patient age >= 18 years",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ER positive breast cancer",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.er",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "HER2 negative (IHC 0, 1+, or 2+ with negative ISH)",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.her2",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Localized breast cancer stages I-III",
+        "criterion_type": "inclusion",
+        "variable": "disease.stage_numeric",
+        "operator": "in_set",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Primary condition is breast cancer",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "BMI >= 25",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ECOG Performance Status 0-2",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Willingness to start intermittent fasting intervention within three months of st",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Subjects who received neoadjuvant or adjuvant chemotherapy must have recovered f",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Subjects who received neoadjuvant endocrine therapy eligible only after definiti",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Adequate hepatic, renal function and bone marrow reserve",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Willingness to consent to nighttime fasting and daytime eating period",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Negative pregnancy test within seven days of registration (women of childbearing",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Ability to understand and willingness to sign informed consent",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Subject works late night shifts",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Subject currently or previously on a fasting diet or weight-loss agent in the pa",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of an eating disorder (e.g., anorexia nervosa, bulimia nervosa)",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Presence of diabetes",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Presence of chronic dizziness or vertigo",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Presence of endocrine disorders prone to blood sugar fluctuations",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Poorly controlled neurological disorders (e.g., epilepsy, Parkinson's disease)",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Poorly controlled co-existing cardiac disease (e.g., chronic hypotension, CHF NY",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of heavy alcohol use",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of liver disease (cirrhosis, active hepatitis) or chronic renal disease",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Untreated or active infections (e.g., hepatitis, HIV, chronic unhealed infection",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Clinically significant illness or systemic disease",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Recent hospitalization for a major illness within one month of enrollment",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Subject is pregnant or breastfeeding",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P004",
+    "nct_id": "NCT05098210",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "UNCERTAIN",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 26,
+    "num_failures": 4,
+    "num_unknowns": 2,
+    "driving_predicates": [
+      {
+        "criterion_text": "MELANOMA SPECIFIC: History of detectable disease during/after treatment with a P",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "required_value": "PD-1/PD-L1 inhibitor",
+        "record_value": null,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "BREAST CANCER SPECIFIC: Histologically confirmed stage IV (metastatic) HR-positi",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "required_value": "breast cancer",
+        "record_value": "melanoma",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "BREAST CANCER SPECIFIC: Prior treatment with CDK4/6 inhibitor",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "required_value": "CDK4/6 inhibitor",
+        "record_value": null,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "BREAST CANCER SPECIFIC: Prior treatment with endocrine therapy",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "required_value": "endocrine therapy",
+        "record_value": null,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "Age >= 18 years",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ECOG performance status 0, 1, or 2",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Measurable disease by RECIST 1.1",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Adequate renal function (creatinine < 1.5 mg/dL or eGFR > 60 mL/min)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Adequate hepatic function (tBili, AST/ALT within limits)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Grade <= 1 dyspnea and SaO2 >= 92% on ambient air",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Exclusion: active ILD/pneumonitis or history of ILD/pneumonitis requiring system",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "LVEF >= 50% for patients >= 60 years",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Exclusion: history of myocarditis, CHF class III/IV, unstable angina, serious ar",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ANC > 1000 cells/mm^3",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Hemoglobin >= 9 mg/dL",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Platelet count >= 50,000/uL",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Toxicity from prior therapy recovered to CTCAE grade <= 2",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "MELANOMA SPECIFIC: Histologically confirmed metastatic (stage IV) or unresectabl",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "MELANOMA SPECIFIC: Stage IV or unresectable locally advanced (stage IIIC/IIID)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "MELANOMA SPECIFIC: At least one prior line of therapy with persistent/recurrent ",
+        "criterion_type": "inclusion",
+        "variable": "prior_line_count_total",
+        "operator": "gte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "MELANOMA SPECIFIC: Known BRAF mutational status",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "MELANOMA SPECIFIC: History of detectable disease during/after treatment with a P",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "BREAST CANCER SPECIFIC: Histologically confirmed stage IV (metastatic) HR-positi",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "BREAST CANCER SPECIFIC: Stage IV (metastatic) disease",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_metastatic",
+        "operator": "is_true",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "BREAST CANCER SPECIFIC: Hormone receptor positive (ER positive or PR positive)",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.hormone_receptor_positive",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "BREAST CANCER SPECIFIC: HER2 negative (IHC 0 or 1+, or IHC 2+/ISH-)",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.her2",
+        "operator": "eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "BREAST CANCER SPECIFIC: Prior treatment with CDK4/6 inhibitor",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "BREAST CANCER SPECIFIC: Prior treatment with endocrine therapy",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Willing and able to comply with study procedures and provide written informed co",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Agreement to use adequate contraception if sex can lead to pregnancy",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P004",
+    "nct_id": "NCT03452774",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "UNCERTAIN",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 7,
+    "num_failures": 1,
+    "num_unknowns": 2,
+    "driving_predicates": [
+      {
+        "criterion_text": "ECOG PS > 2",
+        "variable": "ecog_ps",
+        "operator": "gt",
+        "required_value": 2,
+        "record_value": 2,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "exclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "Patients with solid and hematological malignancies",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "MSI (MMR) biomarker status determined",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Cancer-related biomarkers/gene variants/fusions/rearrangements assessed by local",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Decision to consider clinical trial pre-screening enrollment by primary provider",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ECOG PS > 2",
+        "criterion_type": "exclusion",
+        "variable": "ecog_ps",
+        "operator": "gt",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Abnormal organ function",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Hospice enrollment",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P005",
+    "nct_id": "NCT05523947",
+    "v2_verdict": "UNCERTAIN",
+    "gt_verdict": "INELIGIBLE",
+    "retrace_verdict": "UNCERTAIN",
+    "step1_issues": [],
+    "num_predicates": 18,
+    "num_failures": 0,
+    "num_unknowns": 13,
+    "driving_predicates": [],
+    "all_evaluated": [
+      {
+        "criterion_text": "Pathologically confirmed HER2-positive (Dose Escalation)",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.her2",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Mandatory provision of tumor tissue sample",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "At least one measurable lesion (Dose Expansion)",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Cohort 1: HER2-positive biliary tract cancer",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Cohort 2: HER2-positive metastatic solid tumor other than breast, gastric/GEJ ad",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Uncontrolled CNS metastases",
+        "criterion_type": "exclusion",
+        "variable": "disease.brain_metastases_present",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Spinal cord compression",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Carcinomatous meningitis",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Acute coronary syndromes",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Heart failure",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Interstitial lung disease (ILD)",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Pneumonitis",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of a second primary cancer",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "HIV infection",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Active chronic hepatitis B",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Hepatitis C",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Systemic steroid therapy",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Autoimmune disease",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P005",
+    "nct_id": "NCT06625775",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "UNCERTAIN",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 19,
+    "num_failures": 2,
+    "num_unknowns": 6,
+    "driving_predicates": [
+      {
+        "criterion_text": "BBO-10203 + Fulvestrant cohort HR+/HER2- aBC: must have been treated with a CDK4",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "required_value": "CDK4/6 inhibitor",
+        "record_value": null,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "KRAS mutant aCRC exclusion: HER2 amplification",
+        "variable": "biomarkers.her2",
+        "operator": "eq",
+        "required_value": "positive",
+        "record_value": "positive",
+        "result": "CONFIRMED_MET",
+        "criterion_type": "exclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "Locally advanced/unresectable or metastatic HER2-positive aBC, HR-positive/HER2-",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Measurable disease by RECIST v1.1 (bone-only evaluable disease permitted for HR+",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ECOG performance status 0-1",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Adequate LVEF assessed by ECHO or MUGA (BBO-10203 + Trastuzumab cohorts only)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Stable brain metastases required (if present)",
+        "criterion_type": "inclusion",
+        "variable": "disease.brain_metastases_irradiated",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "HER2-positive aBC: at least 2 prior lines of anti-HER2-directed therapy (or at l",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Monotherapy cohort HR+/HER2- aBC, KRAS mutant aCRC or aNSCLC: progression on or ",
+        "criterion_type": "inclusion",
+        "variable": "prior_line_count_total",
+        "operator": "gte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "BBO-10203 + Fulvestrant cohort HR+/HER2- aBC: confirmed PIK3CA mutation",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.pik3ca_status",
+        "operator": "eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "BBO-10203 + Fulvestrant cohort HR+/HER2- aBC: must have been treated with a CDK4",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "BBO-10203 + Fulvestrant + ribociclib cohort HR+/HER2- aBC: confirmed PIK3CA muta",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.pik3ca_status",
+        "operator": "eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "BBO-10203 + Fulvestrant + ribociclib cohort HR+/HER2- aBC: no prior systemic the",
+        "criterion_type": "inclusion",
+        "variable": "prior_line_count_metastatic",
+        "operator": "eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "BBO-10203 + FOLFOX + Bevacizumab cohort KRAS mutant aCRC: one prior line of irin",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "KRAS mutant aCRC exclusion: KRAS G12R mutation",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "KRAS mutant aCRC exclusion: BRAF V600E mutation",
+        "criterion_type": "exclusion",
+        "variable": "biomarkers.braf_variant",
+        "operator": "eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "KRAS mutant aCRC exclusion: HER2 amplification",
+        "criterion_type": "exclusion",
+        "variable": "biomarkers.her2",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "KRAS mutant aCRC exclusion: dMMR/MSI-H tumors",
+        "criterion_type": "exclusion",
+        "variable": "biomarkers.msi",
+        "operator": "eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "KRAS mutant aNSCLC exclusion: KRAS G12R mutation",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "KRAS mutant aNSCLC exclusion: other targetable driver mutations (EGFR, ALK, ROS1",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Untreated and/or non-stable brain metastases",
+        "criterion_type": "exclusion",
+        "variable": "disease.brain_metastases_irradiated",
+        "operator": "is_false",
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P005",
+    "nct_id": "NCT07029399",
+    "v2_verdict": "UNCERTAIN",
+    "gt_verdict": "INELIGIBLE",
+    "retrace_verdict": "UNCERTAIN",
+    "step1_issues": [],
+    "num_predicates": 24,
+    "num_failures": 0,
+    "num_unknowns": 11,
+    "driving_predicates": [],
+    "all_evaluated": [
+      {
+        "criterion_text": "Able to provide written informed consent",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Advanced unresectable or metastatic solid tumor (Part 1, 2 & 3 only)",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Advanced unresectable or metastatic HR+/HER2- breast cancer (Part 4 & 5 only)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Refractory to or unable to tolerate existing therapies (Part 1, 2 & 4 only)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Measurable or evaluable disease (Part 1, 2 & 4 only)",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Measurable disease (Part 3 & 5 only)",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Eighteen years of age or older",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ECOG status of 0 or 1",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Adequate organ function",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Patients with female reproductive organs must be surgically sterile, post-menopa",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Patients capable of insemination must use highly effective contraception and ref",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Able to swallow oral medications",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Willing to provide tumor tissue",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Advanced solid tumor that is a candidate for curative treatment",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of another malignancy (except adequately treated local basal cell/squamo",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Not recovered from the effects of prior anticancer therapy",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Clinically significant cardiovascular event within 6 months (MI, arterial thromb",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Known active CNS metastases and/or carcinomatous meningitis",
+        "criterion_type": "exclusion",
+        "variable": "disease.brain_metastases_present",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Active interstitial lung disease requiring treatment",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of uveitis, retinopathy, or other clinically significant retinal disease",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Major surgery within 30 days of first dose",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Active uncontrolled infectious disease",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Significant liver disease (Child Pugh class B or C)",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Prior selective investigational inhibitors or degraders (Part 5 only)",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P005",
+    "nct_id": "NCT04030507",
+    "v2_verdict": "UNCERTAIN",
+    "gt_verdict": "INELIGIBLE",
+    "retrace_verdict": "UNCERTAIN",
+    "step1_issues": [],
+    "num_predicates": 14,
+    "num_failures": 0,
+    "num_unknowns": 5,
+    "driving_predicates": [],
+    "all_evaluated": [
+      {
+        "criterion_text": "Histologically or cytologically confirmed breast cancer",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Pathologic assessment of ER, PR, and HER2 status",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Radiographic evidence of extracranial distant metastases or unresectable locally",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Initiating first-line or second-line chemotherapy for metastatic/recurrent disea",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Age 18 years or older",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Life expectancy greater than 12 weeks",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Willing to undergo study procedures",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Women of child-bearing potential must agree to use adequate contraception",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Ability to understand and willingness to sign informed consent",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Contraindication to MRI (e.g. non-compatible implanted metallic device)",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Chronic kidney disease stage IV-V or end stage renal disease",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of anaphylactic reactions to gadolinium",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Pregnant or breastfeeding women",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Prior diagnosis of brain metastases",
+        "criterion_type": "exclusion",
+        "variable": "disease.brain_metastases_present",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P005",
+    "nct_id": "NCT05150691",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "UNCERTAIN",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 24,
+    "num_failures": 1,
+    "num_unknowns": 10,
+    "driving_predicates": [
+      {
+        "criterion_text": "Part 2 Group 9: Advanced/unresectable, recurrent, or metastatic endometrial carc",
+        "variable": "disease.primary_condition",
+        "operator": "in_set",
+        "required_value": [
+          "endometrial carcinoma",
+          "uterine carcinosarcoma",
+          "uterine serous papillary carcinoma",
+          "EC",
+          "UCS",
+          "USPC"
+        ],
+        "record_value": "breast cancer",
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "HER2-positive or HER2-expressing (non-null) advanced/unresectable/recurrent/meta",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "HER2-positive or HER2-expressing (IHC score >= 1, except cohort 2h which require",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.her2_ihc_score",
+        "operator": "gte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "At least 1 measurable lesion per RECIST 1.1",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Provide signed informed consent",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ECOG performance status of 0-1",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "LVEF >= 50% by ECHO or MUGA",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Adequate organ functions",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "HER2 status documented or tumor sample available for HER2 testing",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Life expectancy of >= 3 months",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Part 2 Group 9: Advanced/unresectable, recurrent, or metastatic endometrial carc",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "in_set",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Part 2 Group 9: Progressed on or after at least 1 line of systemic treatment inc",
+        "criterion_type": "inclusion",
+        "variable": "prior_line_count_metastatic",
+        "operator": "gte",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Part 2 Group 9: No more than 3 prior lines of therapy for advanced/unresectable ",
+        "criterion_type": "inclusion",
+        "variable": "prior_line_count_metastatic",
+        "operator": "lte",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Part 2 Group 9: Prior exposure to platinum-based therapy",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Part 2 Group 9: Prior exposure to immune checkpoint inhibitor (ICI)",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].drug_class",
+        "operator": "list_any_eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of symptomatic CHF (NYHA class II-IV) or serious cardiac arrhythmia requ",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of myocardial infarction or unstable angina within 6 months before Day 1",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Average QTcF > 450 ms in males and > 470 ms in females",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of clinically significant lung diseases",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Uncontrolled infection requiring IV antibiotics, antivirals, or antifungals",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "HIV infection with AIDS-defining illness or active viral hepatitis",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Clinically active brain metastases",
+        "criterion_type": "exclusion",
+        "variable": "disease.brain_metastases_present",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Unresolved toxicities from previous anticancer therapy (> Grade 1 per NCI-CTCAE ",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Known hypersensitivity to drug substances or inactive ingredients",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Part 2 only: Multiple primary malignancies within 3 years (except non-melanoma s",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P005",
+    "nct_id": "NCT04585750",
+    "v2_verdict": "UNCERTAIN",
+    "gt_verdict": "INELIGIBLE",
+    "retrace_verdict": "UNCERTAIN",
+    "step1_issues": [],
+    "num_predicates": 32,
+    "num_failures": 0,
+    "num_unknowns": 23,
+    "driving_predicates": [],
+    "all_evaluated": [
+      {
+        "criterion_text": "At least 18 years of age (or 12-17 after Safety Review Committee approval)",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Locally advanced or metastatic solid malignancy",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "TP53 Y220C mutation",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.tp53_status",
+        "operator": "eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ECOG performance status of 0 or 1",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Previously treated with one or more lines of anticancer therapy",
+        "criterion_type": "inclusion",
+        "variable": "prior_line_count_total",
+        "operator": "gte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Adequate organ function",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Measurable disease per RECIST v1.1 (Phase 2)",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Phase 1b: Anti-PD-1/PD-L1 naive or must have progressed on treatment (not discon",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Measurable disease",
+        "criterion_type": "inclusion",
+        "variable": "disease.is_advanced_measurable",
+        "operator": "is_true",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Anti-cancer therapy within 21 days (or 5 half-lives) of study drug",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Radiotherapy within 14 days of study drug",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Primary CNS tumor",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of leptomeningeal disease or spinal cord compression",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Brain metastases unless neurologically stable and not requiring steroids",
+        "criterion_type": "exclusion",
+        "variable": "disease.brain_metastases_present",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Stroke or transient ischemic attack within 6 months prior to screening",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Significant heart conditions (unstable angina, uncontrolled hypertension, MI, CH",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Strong CYP3A4 inducers or strong CYP2C9 inhibitors/inducers within 14 days of fi",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of GI disease interfering with absorption or unable to take oral medicat",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of prior organ transplant",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Known active malignancy (except treated cervical intraepithelial neoplasia or no",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Known active uncontrolled Hepatitis B, Hepatitis C, or HIV infection",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 2: Known KRAS mutation (SNV)",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Prior anti-PD-1/PD-L1/PD-L2 or T-cell receptor-directed therapy discon",
+        "criterion_type": "exclusion",
+        "variable": "prior_treatments[*].irae_grade_3_4",
+        "operator": "list_any_eq",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Live or live-attenuated vaccine within 30 days prior to first dose",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Diagnosis of immunodeficiency or receiving chronic systemic steroid th",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Hypersensitivity (Grade 3+) to pembrolizumab or its excipients",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Active autoimmune disease requiring systemic treatment in past 2 years",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: History of radiation pneumonitis",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: History of or active non-infectious pneumonitis/interstitial lung dise",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Active infection requiring systemic therapy",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Known history of HIV infection",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Phase 1b: Previously received rezatapopt",
+        "criterion_type": "exclusion",
+        "variable": "prior_treatments[*].drug",
+        "operator": "list_any_eq",
+        "result": "DATA_MISSING"
+      }
+    ]
+  },
+  {
+    "pid": "P005",
+    "nct_id": "NCT06686394",
+    "v2_verdict": "INELIGIBLE",
+    "gt_verdict": "UNCERTAIN",
+    "retrace_verdict": "INELIGIBLE",
+    "step1_issues": [],
+    "num_predicates": 25,
+    "num_failures": 3,
+    "num_unknowns": 12,
+    "driving_predicates": [
+      {
+        "criterion_text": "Arm 1: Disease progression on or after prior trastuzumab deruxtecan (T-DXd) trea",
+        "variable": "prior_treatments[*].drug",
+        "operator": "list_any_eq",
+        "required_value": "trastuzumab deruxtecan",
+        "record_value": null,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "Arm 3: Prior T-DXd treatment with disease progression and T-DXd as most recent t",
+        "variable": "prior_treatments[*].drug",
+        "operator": "list_any_eq",
+        "required_value": "trastuzumab deruxtecan",
+        "record_value": null,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "inclusion"
+      },
+      {
+        "criterion_text": "Arm 3: Prior treatment with tucatinib, lapatinib, neratinib, or investigational ",
+        "variable": "prior_treatments[*].drug",
+        "operator": "list_any_eq",
+        "required_value": "tucatinib",
+        "record_value": null,
+        "result": "CONFIRMED_FAILED",
+        "criterion_type": "exclusion"
+      }
+    ],
+    "all_evaluated": [
+      {
+        "criterion_text": "Histologically confirmed HER2+ locally advanced unresectable or metastatic breas",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "HER2 positive status",
+        "criterion_type": "inclusion",
+        "variable": "biomarkers.her2",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Primary condition is breast cancer",
+        "criterion_type": "inclusion",
+        "variable": "disease.primary_condition",
+        "operator": "eq",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "HIV-infected participants must have well-controlled HIV on antiretroviral therap",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "HBsAg positive participants must have received HBV antiviral therapy for at leas",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Participants with history of HCV infection must have undetectable HCV viral load",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "ECOG performance status 0 to 1",
+        "criterion_type": "inclusion",
+        "variable": "ecog_ps",
+        "operator": "lte",
+        "result": "CONFIRMED_MET"
+      },
+      {
+        "criterion_text": "Arm 1: At least 2 and at most 5 prior lines of anti-HER2 therapy in locally adva",
+        "criterion_type": "inclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Arm 1: Disease progression on or after prior trastuzumab deruxtecan (T-DXd) trea",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].drug",
+        "operator": "list_any_eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Arm 2: No more than 5 prior lines of anti-HER2 therapy in locally advanced or me",
+        "criterion_type": "inclusion",
+        "variable": "prior_line_count_metastatic",
+        "operator": "lte",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Arm 3: Prior T-DXd treatment with disease progression and T-DXd as most recent t",
+        "criterion_type": "inclusion",
+        "variable": "prior_treatments[*].drug",
+        "operator": "list_any_eq",
+        "result": "CONFIRMED_FAILED"
+      },
+      {
+        "criterion_text": "Arm 3: Maximum of 3 prior lines of anti-HER2 therapy in locally advanced or meta",
+        "criterion_type": "inclusion",
+        "variable": "prior_line_count_metastatic",
+        "operator": "lte",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Uncontrolled or significant cardiovascular disease",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of noninfectious pneumonitis/ILD requiring steroids or current pneumonit",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Clinically severe respiratory compromise",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "History of or current leptomeningeal disease",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Clinically significant corneal disease",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Ongoing uncontrolled systemic bacterial, fungal, or viral infection",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "HIV infected participants with history of Kaposi's sarcoma and/or Multicentric C",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Known additional malignancy that is progressing or required active treatment wit",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Evidence of spinal cord compression or brain metastases",
+        "criterion_type": "exclusion",
+        "variable": "disease.brain_metastases_present",
+        "operator": "is_true",
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Active infection requiring systemic therapy",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Concurrent active HBV and HCV infection",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Major surgical procedure less than 28 days before enrollment",
+        "criterion_type": "exclusion",
+        "variable": null,
+        "operator": null,
+        "result": "DATA_MISSING"
+      },
+      {
+        "criterion_text": "Arm 3: Prior treatment with tucatinib, lapatinib, neratinib, or investigational ",
+        "criterion_type": "exclusion",
+        "variable": "prior_treatments[*].drug",
+        "operator": "list_any_eq",
+        "result": "CONFIRMED_FAILED"
+      }
+    ]
+  }
+]
