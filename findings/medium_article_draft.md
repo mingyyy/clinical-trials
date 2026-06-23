@@ -239,6 +239,26 @@ A rule in a system prompt has soft authority. It can be overridden not by contra
 
 ---
 
+## Finding 8: The Ontology Didn't Need Expanding. Three Bugs Did.
+
+The accuracy audit for Structured Extraction identified one-directional errors — 18 false-UNCERTAINs, all going the same way — and diagnosed them as ontology gaps: missing variables for disease activity, HER2 IHC score, TP53, and PIK3CA. A three-phase expansion roadmap was drafted.
+
+Before building Phase 1, I checked whether the variables actually existed in the code. They did. Every "missing" variable was already defined in the extraction schema, listed in the parser's variable catalog, and populated in the patient profiles.
+
+The errors came from three implementation bugs:
+
+**Bug 1: The evaluator didn't handle exclusion logic correctly.** When a patient met an exclusion criterion — say, HER2 IHC 3+ matching a "HER2-overexpressing excluded" rule — the evaluator registered `CONFIRMED_MET` on the exclusion. But the verdict function only checked for `CONFIRMED_FAILED`. A met exclusion was silently ignored. One missing `elif` branch.
+
+**Bug 2: The parser buried a useful variable in an OR predicate.** For criteria like "advanced, locally advanced, or metastatic disease required," the parser generated an OR with four branches: `is_unresectable`, `is_locally_advanced`, `is_metastatic`, and `is_advanced_measurable`. Two branches evaluated as null (DATA_MISSING), one as false, one as false. The OR returned DATA_MISSING — even though `is_advanced_measurable = false` already answered the question. The fix: tell the parser to use `is_advanced_measurable` as a standalone predicate, not as one branch among four.
+
+**Bug 3: A derived field counted unknowns as zeros.** `prior_line_count_metastatic` counted treatments where `setting == "metastatic"`. When treatments had `setting = null` (unknown), the count returned 0 — implying "zero metastatic treatments" when the answer is "unknown." The fix: return null when any treatment has an unknown setting.
+
+Three fixes. No ontology expansion. No new variables. The accuracy went from 75.8% to 87.5%. All three false-ELIGIBLE errors — the safety-critical ones — were eliminated. The remaining 16 errors split evenly: 9 over-INELIGIBLE, 7 over-UNCERTAIN. No one-directional signature left.
+
+The meta-lesson is worth stating explicitly: **one-directional errors are a diagnostic signal, not a diagnosis.** The audit saw one-directional errors and concluded "incomplete ontology." The correct conclusion was "something is systematically wrong" — which turned out to be implementation bugs, not missing vocabulary. The same signal can point to different root causes. Check the code before expanding the schema.
+
+---
+
 ## What to Decide Before You Pick a Framework
 
 **The framework decision is the last decision, not the first.** Use LangGraph when you need a team to debug the pipeline in production. Use PydanticAI when output schema stability at the API boundary is load-bearing. Use smolagents when the task is genuinely open-ended and the agent needs to decide what to do, not just how. Use the raw API when cost and simplicity are priorities and the pipeline is stable. None of these choices will affect clinical output quality.
@@ -261,10 +281,10 @@ A rule in a system prompt has soft authority. It can be overridden not by contra
 
 The expectation going in was that framework choice would be the primary differentiator. A week of building showed the framework is the least interesting variable.
 
-The interesting variables are: one sentence in a prompt, one field in a patient profile, how many trials share a context window, and how the model's confidence calibration interacts with explicit rules. None of these appear in framework benchmarks or architecture diagrams. They appear when you run the system on real cases and read every output carefully — including the ones that look correct.
+The interesting variables are: one sentence in a prompt, one field in a patient profile, how many trials share a context window, how the model's confidence calibration interacts with explicit rules, and whether the code that enforces those rules actually works correctly. None of these appear in framework benchmarks or architecture diagrams. They appear when you run the system on real cases and read every output carefully — including the ones that look correct.
 
 ---
 
 *The full code, outputs, and findings from this experiment are available [on GitHub](https://github.com/mingyyy/clinical-trials). All patient profiles are fictional. ClinicalTrials.gov data is public.*
 
-*Written June 5, 2026. Mindfuel independent learning week.*
+*Written June 5, 2026. Updated June 23, 2026 with Finding 8. Mindfuel independent learning week.*
