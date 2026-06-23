@@ -19,7 +19,9 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-sys.path.insert(0, str(Path(__file__).parent))
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # for test_prompt_fixD import
 from pipeline.api_client import fetch_trials, hard_filter_trials
 from pipeline.config import MAX_PAGES, MODEL, SEARCH_RADIUS_MILES
 from pipeline.test_profiles import TEST_PROFILES
@@ -35,13 +37,13 @@ from test_prompt_fixD import (
     add_derived_fields,
 )
 
-load_dotenv(Path(__file__).parent / ".env")
+load_dotenv(PROJECT_ROOT / ".env")
 
-OUT_DIR = Path(__file__).parent / "outputs" / "05_experiments" / "prompt_fixes" / "fixD_full"
+OUT_DIR = PROJECT_ROOT / "outputs" / "05_experiments" / "prompt_fixes" / "fixD_v2"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-BASELINE_DIR = Path(__file__).parent / "outputs" / "02_rerun" / "langgraph"
-FIXC_DIR = Path(__file__).parent / "outputs" / "05_experiments" / "prompt_fixes" / "fixC_full"
+BASELINE_DIR = PROJECT_ROOT / "outputs" / "02_rerun" / "langgraph"
+FIXC_DIR = PROJECT_ROOT / "outputs" / "05_experiments" / "prompt_fixes" / "fixC_full"
 
 CONCURRENCY = 8
 

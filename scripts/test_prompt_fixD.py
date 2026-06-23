@@ -30,13 +30,14 @@ from pathlib import Path
 import requests
 from dotenv import load_dotenv
 
-sys.path.insert(0, str(Path(__file__).parent))
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 from pipeline.test_profiles import TEST_PROFILES
 
-load_dotenv(Path(__file__).parent / ".env")
+load_dotenv(PROJECT_ROOT / ".env")
 
 MODEL = "claude-sonnet-4-6"
-OUT_DIR = Path(__file__).parent / "outputs" / "05_experiments" / "prompt_fixes" / "fixD"
+OUT_DIR = PROJECT_ROOT / "outputs" / "05_experiments" / "prompt_fixes" / "fixD"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 PATIENT_P004 = next(p for p in TEST_PROFILES if p.patient_id == "P004")
@@ -190,6 +191,16 @@ Operators:
 For OR criteria (e.g. "metastatic OR locally advanced"), produce an object
 with "or_predicates": [...] instead of a single variable/operator.
 
+IMPORTANT mapping rules:
+- When criteria require "advanced", "metastatic", "inoperable", "measurable
+  disease", or any combination (e.g. "locally advanced or metastatic"), use
+  disease.is_advanced_measurable as a STANDALONE inclusion predicate (is_true),
+  NOT as an OR branch. This variable is the broadest gate — it is true for any
+  active/measurable disease and false for NED/remission. Do NOT combine it in
+  an or_predicates array with is_metastatic/is_locally_advanced/is_unresectable.
+- When criteria mention HER2-overexpressing, HER2 IHC score, or HER2-low
+  (IHC 1+ or IHC 2+/ISH-), use biomarkers.her2_ihc_score, not biomarkers.her2.
+
 Set parseable=false for criteria that cannot be expressed as a predicate
 (e.g. "adequate organ function", "able to swallow pills"). These will be
 treated as DATA_MISSING automatically.
@@ -322,6 +333,9 @@ def compute_verdict(evaluated: list[dict]) -> tuple[str, list, list]:
         ctype = e["criterion_type"]
         if result == "CONFIRMED_FAILED":
             failures.append(e)
+        elif result == "CONFIRMED_MET" and ctype == "exclusion":
+            # Exclusion criterion is met = patient is excluded
+            failures.append(e)
         elif result == "DATA_MISSING" and ctype == "exclusion":
             unknowns.append(e)
 
@@ -389,9 +403,13 @@ def add_derived_fields(record: dict) -> dict:
     treatments = record.get("prior_treatments") or []
 
     # Line count by setting
-    record["prior_line_count_metastatic"] = sum(
-        1 for t in treatments if t.get("setting") == "metastatic"
-    )
+    # If any treatment has setting=null, the metastatic count is unknown (null)
+    if any(t.get("setting") is None for t in treatments):
+        record["prior_line_count_metastatic"] = None
+    else:
+        record["prior_line_count_metastatic"] = sum(
+            1 for t in treatments if t.get("setting") == "metastatic"
+        )
     record["prior_line_count_total"] = len(treatments)
 
     # Hormone receptor positive: true if ER+ OR PR+, false if both negative, null if both null
@@ -540,8 +558,8 @@ def main():
     print(f"\n{'='*60}")
     print(f"Fix D results: {passed_count}/{len(TEST_CASES)} passed")
 
-    prev_path = Path(__file__).parent / "outputs" / "05_experiments" / "prompt_fixes" / "all_results.json"
-    fixC_path = Path(__file__).parent / "outputs" / "05_experiments" / "prompt_fixes" / "fixC" / "results.json"
+    prev_path = PROJECT_ROOT / "outputs" / "05_experiments" / "prompt_fixes" / "all_results.json"
+    fixC_path = PROJECT_ROOT / "outputs" / "05_experiments" / "prompt_fixes" / "fixC" / "results.json"
 
     if prev_path.exists() and fixC_path.exists():
         prev = json.load(open(prev_path))
