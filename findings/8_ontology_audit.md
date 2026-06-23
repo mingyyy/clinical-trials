@@ -10,16 +10,13 @@
 
 ## Executive Summary
 
-The current Structured Extraction ontology covers approximately **65–70% of the clinical criteria encountered in breast cancer trials**. The framework makes 3 critical false-ELIGIBLE errors (safety risk) and 18 false-UNCERTAIN errors (review burden).
+**v1 (June 6):** 75.8% accuracy. 3 false-ELIGIBLE (safety risk), 18 false-UNCERTAIN (review burden). Originally attributed to ontology gaps.
 
-**Error mode:** Over-cautious (false UNCERTAIN rather than false ELIGIBLE) — clinically safer but operationally expensive.
+**v2 (June 23):** 87.5% accuracy. 0 false-ELIGIBLE, 16 remaining errors evenly split. The v1 errors were caused by three implementation bugs, not missing ontology variables. No ontology expansion was needed.
 
-**Root cause:** Five variable categories are missing or inadequately specified:
-1. Disease activity requirements (measurable/active disease, NED vs active)
-2. HER2 granularity (IHC score, HER2-low distinction)
-3. Specific mutation predicates (TP53, PIK3CA)
-4. Temporal variables (washout periods, time since progression, line counts)
-5. Prior treatment outcomes (progression on drug, line-of-therapy ordinal)
+**Remaining genuine gaps** (for future work):
+1. Temporal variables (washout periods, time since progression) — not in schema
+2. Prior treatment outcomes (progression on drug) — not in schema
 
 ---
 
@@ -55,13 +52,13 @@ The current Structured Extraction ontology covers approximately **65–70% of th
 | Brain metastases | Covered | present / irradiated / measurable-unirradiated |
 | Prior drug names | Covered | — |
 | Prior treatment setting | Covered | adjuvant / neoadjuvant / metastatic |
-| HER2 IHC score / HER2-low | **Missing** | Cannot distinguish IHC 3+ from IHC 2+/FISH− |
-| TP53, PIK3CA mutations | **Missing** | No variables exist |
-| Disease activity / NED / measurable disease | **Missing** | Critical gap — see below |
-| Temporal variables (washout, time since progression) | **Missing** | Entirely absent |
-| Prior line count (aggregate) | **Missing** | `line_of_therapy` per drug, no count logic |
+| HER2 IHC score / HER2-low | Covered (v2) | `her2_ihc_score` existed in schema; parser prompt fixed to use it |
+| TP53, PIK3CA mutations | Covered | Variables exist; test profiles lack TP53/PIK3CA data (correctly returns UNCERTAIN) |
+| Disease activity / NED / measurable disease | Covered (v2) | `is_advanced_measurable` existed; parser prompt fixed to use as standalone predicate |
+| Temporal variables (washout, time since progression) | **Missing** | Genuinely absent — real ontology gap (Phase 2) |
+| Prior line count (aggregate) | Covered (v2) | `prior_line_count_metastatic/total` derived fields; null-handling bug fixed |
 | Progression on specific drug | **Missing** | Boolean outcome flag absent |
-| HR+ composite (ER or PR positive) | Partially covered | ER and PR separate; no HR+ composite |
+| HR+ composite (ER or PR positive) | Covered | `hormone_receptor_positive` derived field exists in `add_derived_fields()` |
 | PD-L1 structured (CPS/TPS score) | Partially covered | String field only; no threshold comparison |
 | Organ function (hepatic, renal, cardiac) | Not covered | Marked `parseable=false`; acceptable default |
 
@@ -138,10 +135,73 @@ Key subtypes:
 
 | Phase | Expected Accuracy |
 |---|---|
-| Current | 75.8% (94/124) |
+| Current (v1) | 75.8% (94/124) |
 | After Phase 1 | ~83–85% |
 | After Phase 1+2 | ~87–90% |
 | After Phase 1+2+3 | ~90–92% |
+
+---
+
+## v2 Update — Bug Fixes, Not Ontology Expansion (June 23, 2026)
+
+A closer investigation revealed that the Phase 1 variables (`is_advanced_measurable`, `her2_ihc_score`, `tp53_status`, `pik3ca_status`) **already existed in the ontology**. The original audit misdiagnosed the root cause. The actual issues were three bugs:
+
+### Bug 1: Evaluator logic — exclusion CONFIRMED_MET not treated as failure
+
+`compute_verdict()` only checked for `CONFIRMED_FAILED`. When an exclusion criterion evaluated as `CONFIRMED_MET` (meaning the exclusion applies to this patient), the result was silently ignored. The verdict fell through to ELIGIBLE.
+
+**Fix:** Added `elif result == "CONFIRMED_MET" and ctype == "exclusion"` → append to failures.
+
+**Impact:** Fixed P005 × NCT06551116 (HER2-overexpressing exclusion). The parser correctly generated `her2_ihc_score gte 3` as an exclusion predicate and it evaluated correctly — but the evaluator didn't treat it as a failure.
+
+### Bug 2: Parser prompt — `is_advanced_measurable` buried in OR predicates
+
+For criteria like "inoperable, locally advanced, or metastatic disease", the parser generated an OR predicate with branches: `is_unresectable`, `is_locally_advanced`, `is_metastatic`, and sometimes `is_advanced_measurable`. When some branches evaluated as `null` (DATA_MISSING), the OR conservatively returned DATA_MISSING even when `is_advanced_measurable=false` already answered the question.
+
+**Fix:** Updated PARSE_SYSTEM prompt to instruct the parser to use `is_advanced_measurable` as a **standalone predicate** for active disease requirements, not as an OR branch. The variable is the broadest gate — it subsumes the individual stage checks.
+
+**Impact:** Fixed P003 × NCT06545331 (solid tumor requiring advanced/metastatic disease; P003 is NED).
+
+### Bug 3: Derived field — `prior_line_count_metastatic` returned 0 for unknown settings
+
+`add_derived_fields()` counted treatments where `setting == "metastatic"`. When treatments had `setting=null` (unknown), the count was 0 — implying "zero metastatic-setting treatments" when the correct answer is "unknown."
+
+**Fix:** Return `null` when any treatment has `setting=null`.
+
+**Impact:** Fixed regression on the target case (P004 × NCT04511013). Without this fix, the evaluator bug fix caused a false INELIGIBLE: the exclusion "no prior systemic therapy for metastatic disease" mapped to `prior_line_count_metastatic eq 0`, which evaluated as CONFIRMED_MET (exclusion met → INELIGIBLE). With `null`, it correctly evaluates as DATA_MISSING → UNCERTAIN.
+
+### v2 Results
+
+| Patient | Assessed | v1 E/U/I | v2 E/U/I | Accuracy (v2) |
+|---------|----------|----------|----------|---------------|
+| P001 | 73 | 0/9/59 | 0/0/71 | 96.7% (58/60) |
+| P002 | 53 | 1/9/39 | 1/6/41 | 40.0% (2/5)* |
+| P003 | 19 | 2/9/7 | 0/5/14 | 88.9% (16/18) |
+| P004 | 18 | 1/5/11 | 0/6/10 | 87.5% (14/16) |
+| P005 | 33 | 1/3/26 | 0/5/25 | 75.9% (22/29) |
+| **Total** | **196** | **5/35/142** | **1/22/161** | **87.5% (112/128)** |
+
+\* P002: only 5 trials overlapped with ground truth due to API result differences across run dates.
+
+**Overall: 75.8% → 87.5% (+11.7pp)**
+
+| Metric | v1 | v2 |
+|--------|-----|-----|
+| False-ELIGIBLE (safety-critical) | 3 | **0** |
+| UNCERTAIN→INELIGIBLE errors | 18 | **9** |
+| INELIGIBLE→UNCERTAIN errors | 8 | **7** |
+| Cost | $2.16 | $2.33 |
+| Target case (P004 × NCT04511013) | UNCERTAIN | UNCERTAIN |
+
+### What the v2 exercise revealed
+
+**The audit's diagnosis was wrong — the ontology was already adequate.** The Phase 1 variables existed in the extraction schema, the parser variable list, and the patient profiles. The errors came from three implementation bugs: an evaluator logic gap, a prompt phrasing issue, and a derived field miscalculation.
+
+**No ontology expansion was needed.** Three code/prompt fixes, each taking minutes, eliminated all safety-critical errors and raised accuracy by 11.7 percentage points.
+
+**The remaining 16 errors are evenly split** (9 over-INELIGIBLE, 7 over-UNCERTAIN) — no longer a one-directional signature. This suggests the low-hanging fruit has been picked. Further improvements would require either richer test patient profiles or more precise predicate parsing, not ontology changes.
+
+**The real Phase 2 work**, if pursued, would be temporal variables (washout periods, progression timing). These genuinely don't exist in the schema. But they're also blocked by test profile sparsity — none of the 5 profiles contain temporal data.
 
 ---
 
@@ -158,14 +218,16 @@ Free-text oncology profiles are sparse on precision. The bottleneck is not ontol
 
 **This is the same structural constraint that limits the original LLM-verdict approaches, but from the opposite side.** LLM-as-judge over-infers from sparse profiles (clinical priors fill in gaps). Structured Extraction under-infers (null fields = uncertainty). Neither is "more correct" — they make different tradeoffs between false confidence and false uncertainty. The right tradeoff depends on downstream cost: in clinical trial matching, false ELIGIBLE is more dangerous than false UNCERTAIN.
 
+**The v2 exercise adds a third lesson:** before expanding a schema, check whether the existing schema is being used correctly. Implementation bugs — evaluator logic, prompt phrasing, derived field calculation — can masquerade as ontology gaps. The diagnostic signal is the same (one-directional errors), but the fix is different (code review vs schema design).
+
 ---
 
 ## Relation to Framework Comparison
 
-The ontology gaps are domain-specific (breast cancer criteria vocabulary) and architectural (structured extraction design). They affect Structured Extraction's accuracy independent of its merits relative to LangGraph, PydanticAI, smolagents, or Claude Direct.
+The bugs fixed in v2 are specific to the Structured Extraction architecture. They affect its accuracy independent of its merits relative to LangGraph, PydanticAI, smolagents, or Claude Direct.
 
-The four-framework comparison showed Structured Extraction costs 44% less than Annotation-First and is architecturally more robust (deterministic evaluation, no inference leakage). The ontology audit reveals the quality bottleneck is in Steps 1+2 (extraction + parsing), not Step 3 (evaluation). Improving the ontology improves accuracy; the deterministic evaluation advantage is preserved.
+The four-framework comparison showed Structured Extraction costs 44% less than Annotation-First and is architecturally more robust (deterministic evaluation, no inference leakage). The v2 fixes confirm this: once the evaluator logic was corrected, the deterministic evaluation correctly handled all cases that the parser and extraction steps set up properly. The architecture's advantage — rules enforced in code, not in prompts — is preserved and validated.
 
 ---
 
-*Audit produced June 6, 2026 by independent LLM agent reading `test_prompt_fixD.py`, `findings/ground_truth.json`, full-run outputs (P001–P005), and `findings/ground_truth_verification_report.md`. Synthesized with human review.*
+*Original audit produced June 6, 2026. v2 update June 23, 2026 — three bug fixes, no ontology expansion, 75.8% → 87.5% accuracy.*
