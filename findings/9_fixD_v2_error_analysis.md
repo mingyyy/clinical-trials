@@ -33,25 +33,50 @@ Step 3 is now solid. Steps 1 and 2 are both LLM calls, and their errors compound
 | Parse ERROR | 12 | JSON parse failure on long/complex eligibility text. Lost assessments. |
 | **Total** | **41** | |
 
-### By root cause (manual review of all 29 wrong verdicts)
+### By step attribution (traced all 29 errors)
 
-| Root cause | Count | Examples |
-|-----------|-------|---------|
-| **Parser misreads multi-cohort trials** | ~10 | Trial has TNBC cohort but parser checks NSCLC cohort. P002/NCT05208762, P002/NCT06399757 |
-| **Parser generates wrong predicate for criterion** | ~7 | Maps "no prior stem cell transplant" to drug_class check that fails on the patient's actual treatments. P002/NCT06682793 |
-| **`is_advanced_measurable` too aggressive** | ~5 | P001 trials where GT says UNCERTAIN but fixD says INELIGIBLE because patient is NED/stage II and trial requires advanced disease. Borderline judgment call. |
-| **Parser misses criteria entirely** | ~4 | No predicate generated for a key inclusion/exclusion. Falls through to UNCERTAIN when should be INELIGIBLE. |
-| **GT labeling disagreement** | ~3 | Genuine ambiguity where reasonable assessors disagree. Not a fixD error per se. |
+All 29 error cases were re-run with full predicate traces. Each error was attributed by elimination: verify Step 1 (extraction) against source profile, verify Step 3 (evaluation) is deterministic, attribute remainder to Step 2 (parsing).
+
+| Step | Errors | Verification method |
+|------|--------|-------------------|
+| Step 1 (extraction) | **0** | All 5 patient records verified field-by-field against source profiles. No extraction errors. |
+| Step 2 (parsing) | **29** | Every error traces to wrong, missing, or mismatched predicates. |
+| Step 3 (evaluation) | **0** | Deterministic code. Re-run produces identical results from same predicates. |
+
+**Step 2 is the sole bottleneck.** Steps 1 and 3 are working correctly.
+
+### Step 2 error sub-types
+
+| Sub-type | Count | What's happening | Fixable by |
+|----------|-------|-----------------|------------|
+| **Missed criteria** | 10 | Parser didn't generate a predicate for a key criterion. No predicate = no failure = UNCERTAIN when should be INELIGIBLE. | Better prompt, more examples |
+| **Primary condition string mismatch** | 7 | Parser generates `eq "breast cancer"` but record has `"HER2-positive breast cancer"`. Or `in_set ["TNBC"]` doesn't match `"Triple-negative breast cancer (TNBC)"`. Exact string matching fails. | Fuzzy matching in evaluator, or normalized extraction |
+| **Wrong cohort** | 6 | Multi-cohort trial. Parser generates predicates from wrong cohort (e.g., checks endometrial cohort for breast cancer patient). | Patient-aware parsing (Option B) |
+| **Other** | 5 | OR predicate issues, ECOG edge case (`gt 2` vs `gte 2` for ECOG=2), non-deterministic retrace differences. | Mixed — case-by-case |
+| **is_advanced_measurable** | 1 | Genuine borderline: NED patient, trial requires advanced disease. | Judgment call — may not be an error |
+
+**The two largest fixable sub-types — string mismatch (7) and wrong cohort (6) — account for 13 of 29 errors (45%).** Both have clear mechanical fixes.
+
+### String mismatch examples
+
+| Patient record value | Parser predicate value | Match? | Should match? |
+|---------------------|----------------------|--------|---------------|
+| `"HER2-positive breast cancer"` | `eq "breast cancer"` | No | Yes — HER2+ breast cancer is breast cancer |
+| `"HER2-positive breast cancer"` | `eq "invasive breast cancer"` | No | Yes — same disease |
+| `"Triple-negative breast cancer (TNBC)"` | `in_set ["TNBC"]` | No | Yes — different string, same entity |
+| `"Triple-negative breast cancer (TNBC)"` | `in_set ["triple-negative breast cancer"]` | No | Yes — case + parenthetical mismatch |
+
+The evaluator uses exact string matching (`eq`, `in_set`). The extraction uses descriptive strings. The parser uses abbreviated or clinical strings. They don't match even when they refer to the same entity.
 
 ### By patient
 
 | Patient | Profile | Errors/Assessed | Accuracy | Primary error pattern |
 |---------|---------|----------------|----------|---------------------|
-| P001 | HER2+ stage II, NED | 3/71 | 95.8% | is_advanced_measurable on borderline trials |
-| P002 | TNBC stage III | 15/47 | 68.1% | Multi-cohort confusion, wrong tumor type matching |
-| P003 | HR+ HER2-, NED | 2/18 | 88.9% | Minor predicate misses |
-| P004 | Melanoma, brain mets | 2/16 | 87.5% | ECOG threshold, wrong cohort |
-| P005 | HER2+ metastatic | 7/30 | 76.7% | Multi-cohort confusion, drug class mismatches |
+| P001 | HER2+ stage II, NED | 3/71 | 95.8% | String mismatch (2), is_advanced_measurable (1) |
+| P002 | TNBC stage III | 15/47 | 68.1% | String mismatch (5), wrong cohort (3), missed criteria (4) |
+| P003 | HR+ HER2-, NED | 2/18 | 88.9% | Missed criteria (2) |
+| P004 | Melanoma, brain mets | 2/16 | 87.5% | Wrong cohort (1), ECOG edge case (1) |
+| P005 | HER2+ metastatic | 7/30 | 76.7% | Wrong cohort (2), missed criteria (4), string mismatch (1) |
 
 P002 and P005 together account for 22 of 29 errors. Both patients face trials with complex multi-cohort structures.
 
@@ -193,14 +218,29 @@ This is a fundamental tension:
 
 ---
 
-## Recommended Exploration Order
+## Recommended Exploration Order (revised after trace)
 
-1. **Option B (patient-aware parsing)** — highest expected impact, moderate risk, single implementation change. Test on the 15 P002 errors first.
-2. **Option E (fix parse errors)** — low risk, recovers lost assessments, independent of other options.
-3. **Option D (hybrid)** — if Option B doesn't close the gap, this is the next step. More complex but highest ceiling.
-4. **Option A (few-shot examples)** — try first if Option B's inference leakage is unacceptable.
-5. **Option F (extraction)** — investigate after tracing remaining errors post-B.
-6. **Option C (two-pass)** — only if Option B shows inference leakage and you want the clean separation.
+The trace changes the priority. String mismatch is the easiest win, wrong cohort is the highest-impact, and missed criteria is the hardest.
+
+1. **String normalization (new — addresses 7 errors)** — Normalize `disease.primary_condition` during extraction to a controlled vocabulary (e.g., `"breast cancer"`, `"TNBC"`, `"melanoma"`). Or add fuzzy/contains matching to the evaluator. Mechanical fix, no LLM change needed. **Do this first.**
+
+2. **Option B (patient-aware parsing — addresses 6 errors)** — Pass tumor type to Step 2 so the parser focuses on the right cohort. Test on P002 and P005 errors. Check inference leakage on P004 target case.
+
+3. **Option E (fix parse errors — recovers 12 assessments)** — Independent of the above. Add retry logic or structured output for long criteria text.
+
+4. **Missed criteria (10 errors) — hardest to fix.** The parser generates 15-30 predicates per trial but misses key ones. Options: more detailed parser prompt, longer output budget, or a verification pass ("did you cover all inclusion criteria?"). This may be inherent to the single-pass parsing approach.
+
+5. **Option D (hybrid)** — if the above don't close the gap to 90%.
+
+**Projected improvement:**
+
+| Fix | Errors addressed | Expected accuracy |
+|-----|-----------------|-------------------|
+| Current | — | 84.1% (153/182) |
+| + String normalization | 7 | ~88% (160/182) |
+| + Patient-aware parsing | 6 | ~91% (166/182) |
+| + Parse error recovery | ~8 of 12 | ~90% (166/190 base) |
+| + Missed criteria (partial) | ~5 of 10 | ~93% |
 
 ---
 
