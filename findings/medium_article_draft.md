@@ -265,6 +265,6 @@ The interesting variables are: one sentence in a prompt, one field in a patient 
 
 ---
 
-*The full code, outputs, and findings from this experiment are available [on GitHub]. All patient profiles are fictional. ClinicalTrials.gov data is public.*
+*The full code, outputs, and findings from this experiment are available [on GitHub](https://github.com/mingyyy/clinical-trials). All patient profiles are fictional. ClinicalTrials.gov data is public.*
 
 *Written June 5, 2026. Mindfuel independent learning week.*
