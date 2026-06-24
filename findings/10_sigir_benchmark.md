@@ -305,12 +305,72 @@ Before changing aggregation, measure our actual criterion-level accuracy against
 
 ---
 
+## Experiment: Full Three-Step System (Matching + Aggregation)
+
+We built and tested a TrialGPT-style three-step system on 9 trials. Results: **33% 3-way accuracy** — worse than single-step fixE. The R/E scores did not separate eligible from excluded trials.
+
+### Why aggregation didn't help
+
+Analysis of per-criterion results across 10 trials (5 eligible, 5 excluded) revealed:
+
+| GT label | Trials with 0 clinical failures | Trials with clinical failures |
+|----------|-------------------------------|-------------------------------|
+| ELIGIBLE | 3 | 2 |
+| EXCLUDED | 3 | 2 |
+
+**There is no pattern at the criterion level that distinguishes eligible from excluded.** Three excluded trials had zero criterion failures — the LLM said the patient passed everything, yet the expert said excluded. Two eligible trials had criterion failures, yet the expert said eligible.
+
+### What the experts are doing that we can't replicate with criterion matching
+
+Examining the 3 excluded-but-all-pass trials:
+
+| Trial | Why expert said EXCLUDED | What criterion matching sees |
+|-------|------------------------|---------------------------|
+| NCT01660594 (CT calcium scoring) | Patient hasn't had CT calcium scoring; "non-acute" chest pain vs patient's acute presentation | All criteria appear met — "non-acute chest pain" not parsed as failed |
+| NCT02608255 (ACS biomarker) | Patient may have received anticoagulation before blood draw | No basis in note to assess this |
+| NCT01407146 (ACS survey) | Retrospective survey, not for acutely presenting patients | Criteria are very loose; study design context matters, not criteria |
+
+**The expert is judging trial FITNESS, not criterion COMPLIANCE.** They read the trial summary, understand the study design, and assess whether this patient in this clinical situation is actually the kind of patient the trial is looking for. This requires understanding the trial's purpose — not just checking its stated criteria.
+
+### The fundamental limitation of criterion-by-criterion evaluation
+
+Whether we use fixE (typed record + criterion evaluation), direct LLM evaluation, TrialGPT-style prompts, or aggregation scoring, the approach is the same: evaluate each stated criterion independently, then combine results.
+
+But the SIGIR expert labels encode a higher-level judgment: **"would this trial benefit from this patient's participation, and would this patient benefit from this trial?"** This is a holistic clinical assessment that:
+- Considers the trial's study design and purpose (not just criteria)
+- Considers whether the patient's clinical situation matches the trial's intent
+- Applies domain knowledge about what a trial is really looking for vs what it formally states
+- Accepts that some criteria are aspirational (stated but loosely enforced)
+
+**No per-criterion system can fully capture this.** It's analogous to the difference between "does this resume have all required keywords?" vs "is this candidate a good fit for the role?" The former is automatable; the latter requires understanding the role.
+
+### What this means for our accuracy target
+
+The 87.3% criterion-level accuracy that TrialGPT achieves is near-expert (88.7-90%). This is likely close to the ceiling for per-criterion evaluation. The gap between criterion-level accuracy and trial-level recall is structural — it's caused by error compounding and by expert labels encoding judgments beyond criterion compliance.
+
+To significantly improve trial-level recall beyond what per-criterion evaluation can achieve, the system needs to **reason about trial fitness**, not just criterion compliance. This requires:
+1. Reading the trial summary and understanding its purpose
+2. Assessing whether the patient's clinical scenario matches the trial's intent
+3. Treating criteria as indicators of fitness, not hard gates
+
+### The right path forward
+
+Instead of trying to improve per-criterion evaluation (which is already near expert level) or adding aggregation (which doesn't have the signal to separate eligible from excluded), the best approach may be:
+
+**A holistic trial-fitness assessment that sees the full trial description + patient note and asks: "Is this patient the kind of patient this trial is looking for?"**
+
+This is conceptually closer to the original direct LLM approach from the framework comparison — but with the lessons learned:
+1. Per-criterion evaluation for auditing and explanation (keep this)
+2. Holistic fitness assessment for the trial-level verdict (add this)
+3. The two can disagree — when they do, flag for human review
+
+This is a hybrid: criterion evaluation for transparency, holistic assessment for accuracy.
+
 ## Next Steps
 
-1. Measure criterion-level accuracy on the 3-patient sample
-2. Prototype criterion classification (clinical vs administrative vs logistical)
-3. Re-evaluate recall after classification
-4. Full SIGIR run only after recall improves on the 3-patient sample
+1. Prototype the holistic fitness assessment on the same 10 trials
+2. Compare: does holistic assessment match expert labels better than criterion evaluation?
+3. If yes, design the production system that combines both
 
 ---
 
