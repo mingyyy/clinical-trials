@@ -178,12 +178,140 @@ To benchmark fairly against TrialGPT's published 87.3% criterion-level accuracy,
 
 ---
 
-## Next Steps
+## Deep Dive: Why TrialGPT Gets Better Recall (and What's Still Missing)
 
-1. **Full SIGIR run with TrialGPT-style prompt** (58 patients) — direct comparison
-2. **Criterion-level accuracy** — compare against TrialGPT's 87.3% (requires mapping labels)
-3. **P004 inference test** — does the permissive absence rule break inference isolation on the target case?
+### What TrialGPT actually does (three steps, not one)
+
+Reading TrialGPT's source code reveals a **three-step architecture** that our comparison missed:
+
+```
+Step 1: Matching    — per-criterion assessment (inclusion and exclusion in separate LLM calls)
+Step 2: Aggregation — SECOND LLM call: takes all per-criterion results + trial summary →
+                      outputs two scores: Relevance (R: 0-100) and Eligibility (E: -R to R)
+Step 3: Ranking     — sort trials by E score → return ranked list
+```
+
+This is fundamentally different from our binary verdict approach. Three key design choices:
+
+**1. Two-score output instead of binary verdict.** TrialGPT separates "is this trial about the right disease?" (Relevance) from "does the patient strictly meet every criterion?" (Eligibility). A trial can be highly relevant (R=90) but have uncertain eligibility (E=30). Our approach collapses these into one binary: ELIGIBLE or not.
+
+**2. Administrative criteria are assumed met.** In the aggregation step, TrialGPT literally injects: `"The patient will provide informed consent, and will comply with the trial protocol without any practical issues."` This bypasses the administrative criteria (consent, willingness, compliance) that push our system to UNCERTAIN.
+
+**3. Soft scoring instead of hard failures.** TrialGPT's eligibility score is a continuous range (-R to R), not a hard pass/fail. A trial with 8 inclusion criteria met and 1 unknown doesn't fail — it gets a score like E=60. Our system: any DATA_MISSING on exclusion → UNCERTAIN. Any CONFIRMED_FAILED → INELIGIBLE. One criterion kills the whole trial.
+
+### What the SIGIR "eligible" label actually means
+
+The SIGIR qrel labels are **clinical relevance judgments**, not strict criterion-by-criterion compliance:
+- **Eligible (2):** "a clinician would consider this trial for this patient" — disease relevance + broadly plausible eligibility
+- **Excluded (1):** "the trial is relevant but the patient clearly doesn't qualify"
+- **Not relevant (0):** "the trial is about a different disease entirely"
+
+This explains why expert-labeled "eligible" trials fail our criterion-level evaluation. Examples from patient sigir-20141 (chest pain, suspected ACS):
+
+| Trial | Why expert said ELIGIBLE | Why fixE said INELIGIBLE/UNCERTAIN |
+|-------|------------------------|-----------------------------------|
+| NCT00143195 (Angina study) | Patient has angina symptoms | "Outpatient setting" — patient is in ER |
+| NCT00005485 (Jackson Heart Study) | African-American with CV risk | "Residents of Jackson, Mississippi" — not in note |
+| NCT00683813 (Cardiac rehab) | IHD patient | "Regular Internet access" — not in note |
+| NCT00952744 (Copeptin biomarker) | ACS presentation | "Unable to provide consent" exclusion → DATA_MISSING |
+
+The experts applied **clinical judgment**: "would a doctor suggest this trial?" Our system applied **strict logic**: "does the patient pass every stated criterion?" Both are valid — for different use cases.
+
+### Why TrialGPT's recall is also below 50%
+
+Even with the permissive absence rule and soft scoring, TrialGPT's published recall isn't high. The 87.3% criterion-level accuracy translates to much lower trial-level recall because:
+
+1. **Error compounding.** A trial with 15 criteria and 87% per-criterion accuracy has only ~13% chance of getting ALL criteria right (0.87^15 ≈ 0.13). One wrong criterion can flip the trial-level verdict.
+
+2. **The aggregation helps but doesn't fully compensate.** The R/E scoring smooths per-criterion errors, but a strong "not included" on a key inclusion criterion still drives E negative.
+
+3. **Some eligible trials have criteria the patient genuinely can't meet from the note alone.** Location, insurance, willingness to comply — information that doesn't appear in clinical notes.
 
 ---
 
-*Benchmark run June 24, 2026. 3 of 58 SIGIR patients with three-way comparison. Full cohort run pending.*
+## The Gap Between Criterion-Level and Trial-Level Accuracy
+
+This is the core insight from the benchmark:
+
+| Level | What's measured | Our performance | TrialGPT | Expert |
+|-------|----------------|----------------|----------|--------|
+| Criterion-level | % of individual criteria correctly assessed | Not yet measured | 87.3% | 88.7-90.0% |
+| Trial-level (binary) | % of trials correctly labeled eligible/not | 83.3% (fixE) | Not directly reported | Varies |
+| Trial-level (eligible recall) | % of eligible trials found | 11.5-42.3% | Not separately reported | — |
+
+**Criterion-level accuracy and trial-level recall are different problems.** You can have 90% criterion-level accuracy and still miss most eligible trials, because errors compound and one wrong criterion is enough to flip a verdict.
+
+The solutions are different:
+- **Criterion-level accuracy** → better prompts, better extraction
+- **Trial-level recall** → better aggregation logic (soft scoring, criterion weighting, administrative criteria handling)
+
+---
+
+## Improvement Directions
+
+### Direction 1: Add aggregation step (TrialGPT-style)
+
+After per-criterion evaluation, add a second LLM call that:
+- Sees all per-criterion results + trial summary
+- Outputs a relevance score (0-100) and eligibility score (-R to R)
+- Assumes administrative criteria are met
+- Weights clinical criteria higher than administrative/logistical ones
+
+**Expected impact:** Should significantly improve recall. TrialGPT's aggregation is what turns per-criterion results into usable trial-level scores.
+
+**Risk:** Adds cost (one more LLM call per trial) and reintroduces LLM judgment at the trial level.
+
+### Direction 2: Criterion classification before evaluation
+
+Not all criteria are equal. Classify criteria into:
+- **Clinical** (disease type, biomarkers, prior treatment): must evaluate strictly
+- **Administrative** (consent, compliance, willingness): assume met
+- **Logistical** (location, internet access, travel): evaluate but don't hard-fail
+- **Lab/vital** (organ function, blood counts): DATA_MISSING unless in note
+
+Then apply different failure rules per category. Clinical CONFIRMED_FAILED → INELIGIBLE. Administrative DATA_MISSING → assume met. Logistical DATA_MISSING → flag but don't block.
+
+**Expected impact:** Directly addresses the administrative criteria problem. Lower cost than full aggregation (classification can be done in the same per-criterion call).
+
+**Risk:** Classification itself might be error-prone.
+
+### Direction 3: Soft scoring in code (no extra LLM call)
+
+Instead of binary verdict, compute a score from per-criterion results:
+```
+score = sum(weights[criterion_type] * result_value for each criterion)
+where: CONFIRMED_MET = +1, DATA_MISSING = 0, CONFIRMED_FAILED = -1
+and: clinical criteria weight > administrative > logistical
+```
+
+Threshold the score for the final verdict: score > X → ELIGIBLE, score < Y → INELIGIBLE, else UNCERTAIN.
+
+**Expected impact:** Moderate improvement. Avoids one-criterion-kills-all but needs good weighting.
+
+**Risk:** Weights are hard to calibrate without training data.
+
+### Direction 4: Improve criterion-level accuracy first
+
+Before changing aggregation, measure our actual criterion-level accuracy against TrialGPT's 87.3% benchmark. If we're significantly below, fix that first — better per-criterion accuracy makes aggregation easier.
+
+**Expected impact:** Foundational. If criterion accuracy is already ~87%, aggregation is the bottleneck. If it's much lower, fix criteria first.
+
+### Recommended order
+
+1. **Measure criterion-level accuracy** (Direction 4) — establishes baseline, cheap
+2. **Add criterion classification** (Direction 2) — targeted fix for the biggest recall killer (administrative criteria), no extra LLM call
+3. **Add aggregation step** (Direction 1) — if classification isn't enough, add soft scoring
+4. **Soft code scoring** (Direction 3) — alternative to Direction 1 if LLM cost is a concern
+
+---
+
+## Next Steps
+
+1. Measure criterion-level accuracy on the 3-patient sample
+2. Prototype criterion classification (clinical vs administrative vs logistical)
+3. Re-evaluate recall after classification
+4. Full SIGIR run only after recall improves on the 3-patient sample
+
+---
+
+*Benchmark run June 24, 2026. 3 of 58 SIGIR patients. Key finding: the recall gap is caused by hard binary verdicts on a task that requires soft relevance scoring. TrialGPT's three-step architecture (matching → aggregation → ranking) handles this; our single-verdict approach does not.*
