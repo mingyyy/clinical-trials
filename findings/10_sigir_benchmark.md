@@ -143,13 +143,47 @@ For a production system, the question is: **how often does the inference problem
 
 ---
 
-## Next Steps
+## Controlled Comparison: Three Approaches on the Same 3 Patients
 
-1. **Run full SIGIR cohort** (58 patients) to get stable numbers
-2. **Trace the 23 missed eligible trials** — understand what information the extraction lost
-3. **Test TrialGPT's approach** (raw note + criteria) on the same 3 patients for direct comparison
-4. **Consider hybrid architecture** that uses extraction only for inference-sensitive criteria
+To isolate what drives recall, we tested three approaches on the same 215 trials:
+
+| Approach | Architecture | Absence rule | Binary acc | Eligible recall |
+|----------|-------------|-------------|-----------|----------------|
+| **fixE** | Extract record → evaluate against record | null = DATA_MISSING (conservative) | 83.3% | 11.5% (3/26) |
+| **Direct (strict)** | Raw note → evaluate criteria | null = DATA_MISSING (conservative) | 87.4% | 7.7% (2/26) |
+| **TrialGPT-style** | Raw note → evaluate criteria | absent = assume not present (permissive) | 83.7% | **42.3% (11/26)** |
+
+### What this reveals
+
+1. **Extraction is NOT the bottleneck.** The direct approach (no extraction, raw note) had *worse* recall than fixE (7.7% vs 11.5%). Removing the typed record didn't help.
+
+2. **The prompt's absence rule is the bottleneck.** The only difference between "Direct (strict)" and "TrialGPT-style" is one instruction: *"if the note does not mention a medically important fact, you can assume that the fact is not true for the patient."* This tripled eligible recall from 7.7% to 42.3%.
+
+3. **Binary accuracy is similar across all three (~83-87%).** The architecture (extraction vs direct) and the absence rule both change *which* trials are labeled eligible vs not, but the overall binary accuracy is stable. The tradeoff is precision vs recall within the not-eligible bucket.
+
+### The core tradeoff
+
+| Rule | Effect | Best for |
+|------|--------|----------|
+| "Absence = DATA_MISSING" (fixE, Finding 4) | Conservative. Misses eligible trials. Protects against false positives. | Systems where false-ELIGIBLE triggers costly downstream action |
+| "Absence = assume not present" (TrialGPT) | Permissive. Finds more eligible trials. Risks false positives. | Screening systems where missing eligible patients is the primary risk |
+
+This is the same tradeoff identified in Finding 2 (per-trial vs batch assessment) and Finding 4 (inference override), now observed at the prompt level. **The absence rule is a policy decision, not a technical one.** Both interpretations are defensible. The right choice depends on the downstream cost of each error type.
+
+### Implications
+
+The 86.3% accuracy we achieved on our 5-patient dataset reflected the conservative absence rule performing well on simple, structured profiles where nulls were genuinely absent. On rich clinical notes with implicit information, the same rule kills recall.
+
+To benchmark fairly against TrialGPT's published 87.3% criterion-level accuracy, we should use the TrialGPT-style prompt — same absence rule, apples-to-apples comparison.
 
 ---
 
-*Benchmark run June 24, 2026. 3 of 58 SIGIR patients. Full cohort run pending.*
+## Next Steps
+
+1. **Full SIGIR run with TrialGPT-style prompt** (58 patients) — direct comparison
+2. **Criterion-level accuracy** — compare against TrialGPT's 87.3% (requires mapping labels)
+3. **P004 inference test** — does the permissive absence rule break inference isolation on the target case?
+
+---
+
+*Benchmark run June 24, 2026. 3 of 58 SIGIR patients with three-way comparison. Full cohort run pending.*
