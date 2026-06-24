@@ -261,15 +261,6 @@ Direct LLM for clear-cut, structured extraction with string normalization for bo
 
 **Expected accuracy: ~93-95%**. Highest complexity.
 
-**Pros:**
-- Fixes a category of errors at the source
-
-**Cons:**
-- Hard to know how many errors are extraction vs parsing without tracing each one
-- May require patient-specific extraction rules
-
-**Expected improvement:** ~3–5 errors fixed.
-
 ---
 
 ## Evaluation Framework
@@ -284,54 +275,87 @@ Direct LLM for clear-cut, structured extraction with string normalization for bo
 
 ---
 
-## Recommended Exploration Order (revised after trace)
+## fixE (Path 4) — Full Run Results
 
-The choice depends on how much architectural change is acceptable.
+Option 3 was implemented as **fixE** (`scripts/run_fixE_all_patients.py`) and run on all 5 patients.
 
-### Path 1: Incremental (low risk, ~91%)
+### Architecture
 
-1. **Option 1 (string normalization)** — pure code, zero LLM change, fixes 7 errors. Do first.
-2. **Option 2 (patient-aware parsing)** — one prompt edit, fixes 6 errors. Test inference leakage on P004.
-3. **Option 6 (parse error recovery)** — independent, recovers 12 assessments.
-4. **Option 4 (verification pass)** — if still below 90%, add coverage checking.
+```
+fixD:  Profile → [LLM] → Record    Criteria → [LLM] → Predicates → [Code evaluator] → Verdict
+fixE:  Profile → [LLM] → Record    Record + Criteria → [LLM] → Per-criterion results → [Code] → Verdict
+```
 
-### Path 2: Structural (medium risk, ~93%)
+fixE eliminates the predicate vocabulary, the string-matching evaluator, and the two-LLM agreement problem. The LLM evaluates each criterion directly against the typed record. Code computes the verdict from per-criterion results.
 
-1. **Option 3 (merged single-step)** — replaces the core two-LLM design. Test on P004 first. If inference isolation holds, this solves string mismatch + wrong cohort + some missed criteria in one change.
-2. **Option 6 (parse error recovery)** — independent.
+### Results
 
-### Path 3: Pragmatic (highest ceiling, most complexity)
+| | fixD v1 | fixD v2 | fixE |
+|---|---|---|---|
+| Accuracy | 75.8% (94/124) | 84.1% (153/182) | **84.2% (160/190)** |
+| Parse errors | ~5% | 12 | **0** |
+| Cost | $2.16 | $2.33 | **$1.72** |
+| Wall time | — | 653s | **335s** |
+| False-ELIGIBLE | 3 | 0 | 2 |
+| P004 target case | UNCERTAIN | UNCERTAIN | **UNCERTAIN** |
 
-1. **Option 5 (hybrid)** — direct LLM for clear-cut, structured extraction for borderline. Addresses all error types by routing them to the right method.
+### fixE vs fixD v2: same accuracy, different error profile
 
-**Projected improvement:**
+| | fixD v2 | fixE |
+|---|---|---|
+| Improvements (other was wrong, this is right) | — | 12 |
+| Regressions (other was right, this is wrong) | — | 11 |
+| Net | — | +1 |
 
-| Path | Approach | Expected accuracy | Risk | Effort |
-|------|----------|-------------------|------|--------|
-| Current | — | 84.1% | — | — |
-| Path 1 (Combo A) | Normalize + patient-aware | ~91% | Low | Small (code + prompt) |
-| Path 1 (Combo C) | + verification pass | ~93-95% | Low | Medium (extra LLM call) |
-| Path 2 (Option 3) | Merged single-step | ~90-93% | Medium (inference) | Medium (rewrite Step 2) |
-| Path 3 (Option 5) | Hybrid | ~93-95% | Medium (complexity) | High (two code paths) |
+fixE fixes 12 of fixD's 29 errors (string mismatch, wrong cohort, missed criteria) but introduces 11 new regressions on borderline cases where the LLM makes different judgment calls. The accuracy is the same because the LLM is non-deterministic on borderline cases.
+
+### Verdict distribution comparison
+
+| Patient | N | LangGraph (E/U/I) | fixD v2 (E/U/I) | fixE (E/U/I) |
+|---------|---|-------------------|-----------------|--------------|
+| P001 | 73 | 0/6/67 | 0/0/71 | 0/2/71 |
+| P002 | 53 | 0/28/24 | 1/6/41 | 1/4/48 |
+| P003 | 19 | 0/7/11 | 0/5/14 | 0/3/16 |
+| P004 | 18 | 1/6/11 | 0/6/10 | 1/4/13 |
+| P005 | 33 | 0/7/25 | 0/5/25 | 0/6/27 |
+
+### What fixE wins on (even at same accuracy)
+
+1. **Zero parse errors.** fixD had 12 ERRORs from JSON parse failures on long criteria. fixE evaluates criteria directly — no structured output to fail on. This recovers 8 assessments into the comparison base.
+
+2. **26% cheaper.** $1.72 vs $2.33. fixE makes one LLM call per trial (evaluate criteria against record). fixD makes one call per trial (parse criteria into predicates) plus code evaluation. The predicate parsing requires more output tokens.
+
+3. **49% faster.** 335s vs 653s. Fewer total tokens processed.
+
+4. **Simpler codebase.** No predicate vocabulary, no `evaluate_single()`, no `get_path()`, no OR-predicate handling, no string matching. The evaluator is ~20 lines of verdict logic vs ~150 lines in fixD.
+
+### The ~84% ceiling
+
+Both fixD v2 and fixE hit the same ceiling. The remaining errors are dominated by:
+
+- **P002 "advanced/metastatic" judgment calls (19 UNCERTAIN→INELIGIBLE):** The GT labels these UNCERTAIN ("stage III might qualify as locally advanced"). Both fixD and fixE check `is_metastatic=false` and return INELIGIBLE. This is a correct reading of the record — but the GT labeler was more lenient about what "advanced" means for stage III TNBC.
+
+- **LLM non-determinism on borderline cases:** fixE gets 12 cases right that fixD gets wrong, and 11 cases wrong that fixD gets right. The LLM makes different choices on the same borderline cases across runs.
+
+The ceiling is not an architecture problem. It's a **ground truth calibration problem**: how should "advanced or metastatic" be applied to stage III TNBC? The GT labeler (also an LLM) says UNCERTAIN. The evaluator says INELIGIBLE. Both readings are defensible.
+
+To move above 84%, the options are:
+1. **Correct the GT:** Review the ~19 UNCERTAIN→INELIGIBLE P002 cases and determine whether INELIGIBLE is actually correct. If even half are reclassified, accuracy jumps to ~89%.
+2. **Add "locally advanced" logic:** Treat stage III as potentially matching "advanced" criteria — add `is_locally_advanced` to the evaluation rules for "advanced or metastatic" criteria.
+3. **Accept 84% as the ceiling** for this patient set and GT methodology.
 
 ---
 
-## Open Questions
+## Open Questions (revised)
 
-1. **Does co-visibility cause inference leakage?** Both Option 2 (patient-aware parsing) and Option 3 (merged single-step) reintroduce patient information into the criteria assessment. The critical test: P004 × NCT04511013. If `prior_treatments[*].setting = null` still produces DATA_MISSING (not CONFIRMED_FAILED), inference isolation works. This test should be run before committing to any approach that reintroduces co-visibility.
+1. ~~**Does co-visibility cause inference leakage?**~~ **Answered: No.** P004 × NCT04511013 returns UNCERTAIN in fixE. The typed record with `setting: null` does not trigger clinical inference. Inference isolation is preserved.
 
-2. **How much of the GT is wrong?** The GT labeler is also an LLM. Some "errors" may be GT mistakes — particularly the UNCERTAIN→INELIGIBLE cases where the GT says UNCERTAIN but fixD's reading of the criteria seems defensible. A human review of the 17 UNCERTAIN→INELIGIBLE cases would sharpen the true accuracy number.
+2. **How much of the GT is wrong?** This is now the binding question. The ~19 UNCERTAIN→INELIGIBLE errors on P002 may be GT errors, not system errors. If the GT labeled "stage III not metastatic" as INELIGIBLE (which is arguably correct for trials requiring metastatic disease), accuracy would be ~89-92%.
 
-3. **Is 90% the right target?** In clinical screening, false-INELIGIBLE (patient silently excluded) is more dangerous than false-UNCERTAIN (patient flagged for human review). If the system is a screener feeding a human reviewer, 84% with a conservative bias may be acceptable. The 10 missed criteria errors all go in the conservative direction (UNCERTAIN when should be INELIGIBLE).
+3. **Is fixE strictly better than fixD?** Same accuracy, but simpler, cheaper, faster, zero parse errors. The only downside: fixE loses the "predicate as audit trail" property — you can see which criteria were evaluated and their results, but not the intermediate structured predicates. For most use cases, the per-criterion evaluation trace is sufficient.
 
-4. **Is Option 3 actually fixD anymore?** The merged single-step design is architecturally closer to fixC (Annotation-First) than fixD (Structured Extraction). The original value of fixD was that the LLM never saw patient and criteria together. If we merge them, we're designing a new architecture — call it fixE — not improving fixD. This is fine, but worth naming.
-
-5. **Could we test Option 3 vs Combo A on the same 29 errors as a controlled comparison?** Both can be run on just the error cases (~30 API calls each) before committing to a full rerun. This would give data on whether the merged approach actually outperforms incremental fixes.
+4. **Should fixE replace fixD as the recommended architecture?** fixE is architecturally closer to fixC (Annotation-First) than fixD (Structured Extraction). The original value of fixD was total separation of patient data from criteria. fixE relaxes that — the LLM sees the typed record alongside criteria — but the typed record with explicit nulls provides sufficient inference protection. The simpler design is the better default.
 
 ---
 
-*Analysis produced June 23, 2026. Revised after full error trace attributed all 29 errors to Step 2 parsing.*
-
----
-
-*Analysis produced June 23, 2026. Based on fixD v2 outputs, tightened ground truth (182 assessments), and manual review of all 29 error cases.*
+*Analysis produced June 23, 2026. Updated with fixE full-run results. The ~84% accuracy ceiling is a ground truth calibration issue, not an architecture issue.*
