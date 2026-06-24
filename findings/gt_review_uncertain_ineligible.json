@@ -1,0 +1,136 @@
+[
+  {
+    "correct_label": "UNCERTAIN",
+    "confidence": 0.8,
+    "reason": "The trial has two parts: Part 1 requires advanced or metastatic disease, but Part 2 explicitly targets 'early stage HER-2 positive cancers with high risk for relapse following completion of SOC or after neoadjuvant systemic treatment.' The patient has Stage II HER2+ breast cancer and has completed surgery and chemotherapy, which could align with Part 2 eligibility. However, uncertainty remains because it's unclear whether the patient meets the 'high risk for relapse' criterion and whether prior chemotherapy was neoadjuvant or adjuvant. System A's INELIGIBLE label fails to account for Part 2 eligibility, making UNCERTAIN the more appropriate label.",
+    "pid": "P001",
+    "nct_id": "NCT07192432",
+    "title": "Gene Therapy for HER-Positive Cancer (SENTRY-HER2)"
+  },
+  {
+    "pid": "P001",
+    "nct_id": "NCT05232916",
+    "error": "Expecting value: line 1 column 1 (char 0)"
+  },
+  {
+    "correct_label": "UNCERTAIN",
+    "confidence": 0.82,
+    "reason": "Criterion 4 requires 'locally advanced or metastatic solid tumor.' Stage III TNBC can qualify as locally advanced, so the patient may meet this inclusion criterion. However, uncertainty remains around whether the patient has measurable disease per RECIST v1.1 (criterion 6) post-neoadjuvant chemotherapy and surgery, and whether washout periods are satisfied. System B's UNCERTAIN label is more appropriate than outright INELIGIBLE, as the locally advanced language in criterion 4 plausibly encompasses Stage III disease.",
+    "pid": "P002",
+    "nct_id": "NCT05086692",
+    "title": "A Beta-only IL-2 ImmunoTherapY Study"
+  },
+  {
+    "correct_label": "INELIGIBLE",
+    "confidence": 0.82,
+    "reason": "The trial requires disease that is 'advanced (ie, surgery or radiotherapy are not considered to be potentially curative), recurrent, or metastatic following SoC treatments.' The parenthetical clarification defines 'advanced' specifically as disease where surgery or radiotherapy are not potentially curative \u2014 this is a functional definition rather than purely stage-based. However, the key issue is 'following SoC treatments,' meaning the patient must have progressed after standard of care. A Stage III TNBC patient who received neoadjuvant chemotherapy but has not progressed to recurrent or metastatic disease would not meet this criterion. Stage III disease that has received neoadjuvant chemo could still be resectable/curable, and there is no indication of recurrence or metastatic spread. Additionally, the trial requires tumor lesions amenable to biopsy. Without evidence of recurrence or metastatic progression post-SoC, the patient appears ineligible. System A's INELIGIBLE label is more correct, though some uncertainty remains about the patient's current disease status post-neoadjuvant treatment.",
+    "pid": "P002",
+    "nct_id": "NCT05985655",
+    "title": "Study to Assess GTAEXS617 in Participants With Advanced Soli"
+  },
+  {
+    "correct_label": "UNCERTAIN",
+    "confidence": 0.85,
+    "reason": "The criterion requires tumors that are 'inoperable, locally advanced, metastatic, or recurrent.' Stage III TNBC can qualify as 'locally advanced,' but the patient's current disease status is unclear - she received neoadjuvant chemotherapy (suggesting she may have undergone surgery), and her current disease state (whether she has residual/recurrent disease, or is in remission post-treatment) is not specified. TNBC is an eligible tumor type for the expansion cohort. The eligibility is uncertain because Stage III could meet 'locally advanced' criteria, but the patient's current status post-neoadjuvant treatment needs clarification. System B's UNCERTAIN is more appropriate than a definitive INELIGIBLE.",
+    "pid": "P002",
+    "nct_id": "NCT06545331",
+    "title": "Study of XB010 in Subjects With Solid Tumors"
+  },
+  {
+    "correct_label": "INELIGIBLE",
+    "confidence": 0.92,
+    "reason": "The trial explicitly requires 'metastatic or unresectable' solid malignancy for breast cancer eligibility (Part A). Stage III TNBC is neither metastatic (Stage IV) nor described as unresectable. Unlike criteria that say 'advanced or metastatic' (where 'advanced' could encompass locally advanced/Stage III), this criterion uses 'metastatic or unresectable' \u2014 a more restrictive formulation. Stage III breast cancer that has undergone neoadjuvant chemotherapy is typically resectable, so the patient does not meet the unresectable threshold either. INELIGIBLE is the more correct label.",
+    "pid": "P002",
+    "nct_id": "NCT05579366",
+    "title": "Rinatabart Sesutecan (Rina-S, PRO1184, GEN1184) for Advanced"
+  },
+  {
+    "correct_label": "UNCERTAIN",
+    "confidence": 0.75,
+    "reason": "The trial title references 'Advanced Cancer' and the inclusion criteria for Dose Escalation requires 'no available therapeutic options to provide clinically meaningful benefit' for TNBC - this implies advanced/metastatic disease where standard options are exhausted. The patient is Stage III TNBC post-neoadjuvant chemotherapy, which may still have available standard-of-care options (e.g., adjuvant capecitabine, olaparib given BRCA1 mutation, pembrolizumab). However, the criteria don't explicitly state 'metastatic only,' and Stage III could potentially qualify as locally advanced with limited options depending on residual disease status. The patient's BRCA1 mutation also means olaparib would likely be an available meaningful option, potentially disqualifying her from Dose Escalation. These ambiguities - whether her stage qualifies as 'advanced,' whether she has exhausted meaningful therapeutic options, and which part of the trial she'd enroll in - make this genuinely uncertain and warranting human review rather than a definitive INELIGIBLE determination.",
+    "pid": "P002",
+    "nct_id": "NCT05902988",
+    "title": "A Phase I/II Study of VLS-1488 in Subjects With Advanced Can"
+  },
+  {
+    "correct_label": "INELIGIBLE",
+    "confidence": 0.82,
+    "reason": "The Phase 1 inclusion criterion explicitly requires 'locally advanced, inoperable, or metastatic tumor.' While Stage III TNBC could qualify as 'locally advanced,' the trial also requires 'no available standard of care therapy or participant is ineligible for standard of care therapy.' This patient with Stage III TNBC and BRCA1 mutation has received only neoadjuvant chemotherapy and would still have standard of care options available (e.g., surgery, adjuvant therapy, olaparib for BRCA-mutant TNBC). This unmet requirement makes the patient ineligible. However, the primary uncertainty is whether Stage III qualifies as 'locally advanced' per protocol definition, and whether the SOC criterion truly precludes this patient. On balance, INELIGIBLE is slightly more appropriate given the SOC availability concern, but UNCERTAIN has merit given ambiguity around 'locally advanced' staging and SOC eligibility determinations.",
+    "pid": "P002",
+    "nct_id": "NCT06399757",
+    "title": "A Study to Investigate APL-5125 in Adults With Advanced Soli"
+  },
+  {
+    "correct_label": "INELIGIBLE",
+    "confidence": 0.82,
+    "reason": "The trial explicitly requires 'metastatic or unresectable' solid tumors for Parts A and B (the TNBC-including parts). Stage III TNBC is neither metastatic nor described as unresectable in the patient profile. Unlike criteria that say 'advanced or metastatic' (where Stage III could qualify as 'locally advanced'), this criterion specifically uses 'metastatic or unresectable' \u2014 and there is no indication the patient's Stage III disease is unresectable. Additionally, the patient lacks documented PD-L1 expression status, which is a required inclusion criterion. While Part C also includes TNBC without explicitly stating 'metastatic or unresectable,' it still requires relapsed/refractory disease, which is not clearly established for this Stage III patient post-neoadjuvant chemotherapy. INELIGIBLE is the more appropriate label, though some uncertainty remains around Part C's broader language.",
+    "pid": "P002",
+    "nct_id": "NCT05208762",
+    "title": "A Study of PF-08046054/SGN-PDL1V in Advanced Solid Tumors"
+  },
+  {
+    "correct_label": "UNCERTAIN",
+    "confidence": 0.85,
+    "reason": "The inclusion criterion says 'recurrent unresectable, locally advanced, or metastatic' TNBC, and Stage III TNBC can qualify as 'locally advanced.' However, several other criteria introduce uncertainty: (1) the patient must be enrolled in BASECAMP-1 and have confirmed HLA-A*02 LOH by NGS \u2014 not established in the profile; (2) EGFR expression must be confirmed \u2014 not stated; (3) prior required therapy requirements must be met \u2014 neoadjuvant chemo is noted but the protocol's specific requirements are unknown; (4) the exclusion criterion about disease 'suitable for local therapy or able to receive standard of care therapy that is therapeutic and not palliative' could apply to a Stage III patient post-neoadjuvant chemo who may still have curative-intent options. Given these multiple unknowns, UNCERTAIN is more appropriate than INELIGIBLE.",
+    "pid": "P002",
+    "nct_id": "NCT06682793",
+    "title": "A Study to Evaluate the Safety and Efficacy of A2B395, an Al"
+  },
+  {
+    "correct_label": "UNCERTAIN",
+    "confidence": 0.82,
+    "reason": "The trial criterion says 'locally advanced or metastatic solid tumors,' and Stage III breast cancer can qualify as 'locally advanced.' The patient meets most inclusion criteria (age \u226518, female, ECOG 1, TNBC is a solid tumor). However, there is uncertainty about whether: (1) the patient has measurable disease per RECIST v1.1, (2) her prior neoadjuvant chemotherapy was completed >3 weeks before study start, and (3) whether standard therapy options still exist for her (the criterion requires no therapy of proven efficacy or resistance to standard therapy). Given Stage III TNBC could qualify as 'locally advanced,' UNCERTAIN is more appropriate than INELIGIBLE.",
+    "pid": "P002",
+    "nct_id": "NCT07229313",
+    "title": "A Study of KIVU-107 in Participants With Locally Advanced or"
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT04333706",
+    "error": "Expecting value: line 1 column 1 (char 0)"
+  },
+  {
+    "correct_label": "UNCERTAIN",
+    "confidence": 0.82,
+    "reason": "The trial requires 'advanced or metastatic' TNBC, and the patient has Stage III TNBC. Stage III could qualify as 'locally advanced,' which is commonly encompassed by the term 'advanced' in oncology trials. Additionally, the inclusion criteria require the cancer to be 'unresectable,' which is not confirmed for this patient \u2014 Stage III TNBC may or may not be unresectable. The patient received neoadjuvant chemotherapy but there is no information about whether the disease is now unresectable or measurable per RECIST 1.1. These ambiguities make the correct determination UNCERTAIN rather than definitively INELIGIBLE, as System B assessed.",
+    "pid": "P002",
+    "nct_id": "NCT06568692",
+    "title": "A Phase 2 Study of PCS6422 With Capecitabine in Patients Wit"
+  },
+  {
+    "correct_label": "UNCERTAIN",
+    "confidence": 0.75,
+    "reason": "The trial requires 'recurrent or advanced solid tumor.' The patient has Stage III TNBC, which could qualify as 'locally advanced' (advanced disease), making eligibility uncertain. However, the patient received neoadjuvant chemotherapy and the current disease status (whether recurrent, residual, or in remission) is not specified. If the patient has no active/measurable disease after neoadjuvant therapy, she may not meet the RECIST lesion requirement. Additionally, it's unclear if the patient's Stage III disease is currently 'advanced' in the trial's context or if she has recurred. These ambiguities make UNCERTAIN more appropriate than a definitive INELIGIBLE determination.",
+    "pid": "P002",
+    "nct_id": "NCT05377996",
+    "title": "A Study of XMT-1660 in Participants With Solid Tumors"
+  },
+  {
+    "pid": "P003",
+    "nct_id": "NCT05827081",
+    "error": "Expecting value: line 1 column 1 (char 0)"
+  },
+  {
+    "correct_label": "UNCERTAIN",
+    "confidence": 0.82,
+    "reason": "This is a broad registry/matching trial for solid malignancies with relevant biomarkers. The patient has metastatic melanoma (solid tumor) with BRAF V600E mutation (explicitly listed as an eligible biomarker). ECOG PS 2 meets the threshold (exclusion is PS >2). The main uncertainties are: (1) whether brain metastases are excluded (not mentioned in criteria excerpt), (2) whether prior immunotherapy creates any issues (not mentioned), and (3) 'abnormal organ function' is vague and unknown for this patient. System A's INELIGIBLE label is not clearly supported by the stated criteria, making UNCERTAIN the more appropriate label pending human review of the full protocol and patient organ function data.",
+    "pid": "P004",
+    "nct_id": "NCT03452774",
+    "title": "SYNERGY-AI: Artificial Intelligence Based Precision Oncology"
+  },
+  {
+    "pid": "P004",
+    "nct_id": "NCT05592626",
+    "error": "Expecting value: line 1 column 1 (char 0)"
+  },
+  {
+    "pid": "P004",
+    "nct_id": "NCT06047379",
+    "error": "Expecting value: line 1 column 1 (char 0)"
+  },
+  {
+    "pid": "P005",
+    "nct_id": "NCT06157892",
+    "error": "Expecting value: line 1 column 1 (char 0)"
+  }
+]
