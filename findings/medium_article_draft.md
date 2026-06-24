@@ -259,32 +259,94 @@ The meta-lesson is worth stating explicitly: **one-directional errors are a diag
 
 ---
 
+## Finding 9: You Can Skip the Predicate Vocabulary Entirely
+
+After fixing the bugs, I traced every remaining error. All 29 traced to Step 2 — the criteria parser. Zero extraction errors. Zero evaluation errors.
+
+The parser had three failure modes: string mismatch (7 errors — extraction says "HER2-positive breast cancer," parser says "breast cancer," exact match fails), wrong cohort (6 errors — multi-arm trial, parser checks the endometrial cohort for a breast cancer patient), and missed criteria (10 errors — parser doesn't generate predicates for key requirements).
+
+String mismatch and wrong cohort share a root cause: two separate LLM calls that need to agree on vocabulary, and they don't. The extraction produces descriptive strings. The parser produces clinical abbreviations. They're describing the same thing in different words, and the evaluator does exact string matching.
+
+The fix was to skip the predicate step entirely. Instead of extract-then-parse-then-evaluate, give the LLM the typed record alongside the criteria in one call and ask: for each criterion, does the record satisfy it? Code still computes the verdict — the LLM returns per-criterion results (met/failed/missing), not a verdict.
+
+I called this fixE. Same accuracy as the predicate-based approach (84.2% vs 84.1%), but zero parse errors, 26% cheaper, 49% faster, and a much simpler codebase. No predicate vocabulary. No string matching. No OR-predicate handling. The LLM reads "must have breast cancer" and checks the record field "HER2-positive breast cancer" directly — it knows they match.
+
+After correcting four ground truth labels (trials that required specifically metastatic disease, wrongly labeled as uncertain), the accuracy reached 86.3%.
+
+---
+
+## Finding 10: The Absence Rule Matters More Than the Architecture
+
+At this point I had a system that worked well on five oncology patients. But five patients is not a benchmark. To validate against expert annotations, I ran fixE against the SIGIR cohort from the TrialGPT dataset — 58 patients with 3,141 patient-trial pairs judged by human experts.
+
+The first result was alarming: 83.3% binary accuracy (eligible vs not-eligible), but only 11.5% eligible recall. Of 26 trials that experts labeled eligible across three patients, fixE found 3.
+
+Before diagnosing the architecture, I tested whether the extraction step was the bottleneck by running the same evaluation without any extraction — raw clinical note plus criteria, same prompt. Eligible recall dropped to 7.7%. Extraction wasn't the problem.
+
+Then I changed one thing in the prompt. Where fixE says "if a field is null, return DATA_MISSING — do not infer," I switched to TrialGPT's instruction: "if the note does not mention a medically important fact, you can assume that the fact is not true for the patient." Eligible recall tripled to 42.3%. Binary accuracy barely moved (83.3% vs 83.7%).
+
+The architecture was the same. The model was the same. The trials were the same. One sentence in the prompt — how to handle absent information — moved recall from 11% to 42%.
+
+This is Finding 2 (the prompt matters more than the framework) playing out again at a different level. The absence rule is a policy decision disguised as a technical parameter. "Absent means unknown" is conservative — safe for high-stakes decisions, but it misses patients who could benefit from trials. "Absent means not present" is permissive — finds more matches, but risks false positives. Both are defensible. The choice depends on what you're building: a gatekeeper or a screener.
+
+---
+
+## Finding 11: The Ceiling Is Clinical Ambiguity, Not System Design
+
+I tested five different approaches on the same benchmark patients: criterion-based extraction, direct LLM evaluation (strict), direct LLM evaluation (permissive), three-step aggregation with relevance and eligibility scores, and holistic trial-fitness assessment. Every approach produced roughly the same accuracy on an ambiguous patient — a 58-year-old woman with chest pain — regardless of architecture: ~33% three-way accuracy (eligible vs excluded vs not relevant).
+
+On a clearer patient — a 58-year-old woman with a lung mass — the same simple direct approach hit 73%.
+
+The difference was not the system. It was the patient. Chest pain maps to dozens of possible conditions — ACS, stable angina, non-cardiac chest pain, GERD, musculoskeletal. The same patient could plausibly match cardiac trials, GI trials, or pain studies. The expert labels encoded clinical judgment about which trials were actually appropriate — judgment that depends on understanding the trial's purpose, not just its stated criteria.
+
+I found something that confirmed this: three expert-labeled "excluded" trials had zero criterion failures in our evaluation. The LLM said the patient met every stated criterion, yet the expert said the patient shouldn't be in the trial. Reading the trial descriptions, the reasons were clear — one was a retrospective survey (wrong study design for an acutely presenting patient), one required a pre-existing test the patient hadn't had, one specified "non-acute" chest pain. The experts were reading the trial's intent, not just its eligibility checklist.
+
+This is a structural limitation. Criterion-by-criterion evaluation — whether done by an LLM or by code against a typed record — can only assess what the criteria state. Experts assess what the trial means. The gap between criterion compliance and trial fitness is where the accuracy ceiling lives.
+
+TrialGPT, the best published system for this task, achieves 87.3% criterion-level accuracy — close to expert agreement at 88.7–90.0%. Per-criterion evaluation is effectively solved. The remaining gap is in converting criterion-level assessments to trial-level verdicts, where error compounding (87% per criterion across 15 criteria = ~13% all-correct) and the fitness-vs-compliance gap both work against you.
+
+---
+
 ## What to Decide Before You Pick a Framework
 
 **The framework decision is the last decision, not the first.** Use LangGraph when you need a team to debug the pipeline in production. Use PydanticAI when output schema stability at the API boundary is load-bearing. Use smolagents when the task is genuinely open-ended and the agent needs to decide what to do, not just how. Use the raw API when cost and simplicity are priorities and the pipeline is stable. None of these choices will affect clinical output quality.
 
 **Start with the prompt, not the framework.** Before writing any framework code, write the system prompt, run it against representative cases, and read the outputs. The calibration — what counts as UNCERTAIN vs. INELIGIBLE, how to handle inference, what to do with missing data — lives in the prompt and cannot be delegated to framework scaffolding.
 
-**Treat the patient notes field as a contamination risk by default.** Any field carrying researcher framing, clinician narrative, or expectation-setting language will shape verdict calibration on borderline cases. The effect is bidirectional and opaque. Separate clinical facts from contextual framing, and test explicitly with known-borderline cases.
+**Choose your absence rule explicitly.** "Absent means unknown" or "absent means not present" — this is the single highest-impact decision after the prompt itself. It determines whether your system is a conservative gatekeeper (high precision, low recall) or a permissive screener (higher recall, more false positives). Don't let it be a default. Test both against your use case and choose deliberately.
 
-**Make the trials-per-call decision explicitly.** Decide how many trials share a context window, document the reasoning, and verify the effect on verdict distributions before going to production. The choice is not a framework default — it is a design decision about how conservative or inclusive you want the screening to be.
+**If a rule must reliably hold, it belongs in code.** Prompts persuade. Code enforces. Extract typed fields from the LLM, enforce deterministic rules in code. But understand the tradeoff: typed extraction protects against inference but loses information. For rich clinical notes, this costs recall. For structured profiles, it works well.
 
-**"Absence of information" rules are guidance, not enforcement.** In a patient profile derived from electronic health records (EHR), where clinical context is rich and implicit inferences are everywhere, the UNCERTAIN rule may almost never fire — not because it was removed, but because the model is confident enough not to need it. Test this explicitly with known-ambiguous cases.
+**Don't over-engineer the intermediate representation.** The predicate vocabulary in Structured Extraction was designed for auditability. It worked — but it also introduced string mismatch and cohort selection errors that a simpler design (LLM evaluates criteria against the record directly) avoided. Simpler architectures with fewer moving parts have fewer places to fail.
 
-**If a rule must reliably hold, it belongs in code.** If your system has a requirement that the model must honor regardless of its confidence — an eligibility exclusion, a compliance check, a safety gate — ask whether that requirement can be expressed as a code evaluation against a structured record. If yes, don't put it in the prompt. Extract the relevant fields from the LLM into typed values, and enforce the rule in code. Prompts persuade. Code enforces.
+**Treat the patient notes field as a contamination risk by default.** Researcher framing, clinician narrative, and expectation-setting language shape verdict calibration on borderline cases. The effect is bidirectional and opaque. Separate clinical facts from contextual framing.
 
-**The prior question is still Elicit.** For Patient 1, Elicit returned 5 ranked trials in four minutes at no cost, and four approaches built over four days confirmed the same top result. For Patient 4 — the hardest case in the study — Elicit surfaced the correct trial and explicitly left the ambiguous prior-treatment criterion unresolved, while all four structured frameworks overrode their own uncertainty with a confident wrong inference. For a pharma client without proprietary data integration requirements, "build vs. buy" should be answered before "which framework."
+**Know what your benchmark measures.** Criterion compliance and clinical fitness are different things. A system that's 86% accurate on criterion compliance may have 11% recall on eligible trials. A system that's 73% accurate on a clear oncology case may be 33% on an ambiguous cardiology case. Aggregate accuracy numbers hide the variance that matters.
+
+**The prior question is still Elicit.** A specialist tool returned the correct answer in four minutes at no cost. For the hardest case in the study, it was the only system that handled the ambiguity correctly — by declining to decide.
 
 ---
 
 ## The Actual Lesson
 
-The expectation going in was that framework choice would be the primary differentiator. A week of building showed the framework is the least interesting variable.
+The expectation going in was that framework choice would be the primary differentiator. Three weeks of building — the original study week plus two weeks of post-study iteration — showed the framework is the least interesting variable.
 
-The interesting variables are: one sentence in a prompt, one field in a patient profile, how many trials share a context window, how the model's confidence calibration interacts with explicit rules, and whether the code that enforces those rules actually works correctly. None of these appear in framework benchmarks or architecture diagrams. They appear when you run the system on real cases and read every output carefully — including the ones that look correct.
+The interesting variables, in order of impact:
+
+1. **One sentence in a prompt** changed every output. "Absence of information is NOT evidence of ineligibility" — and later, "if the note does not mention a fact, assume it is absent" — had more impact than any architectural decision.
+
+2. **How many trials share a context window** (per-trial vs batch-10 vs batch-all) systematically shifted verdict distributions across all patients and all frameworks.
+
+3. **Whether the LLM's confidence overrides explicit rules** — the structural property that led to Structured Extraction and, ultimately, to the realization that the architecture matters less than the prompt philosophy.
+
+4. **Clinical ambiguity** — the ceiling that no architecture, prompt, or aggregation strategy can break through. When the patient-trial match is clear, everything works. When it's ambiguous, nothing works reliably.
+
+5. **Implementation bugs** — three bugs in working code produced the same error signature as an "incomplete ontology." Check the code before expanding the schema.
+
+None of these appear in framework benchmarks, architecture diagrams, or API documentation. They appear when you run the system on real cases and trace every error to its source — including the ones that look correct.
 
 ---
 
 *The full code, outputs, and findings from this experiment are available [on GitHub](https://github.com/mingyyy/clinical-trials). All patient profiles are fictional. ClinicalTrials.gov data is public.*
 
-*Written June 5, 2026. Updated June 23, 2026 with Finding 8. Mindfuel independent learning week.*
+*Written June 5, 2026. Updated June 24, 2026 with Findings 8–11. Mindfuel independent learning week.*
