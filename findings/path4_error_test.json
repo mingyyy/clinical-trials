@@ -1,0 +1,263 @@
+[
+  {
+    "pid": "P001",
+    "nct_id": "NCT07192432",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "UNCERTAIN",
+    "passed": false,
+    "num_evals": 16
+  },
+  {
+    "pid": "P001",
+    "nct_id": "NCT02945579",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "ELIGIBLE",
+    "gt": "ELIGIBLE",
+    "passed": true,
+    "num_evals": 18
+  },
+  {
+    "pid": "P001",
+    "nct_id": "NCT05232916",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "UNCERTAIN",
+    "passed": false,
+    "num_evals": 10
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT07517198",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "UNCERTAIN",
+    "gt": "UNCERTAIN",
+    "passed": true,
+    "num_evals": 5
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT05985655",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "UNCERTAIN",
+    "passed": false,
+    "num_evals": 18
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT06545331",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "UNCERTAIN",
+    "passed": false,
+    "num_evals": 4
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT07211178",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "UNCERTAIN",
+    "gt": "ELIGIBLE",
+    "passed": false,
+    "num_evals": 9
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT06422455",
+    "v2_verdict": "UNCERTAIN",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "ELIGIBLE",
+    "passed": false,
+    "num_evals": 8
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT06827613",
+    "v2_verdict": "UNCERTAIN",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "INELIGIBLE",
+    "passed": true,
+    "num_evals": 15
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT05902988",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "UNCERTAIN",
+    "passed": false,
+    "num_evals": 7
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT06399757",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "UNCERTAIN",
+    "gt": "UNCERTAIN",
+    "passed": true,
+    "num_evals": 9
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT05208762",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "UNCERTAIN",
+    "passed": false,
+    "num_evals": 11
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT06682793",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "UNCERTAIN",
+    "passed": false,
+    "num_evals": 12
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT04585750",
+    "v2_verdict": "UNCERTAIN",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "INELIGIBLE",
+    "passed": true,
+    "num_evals": 7
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT04333706",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "UNCERTAIN",
+    "passed": false,
+    "num_evals": 21
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT05673200",
+    "v2_verdict": "ELIGIBLE",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "INELIGIBLE",
+    "passed": true,
+    "num_evals": 20
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT06568692",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "UNCERTAIN",
+    "passed": false,
+    "num_evals": 15
+  },
+  {
+    "pid": "P002",
+    "nct_id": "NCT05377996",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "UNCERTAIN",
+    "gt": "UNCERTAIN",
+    "passed": true,
+    "num_evals": 13
+  },
+  {
+    "pid": "P003",
+    "nct_id": "NCT07214532",
+    "v2_verdict": "UNCERTAIN",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "INELIGIBLE",
+    "passed": true,
+    "num_evals": 13
+  },
+  {
+    "pid": "P003",
+    "nct_id": "NCT06106477",
+    "v2_verdict": "UNCERTAIN",
+    "path4_verdict": "UNCERTAIN",
+    "gt": "INELIGIBLE",
+    "passed": false,
+    "num_evals": 24
+  },
+  {
+    "pid": "P004",
+    "nct_id": "NCT05098210",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "ELIGIBLE",
+    "gt": "UNCERTAIN",
+    "passed": false,
+    "num_evals": 17
+  },
+  {
+    "pid": "P004",
+    "nct_id": "NCT03452774",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "UNCERTAIN",
+    "passed": false,
+    "num_evals": 5
+  },
+  {
+    "pid": "P005",
+    "nct_id": "NCT05523947",
+    "v2_verdict": "UNCERTAIN",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "INELIGIBLE",
+    "passed": true,
+    "num_evals": 17
+  },
+  {
+    "pid": "P005",
+    "nct_id": "NCT06625775",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "UNCERTAIN",
+    "gt": "UNCERTAIN",
+    "passed": true,
+    "num_evals": 7
+  },
+  {
+    "pid": "P005",
+    "nct_id": "NCT07029399",
+    "v2_verdict": "UNCERTAIN",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "INELIGIBLE",
+    "passed": true,
+    "num_evals": 22
+  },
+  {
+    "pid": "P005",
+    "nct_id": "NCT04030507",
+    "v2_verdict": "UNCERTAIN",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "INELIGIBLE",
+    "passed": true,
+    "num_evals": 9
+  },
+  {
+    "pid": "P005",
+    "nct_id": "NCT05150691",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "UNCERTAIN",
+    "gt": "UNCERTAIN",
+    "passed": true,
+    "num_evals": 16
+  },
+  {
+    "pid": "P005",
+    "nct_id": "NCT04585750",
+    "v2_verdict": "UNCERTAIN",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "INELIGIBLE",
+    "passed": true,
+    "num_evals": 8
+  },
+  {
+    "pid": "P005",
+    "nct_id": "NCT06686394",
+    "v2_verdict": "INELIGIBLE",
+    "path4_verdict": "INELIGIBLE",
+    "gt": "UNCERTAIN",
+    "passed": false,
+    "num_evals": 21
+  }
+]
