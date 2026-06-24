@@ -459,6 +459,24 @@ The pattern that works: LLM as data extractor and semantic parser; code as evalu
 
 Any AI system where a rule must reliably override an LLM inference should move the rule enforcement out of the LLM and into code. This is not a limitation of clinical AI specifically — it is a structural property of all autoregressive LLMs: rules are applied conditionally on confidence, and confidence is shaped by model weights, not just the context window.
 
+### Post-study iteration (June 23, 2026)
+
+Three rounds of improvement after the original study week:
+
+**fixD v2 (bug fixes):** The original Structured Extraction had three implementation bugs — evaluator didn't handle exclusion logic, parser buried a useful variable in OR predicates, and a derived field counted unknowns as zeros. Fixing these raised accuracy from 75.8% to 84.1% with no ontology expansion. The "ontology gap" diagnosis was wrong — the ontology was already adequate.
+
+**fixE (simplified architecture):** Error tracing showed all 29 remaining errors were in Step 2 (criteria parsing) — zero in extraction, zero in evaluation. The two-LLM design (extract record + parse criteria separately) created a vocabulary agreement problem: the extractor and parser used different strings for the same entity. fixE eliminates this by giving the LLM the typed record alongside the criteria in one call. The LLM evaluates each criterion directly against the record; code computes the verdict. Result: same accuracy (84.2%), but zero parse errors, 26% cheaper ($1.72 vs $2.33), 49% faster, and simpler codebase.
+
+**Ground truth correction:** An independent review of 19 disputed cases found 4 where the ground truth was wrong (labeled UNCERTAIN for trials that specifically require metastatic disease). After correction: **86.3% accuracy (164/190)**.
+
+| Version | Architecture | Accuracy | Cost | Parse errors |
+|---------|-------------|----------|------|-------------|
+| fixD v1 (original) | Extract + Parse predicates + Code eval | 75.8% | $2.16 | ~5% |
+| fixD v2 (bug fixes) | Same + 3 bug fixes | 84.1% | $2.33 | 12 |
+| fixE (simplified) | Extract + LLM eval against record + Code verdict | **86.3%** | **$1.72** | **0** |
+
+The remaining ~14% error rate is dominated by "advanced or metastatic" judgment calls on Stage III TNBC — genuine clinical ambiguity, not architectural failure. Full analysis in `findings/9_fixD_v2_error_analysis.md`.
+
 ---
 
 ## Closing

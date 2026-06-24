@@ -91,4 +91,6 @@ bash run_all.sh
 4. **"Absence = UNCERTAIN" is a soft rule** — LLM confidence from clinical priors overrides explicit prompt rules
 5. **Trials-per-call is an architectural decision** — per-trial (conservative) vs batch-10 (inclusive) vs batch-all (comparative)
 6. **Every system got P004 wrong** — except Elicit, which declined to decide
-7. **You can't prompt your way out of a confidence problem** — Structured Extraction (code-as-judge) was the only fix that worked, reaching 75.8% accuracy with a clear path to ~90% via ontology expansion
+7. **You can't prompt your way out of a confidence problem** — Structured Extraction (code-as-judge) was the only fix that worked
+8. **The ontology didn't need expanding — three bugs did** — fixD v2: 75.8% to 84.1% from implementation fixes, not schema changes
+9. **Simpler architecture, same accuracy, lower cost** — fixE eliminates the predicate vocabulary entirely: LLM evaluates criteria directly against the typed record, code computes verdict. 86.3% accuracy, $1.72, zero parse errors
